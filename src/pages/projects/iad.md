@@ -1,6 +1,6 @@
 ---
 title: "IAD - France"
-path: "iad"
+path: "/project/iad"
 tags: ['backend', frontend]
 excerpt: "Petit text court pour IAD"
 ---

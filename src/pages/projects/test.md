@@ -1,6 +1,6 @@
 ---
 title: "Test"
-path: "test"
+path: "/test"
 tags: [frontend]
 excerpt: "Petit text court pour Test"
 ---

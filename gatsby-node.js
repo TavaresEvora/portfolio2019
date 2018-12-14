@@ -1,6 +1,6 @@
 const path = require('path')
 
-exports.createPages = (({ graphql, actions }) => {
+exports.createPages = (({ actions, graphql }) => {
     const { createPages } = actions
 
     return new Promise((resolve, reject) => {
@@ -9,12 +9,14 @@ exports.createPages = (({ graphql, actions }) => {
         resolve(
             graphql(
                 `
-                query {
+                {
                     allMarkdownRemark {
                         edges {
                             node {
+                                html
                                 frontmatter {
                                     path
+                                    title
                                 }
                             }
                         }
@@ -23,15 +25,20 @@ exports.createPages = (({ graphql, actions }) => {
                 `
             )
         ).then(response => {
-            response.data.allMarkdownRemark.edges.forEach(({node}) => {
-                const path = node.frontmatter.path
+            console.log(path)
+            if (response.errors) {
+                reject(response.errors)
+            }
 
+            response.data.allMarkdownRemark.edges.forEach(({node}) => {
+                const { path } = node.frontmatter
+                
                 createPages({
-                    path,
+                    path: node.frontmatter.path,
                     component: projectTemplate,
-                    context: {
-                        pathSlug: path
-                    }
+                    // context: {
+                    //     pathSlug: path
+                    // }
                 })
 
                 resolve()
