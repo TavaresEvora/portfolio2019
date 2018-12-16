@@ -1,23 +1,28 @@
 import React from 'react'
-import { graphql } from 'gatsby'
+import { graphql } from 'gatsby';
 
-export default function Template({data}) {
+const Template = ({data}) => {
+  const { markdownRemark: project } = data
+  const { title } = project.frontmatter
+  const { html } = project
+  console.log(data)
   return (
     <div>
-        Project
-        <div dangerouslySetInnerHTML={{__html: data.html}} />
+        <h1>{ title }</h1>
+        <div dangerouslySetInnerHTML={{__html: html}} />
     </div>
   )
 }
 
-export const projectQuery = graphql`
-  query ProjectByPath($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
-      frontmatter {
-        path
-        title
-      }
+export const query = graphql`
+    query($pathSlug: String!) {
+        markdownRemark(frontmatter: { path: { eq: $pathSlug } }) {
+            html
+            frontmatter {
+                title
+            }
+        }
     }
-  }
 `
+
+export default Template
