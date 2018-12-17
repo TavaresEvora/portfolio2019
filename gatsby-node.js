@@ -9,8 +9,10 @@ exports.createPages = (({ graphql, actions }) => {
         resolve(
             graphql(
                 `
-                {
-                    allMarkdownRemark {
+                query {
+                    allMarkdownRemark (
+                        sort: { order: ASC, fields: [frontmatter___title]}
+                    ) {
                         edges {
                             node {
                                 frontmatter {
@@ -26,14 +28,18 @@ exports.createPages = (({ graphql, actions }) => {
                     reject(response.errors)
                 }
 
-                response.data.allMarkdownRemark.edges.forEach(({node}) => {
+                const projects = response.data.allMarkdownRemark.edges
+
+                projects.forEach(({node}, index) => {
                     const path = node.frontmatter.path
 
                     createPage({
                         path,
                         component: projectTemplate,
                         context: {
-                            pathSlug: path
+                            pathSlug: path,
+                            prev: index === 0 ? null : projects[index - 1].node,
+                            next: index === (projects.length - 1) ? null : projects[index + 1].node
                         }
                     })
 
