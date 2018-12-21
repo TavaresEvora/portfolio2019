@@ -9,19 +9,42 @@ const HeaderStyle = styled.header`
   color: #000;
 `
 
+const LogoStyle = styled.div`
+  color: #FFF;
+  background: #333;
+  padding: 10px;
+  text-decoration: none;
+  cursor: pointer;
+`
+
+const BurgerMenuStyle = styled.div`
+  background: #333;
+  height: 45px;
+  width: 45px;
+  text-decoration: none;
+  cursor: pointer;
+
+  span {
+    display: block;
+    background: #fff;
+    height: 2px;
+    width: 15px;
+  }
+`
+
 const Header = ({ siteTitle }) => (
   <HeaderStyle>
     <Link to='/'>
-      <div className="logo">
+      <LogoStyle>
         TE
-      </div>
+      </LogoStyle>
     </Link>
     
-    <div className="burger-menu">
+    <BurgerMenuStyle>
       <span></span>
       <span></span>
       <span></span>
-    </div>
+    </BurgerMenuStyle>
   </HeaderStyle>
 )
 
