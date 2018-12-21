@@ -1,23 +1,41 @@
 import React from 'react'
-import { graphql } from 'gatsby'
+import { graphql, Link } from 'gatsby';
 
-export default function Template({data}) {
+const Template = ({data, pageContext}) => {
+  const { markdownRemark: project } = data
+  const { title } = project.frontmatter
+  const { html } = project
+  const { next, prev } = pageContext
+
   return (
     <div>
-        Project
-        <div dangerouslySetInnerHTML={{__html: data.html}} />
+        <h1>{ title }</h1>
+        <div dangerouslySetInnerHTML={{__html: html}} />
+
+        {prev &&
+            <Link to={ prev.frontmatter.path }>
+                Prev
+            </Link>
+        }
+
+        {next &&
+            <Link to={ next.frontmatter.path }>
+                Next
+            </Link>
+        }
     </div>
   )
 }
 
-export const projectQuery = graphql`
-  query ProjectByPath($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
-      html
-      frontmatter {
-        path
-        title
-      }
+export const query = graphql`
+    query($pathSlug: String!) {
+        markdownRemark(frontmatter: { path: { eq: $pathSlug } }) {
+            html
+            frontmatter {
+                title
+            }
+        }
     }
-  }
 `
+
+export default Template

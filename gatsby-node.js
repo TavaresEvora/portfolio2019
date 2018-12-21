@@ -1,7 +1,7 @@
-const path = require('path')
+const path = require(`path`)
 
-exports.createPages = (({ actions, graphql }) => {
-    const { createPages } = actions
+exports.createPages = (({ graphql, actions }) => {
+    const { createPage } = actions
 
     return new Promise((resolve, reject) => {
         const projectTemplate = path.resolve('src/templates/project.js')
@@ -9,41 +9,44 @@ exports.createPages = (({ actions, graphql }) => {
         resolve(
             graphql(
                 `
-                {
-                    allMarkdownRemark {
+                query {
+                    allMarkdownRemark (
+                        sort: { order: ASC, fields: [frontmatter___title]}
+                    ) {
                         edges {
                             node {
-                                html
                                 frontmatter {
                                     path
-                                    title
                                 }
                             }
                         }
                     }
                 }
                 `
-            )
-        ).then(response => {
-            console.log(path)
-            if (response.errors) {
-                reject(response.errors)
-            }
+            ).then(response => {
+                if (response.errors) {
+                    reject(response.errors)
+                }
 
-            response.data.allMarkdownRemark.edges.forEach(({node}) => {
-                const { path } = node.frontmatter
-                
-                createPages({
-                    path: node.frontmatter.path,
-                    component: projectTemplate,
-                    // context: {
-                    //     pathSlug: path
-                    // }
+                const projects = response.data.allMarkdownRemark.edges
+
+                projects.forEach(({node}, index) => {
+                    const path = node.frontmatter.path
+
+                    createPage({
+                        path,
+                        component: projectTemplate,
+                        context: {
+                            pathSlug: path,
+                            prev: index === 0 ? null : projects[index - 1].node,
+                            next: index === (projects.length - 1) ? null : projects[index + 1].node
+                        }
+                    })
+
+                    resolve()
                 })
 
-                resolve()
             })
-
-        })
+        )
     })
 })
