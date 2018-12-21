@@ -4,6 +4,7 @@ import { StaticQuery, graphql } from 'gatsby'
 
 import Header from './header'
 import './layout.css'
+import Preloader from './preloader';
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -19,6 +20,7 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <>
+      <Preloader>
         <Header siteTitle={data.site.siteMetadata.title} />
         <div
           style={{
@@ -30,6 +32,8 @@ const Layout = ({ children }) => (
         >
           {children}
         </div>
+      </Preloader>
+        
       </>
     )}
   />
