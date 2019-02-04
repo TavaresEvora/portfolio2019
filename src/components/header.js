@@ -2,10 +2,13 @@ import { Link } from 'gatsby'
 import posed from 'react-pose'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes, css } from 'styled-components'
 
 const HeaderStyle = styled.header`
+  position: relative;
   display: flex;
+  align-items: center;
+  padding: 15px 15px 0;
   justify-content: space-between;
   height: 50px;
   color: #000;
@@ -13,40 +16,52 @@ const HeaderStyle = styled.header`
 `
 
 const LogoStyle = styled.div`
-  color: #FFF;
-  background: #333;
+  color: #333;
+  background: transparent;
   padding: 10px;
   text-decoration: none;
   cursor: pointer;
+
+  a {
+    text-decoration: none;
+    color: #333;
+  }
+`
+
+const BurgerMenuContentStyle = styled.div`
+  display: flex;
+  cursor: pointer;
+  align-items: center;
 `
 
 const BurgerMenuStyle = styled.div`
-	position: fixed;
-  background: #333;
+	position: relative;
+  background: transparent;
   height: 45px;
   width: 45px;
+  margin-left: 5px;
   text-decoration: none;
   cursor: pointer;
-	z-index: 99;
+  z-index: 99;
 
   span {
     position: absolute;
     top: 50%;
-    left: 0;
+    left: 50%;
     display: block;
-    background: #fff;
+    background: #333;
     height: 3px;
-    width: 60%;
-		transform: translate(0, -50%);
+    width: 30px;
+    transform: translate(-50%, -50%);
 
 		&:first-child {
-			width: 80%;
-			transform: translate(0, -10px);
+			/* width: 80%; */
+			transform: translate(-50%, -10px);
 		}
 
 		&:last-child {
-			width: 70%;
-			transform: translate(0, 7px);
+			/* width: 70%; */
+			transform: translate(-50%, 7px);
 		}
   }
 `
@@ -69,14 +84,22 @@ const fadeIn = keyframes`
 
 const OverlayStyle = posed.div({
     open: {
-        y: '0%',
-        delayChildren: 200,
-        staggerChildren: 50,
+      y: '0%',
+      delayChildren: 500,
+      staggerChildren: 50,
+      transition: {
+        duration: 400,
+        ease: 'easeInOut'
+      },
     },
     closed: {
-        y: '-100%',
-        delay: 300,
-        staggerChildren: 50,
+      y: '-100%',
+      delay: 300,
+      staggerChildren: 50,
+      transition: {
+        duration: 400,
+        ease: 'easeInOut'
+      },
     },
     initialPose: 'closed'
 })
@@ -90,9 +113,6 @@ const Overlay = styled(OverlayStyle)`
 	height: 100vh;
 	width: 100vw;
 	margin: 0;
-	transition: all 1s;
-	transform: translateY(-100%);
-	transform: ${ props => props.isOpen ? 'translateY(0)' : 'translateY(-100%)' };
 `
 
 const NavStyle = styled.nav`
@@ -110,8 +130,8 @@ const NavListStyle = styled.ul`
 `
 
 const NavItem = posed.li({
-    open: { y: 0, opacity: 1 },
-    closed: { y: 100, opacity: 0 },
+  open: { y: 0, opacity: 1 },
+  closed: { y: 100, opacity: 0 },
 })
 
 const NavItemStyle = styled(NavItem)`
@@ -159,17 +179,21 @@ class Header extends Component {
 		return (
 			<>
 				<HeaderStyle>
-					<Link to='/'>
-						<LogoStyle>
-							TE
-						</LogoStyle>
-					</Link>
+          <LogoStyle menuIsOpen>
+					  <Link to='/'>
+							TavaresEvora
+            </Link>
+          </LogoStyle>
 
-					<BurgerMenuStyle onClick={ this.burgerHandleClick }>
-						<span></span>
-						<span></span>
-						<span></span>
-					</BurgerMenuStyle>
+          <BurgerMenuContentStyle onClick={ this.burgerHandleClick }>
+            { menuIsOpen ? 'close' : 'menu' }
+            <BurgerMenuStyle>
+              <span></span>
+              <span></span>
+              <span></span>
+            </BurgerMenuStyle>
+          </BurgerMenuContentStyle>
+					
 				</HeaderStyle>
 
 				<Overlay pose={ menuIsOpen ? 'open' : 'closed' }>

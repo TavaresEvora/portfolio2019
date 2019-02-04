@@ -1,4 +1,10 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
+
+const PreloaderStyle = styled.div`
+  height: 100%;
+  width: 100%;
+`
 
 class Preloader extends Component {
   componentDidMount = () => {
@@ -8,9 +14,9 @@ class Preloader extends Component {
 
   render() {
     return (
-      <div>
+      <PreloaderStyle>
         { this.props.children }
-      </div>
+      </PreloaderStyle>
     )
   }
 }
