@@ -3,7 +3,7 @@ import posed from 'react-pose'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import styled, { keyframes, css } from 'styled-components'
-import { TweenLite } from 'gsap'
+import { TimelineLite } from 'gsap'
 
 const HeaderStyle = styled.header`
   position: relative;
@@ -169,10 +169,12 @@ class Header extends Component {
 		this.state = { menuIsOpen: false }
     this.burgerHandleClick = this.burgerHandleClick.bind(this)
     this.buttonMenuElement = React.createRef()
+    this.tl = new TimelineLite({paused: true})
   }
   
   componentDidMount(){
-    TweenLite.from('#burger-menu span', 0.5, {y: 100})
+    this.tl.staggerFrom('#burger-menu span', 0.5, {x: 50, opacity: 0}, 0.1)
+    this.tl.play()
   }
 
 	burgerHandleClick(e) {
