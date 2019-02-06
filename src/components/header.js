@@ -3,6 +3,7 @@ import posed from 'react-pose'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import styled, { keyframes, css } from 'styled-components'
+import { TweenLite } from 'gsap'
 
 const HeaderStyle = styled.header`
   position: relative;
@@ -166,9 +167,13 @@ class Header extends Component {
 	constructor(props) {
 		super(props)
 		this.state = { menuIsOpen: false }
-        this.burgerHandleClick = this.burgerHandleClick.bind(this)
-        this.buttonMenuElement = React.createRef()
-	}
+    this.burgerHandleClick = this.burgerHandleClick.bind(this)
+    this.buttonMenuElement = React.createRef()
+  }
+  
+  componentDidMount(){
+    TweenLite.from('#burger-menu span', 0.5, {y: 100})
+  }
 
 	burgerHandleClick(e) {
 		e.preventDefault()
@@ -179,7 +184,7 @@ class Header extends Component {
         const { menuIsOpen } = this.state
 		return (
 			<>
-				<HeaderStyle>
+				<HeaderStyle id="header">
           <LogoStyle menuIsOpen>
 					  <Link to='/'>
 							TavaresEvora
@@ -188,7 +193,7 @@ class Header extends Component {
 
           <BurgerMenuContentStyle onClick={ this.burgerHandleClick }>
             { menuIsOpen ? 'close' : 'menu' }
-            <BurgerMenuStyle>
+            <BurgerMenuStyle id="burger-menu">
               <span></span>
               <span></span>
               <span></span>
