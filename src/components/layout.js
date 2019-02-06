@@ -36,27 +36,58 @@ const ContentStyle = styled.div`
   width: 100vw;
 `
 
+const SocialContentStyle = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 25px;
+  transform-origin: 0 0;
+  transform: rotate(-90deg) translateX(-50%);
+
+  a {
+    display: inline-block;
+    margin: 0 10px;
+    letter-spacing: 0.1rem;
+    color: #333;
+    text-decoration: none;
+
+    @media (max-width: 812px) {
+      display: none;
+    }
+  }
+`
+
 const ProjectNavStyle = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
   top: 50%;
-  right: 15px;
+  right: 25px;
+  transform: translateY(calc(-35px / 2));
 
   .arrow {
     color: #333;
     height: 35px;
-    margin-bottom: 30px;
-    transform: translateY(calc(-35px / 2));
     transition: transform .3s;
 
-    &-up:hover {
-      transform: translateY(calc(-45px / 2))
+    &-up {
+      margin-bottom: 30px;
+      &:hover {
+      transform: translateY(-5px);
+      }
     }
     &-down:hover {
-      transform: translateY(calc(-25px / 2))
+      transform: translateY(5px);
     }
   }
+`
+
+const InformationStyle = styled.div`
+  position: absolute;
+  color: #757575;
+  font-size: 0.9rem;
+  font-weight: 300;
+  bottom: 25px;
+  right: 25px;
 `
 
 const Layout = ({ children }) => (
@@ -76,6 +107,17 @@ const Layout = ({ children }) => (
         <GlobalStyle />
         <Preloader>
           <Header siteTitle={data.site.siteMetadata.title} />
+          <SocialContentStyle>
+            <Link to='/'>
+              linkedin
+            </Link>
+            <Link to='/'>
+              twitter
+            </Link>
+            <Link to='/'>
+              instagram
+            </Link>
+          </SocialContentStyle>
           <ContentStyle>
             {children}
           </ContentStyle>
@@ -87,6 +129,9 @@ const Layout = ({ children }) => (
               <FontAwesomeIcon icon="arrow-down" />
             </Link>
           </ProjectNavStyle>
+          <InformationStyle>
+            Dernière mise jour: 06/02/2019
+          </InformationStyle>
         </Preloader>
       </>
     )}

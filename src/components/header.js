@@ -11,7 +11,7 @@ const HeaderStyle = styled.header`
   padding: 15px 15px 0;
   justify-content: space-between;
   height: 50px;
-  color: #000;
+  color: #333;
 	z-index: 99;
 `
 
@@ -39,7 +39,7 @@ const BurgerMenuStyle = styled.div`
   background: transparent;
   height: 45px;
   width: 45px;
-  margin-left: 5px;
+  margin-left: 3px;
   text-decoration: none;
   cursor: pointer;
   z-index: 99;
@@ -51,17 +51,17 @@ const BurgerMenuStyle = styled.div`
     display: block;
     background: #333;
     height: 3px;
-    width: 30px;
+    width: 25px;
     transform: translate(-50%, -50%);
 
 		&:first-child {
 			/* width: 80%; */
-			transform: translate(-50%, -10px);
+			transform: translate(-50%, -8px);
 		}
 
 		&:last-child {
 			/* width: 70%; */
-			transform: translate(-50%, 7px);
+			transform: translate(-50%, 5px);
 		}
   }
 `
@@ -112,7 +112,8 @@ const Overlay = styled(OverlayStyle)`
 	left: 0;
 	height: 100vh;
 	width: 100vw;
-	margin: 0;
+  margin: 0;
+  z-index: 98;
 `
 
 const NavStyle = styled.nav`
