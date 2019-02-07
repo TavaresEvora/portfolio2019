@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, StaticQuery, graphql } from 'gatsby'
 import styled, { createGlobalStyle } from 'styled-components'
+import posed from 'react-pose'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
@@ -90,6 +91,20 @@ const InformationStyle = styled.div`
   right: 25px;
 `
 
+const RevealAnimation = posed.div({
+  loaded: {
+    y: 0
+  }
+})
+
+const RevealStyle = styled(RevealAnimation)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+`
+
 const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
@@ -105,34 +120,34 @@ const Layout = ({ children }) => (
     render={data => (
       <>
         <GlobalStyle />
-        <Preloader>
-          <Header siteTitle={data.site.siteMetadata.title} />
-          <SocialContentStyle>
-            <Link to='/'>
-              linkedin
-            </Link>
-            <Link to='/'>
-              twitter
-            </Link>
-            <Link to='/'>
-              instagram
-            </Link>
-          </SocialContentStyle>
-          <ContentStyle>
-            {children}
-          </ContentStyle>
-          <ProjectNavStyle>
-            <Link className="arrow arrow-up" to='/'>
-              <FontAwesomeIcon icon="arrow-up" />
-            </Link>
-            <Link className="arrow arrow-down" to='/'>
-              <FontAwesomeIcon icon="arrow-down" />
-            </Link>
-          </ProjectNavStyle>
-          <InformationStyle>
-            Dernière mise jour: 06/02/2019
-          </InformationStyle>
-        </Preloader>
+        <Preloader/>
+        <RevealStyle/>
+        <Header siteTitle={data.site.siteMetadata.title} />
+        <SocialContentStyle>
+          <Link to='/'>
+            linkedin
+          </Link>
+          <Link to='/'>
+            twitter
+          </Link>
+          <Link to='/'>
+            instagram
+          </Link>
+        </SocialContentStyle>
+        <ContentStyle>
+          {children}
+        </ContentStyle>
+        <ProjectNavStyle>
+          <Link className="arrow arrow-up" to='/'>
+            <FontAwesomeIcon icon="arrow-up" />
+          </Link>
+          <Link className="arrow arrow-down" to='/'>
+            <FontAwesomeIcon icon="arrow-down" />
+          </Link>
+        </ProjectNavStyle>
+        <InformationStyle>
+          Dernière mise jour: 06/02/2019
+        </InformationStyle>
       </>
     )}
   />
