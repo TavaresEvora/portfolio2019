@@ -29,18 +29,24 @@ const PreloaderStyle = styled(PreloaderAnimation)`
 class Preloader extends Component {
   constructor(props) {
     super(props)
-    this.state = { isLoaded: false }
+    this.state = {
+      isLoaded: false,
+      count: 0,
+    }
   }
 
   componentDidMount = () => {
-    this.setState({ isLoaded: true })
+    // setInterval(() => {
+    //   this.setState({ count: this.state.count + 1 })
+    // }, 80)
+    this.setState({ count: 100, isLoaded: true })
   }
 
   render() {
-    const { isLoaded } = this.state
+    const { isLoaded, count } = this.state
     return (
       <PreloaderStyle pose={ isLoaded ? 'loaded' : 'not' }>
-        <span>100%</span>
+        <span>{ count }%</span>
         {/* <p>Attend ça charge...</p> */}
       </PreloaderStyle>
     )
