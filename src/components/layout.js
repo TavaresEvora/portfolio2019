@@ -127,7 +127,7 @@ const TransitionStyle = styled(TransitionAnimation)`
   left: 0;
   height: 200%;
   width: 100%;
-  background: red;
+  background: #00f0b5;
   z-index: 9999;
 `
 

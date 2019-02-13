@@ -2,7 +2,7 @@ import { Link } from 'gatsby'
 import posed from 'react-pose'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import styled, { keyframes, css } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { TimelineLite } from 'gsap'
 
 const HeaderStyle = styled.header`
