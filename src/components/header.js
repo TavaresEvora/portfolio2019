@@ -173,8 +173,12 @@ class Header extends Component {
   }
   
   componentDidMount(){
-    this.tl.staggerFrom('#burger-menu span', 0.5, {x: 50, opacity: 0}, 0.1)
-    this.tl.play()
+    this.tl
+      .add('start', this.props.delay)
+      .staggerFrom('#burger-menu span', 0.5, { x: 50, opacity: 0 }, 0.1, 'start')
+      .from('#menu-txt', 0.5, { opacity: 0 }, 'start+=0.5')
+      .from('#logo', 0.5, { y: -50, opacity: 0 }, 'start')
+      .play()
   }
 
 	burgerHandleClick(e) {
@@ -187,14 +191,14 @@ class Header extends Component {
 		return (
 			<>
 				<HeaderStyle id="header">
-          <LogoStyle menuIsOpen>
+          <LogoStyle id="logo" menuIsOpen>
 					  <Link to='/'>
 							TavaresEvora
             </Link>
           </LogoStyle>
 
           <BurgerMenuContentStyle onClick={ this.burgerHandleClick }>
-            { menuIsOpen ? 'close' : 'menu' }
+            <span id="menu-txt">{ menuIsOpen ? 'close' : 'menu' }</span>
             <BurgerMenuStyle id="burger-menu">
               <span></span>
               <span></span>

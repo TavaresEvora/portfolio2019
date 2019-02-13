@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link, StaticQuery, graphql } from 'gatsby'
 import styled, { createGlobalStyle } from 'styled-components'
@@ -6,6 +6,7 @@ import posed from 'react-pose'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { TimelineLite } from 'gsap'
 
 import 'normalize.css'
 
@@ -105,53 +106,101 @@ const RevealStyle = styled(RevealAnimation)`
   width: 100%;
 `
 
-const Layout = ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
+const TransitionAnimation = posed.div({
+  loaded: {
+    y: '100%',
+    delay: 600,
+    transition: {
+      duration: 1600,
+      ease: 'easeInOut'
+    },
+  },
+  not: {
+    y: '-100%',
+  },
+  initialPose: 'not'
+})
+
+const TransitionStyle = styled(TransitionAnimation)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 200%;
+  width: 100%;
+  background: red;
+  z-index: 9999;
+`
+
+class Layout extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { isLoaded: false }
+    this.tl = new TimelineLite({paused: true})
+  }
+
+  componentDidMount = () => {
+    this.setState({ isLoaded: true })
+    this.tl
+      .add('social', 2.6)
+      .from('#social-content', 0.5, { x: -50, opacity: 0 }, 'social')
+      .from('#navigation', 0.5, { x: 50, opacity: 0 }, 'social')
+      .from('#last-update', 0.3, { y: 50, opacity: 0 }, 'social+=0.1')
+    this.tl.play()
+  }
+
+  render() {
+    const { isLoaded } = this.state
+    const { children } = this.props
+    return (
+      <StaticQuery
+        query={graphql`
+          query {
+            site {
+              siteMetadata {
+                title
+                description
+              }
+            }
           }
-        }
-      }
-    `}
-    render={data => (
-      <>
-        <GlobalStyle />
-        <Preloader/>
-        <RevealStyle/>
-        <Header siteTitle={data.site.siteMetadata.title} />
-        <SocialContentStyle>
-          <Link to='/'>
-            linkedin
-          </Link>
-          <Link to='/'>
-            twitter
-          </Link>
-          <Link to='/'>
-            instagram
-          </Link>
-        </SocialContentStyle>
-        <ContentStyle>
-          {children}
-        </ContentStyle>
-        <ProjectNavStyle>
-          <Link className="arrow arrow-up" to='/'>
-            <FontAwesomeIcon icon="arrow-up" />
-          </Link>
-          <Link className="arrow arrow-down" to='/'>
-            <FontAwesomeIcon icon="arrow-down" />
-          </Link>
-        </ProjectNavStyle>
-        <InformationStyle>
-          Dernière mise jour: 06/02/2019
-        </InformationStyle>
-      </>
-    )}
-  />
-)
+        `}
+        render={data => (
+          <>
+            <GlobalStyle />
+            <Preloader isLoaded={ isLoaded } />
+            <TransitionStyle pose={ isLoaded ? 'loaded' : 'not' } />
+            <RevealStyle/>
+            <Header delay={ 2.4 } siteTitle={data.site.siteMetadata.title} />
+            <SocialContentStyle id="social-content">
+              <Link to='/'>
+                linkedin
+              </Link>
+              <Link to='/'>
+                twitter
+              </Link>
+              <Link to='/'>
+                instagram
+              </Link>
+            </SocialContentStyle>
+            <ContentStyle>
+              { children }
+            </ContentStyle>
+            <ProjectNavStyle id="navigation">
+              <Link className="arrow arrow-up" to='/'>
+                <FontAwesomeIcon icon="arrow-up" />
+              </Link>
+              <Link className="arrow arrow-down" to='/'>
+                <FontAwesomeIcon icon="arrow-down" />
+              </Link>
+            </ProjectNavStyle>
+            <InformationStyle id="last-update">
+              Dernière mise jour: 06/02/2019
+            </InformationStyle>
+          </>
+        )}
+      />
+    )
+  }
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
