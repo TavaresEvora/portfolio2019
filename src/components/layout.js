@@ -2,19 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link, StaticQuery, graphql } from 'gatsby'
 import styled, { createGlobalStyle } from 'styled-components'
-import posed from 'react-pose'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
+import posed, { PoseGroup } from 'react-pose'
 import { TimelineLite } from 'gsap'
 
 import 'normalize.css'
 
 import Header from './header'
 import Preloader from './preloader';
-
-library.add(faArrowUp)
-library.add(faArrowDown)
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -24,8 +18,8 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Montserrat';
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
+    min-width: 100vw;
     overflow: hidden;
   }
 `
@@ -34,6 +28,7 @@ const ContentStyle = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: calc(100vh - 65px);
   width: 100vw;
 `
@@ -58,31 +53,6 @@ const SocialContentStyle = styled.div`
   }
 `
 
-const ProjectNavStyle = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  top: 50%;
-  right: 25px;
-  transform: translateY(calc(-35px / 2));
-
-  .arrow {
-    color: #333;
-    height: 35px;
-    transition: transform .3s;
-
-    &-up {
-      margin-bottom: 30px;
-      &:hover {
-      transform: translateY(-5px);
-      }
-    }
-    &-down:hover {
-      transform: translateY(5px);
-    }
-  }
-`
-
 const InformationStyle = styled.div`
   position: absolute;
   color: #757575;
@@ -92,48 +62,53 @@ const InformationStyle = styled.div`
   right: 25px;
 `
 
-const RevealAnimation = posed.div({
-  loaded: {
-    y: 0
-  }
-})
-
-const RevealStyle = styled(RevealAnimation)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-`
-
 const TransitionAnimation = posed.div({
-  loaded: {
-    y: '100%',
-    delay: 600,
-    transition: {
-      duration: 1600,
-      ease: 'easeInOut'
-    },
-  },
-  not: {
+  enter: {
     y: '-100%',
   },
-  initialPose: 'not'
+  exit: {
+    y: '100%',
+    delay: 800,
+    transition: {
+      type: 'keyframes',
+      values: ['-100%', '0%', '0%', '100%'],
+      times: [0, 0.3, 0.7, 1],
+      duration: 1200,
+    }
+  },
 })
 
 const TransitionStyle = styled(TransitionAnimation)`
   position: fixed;
   top: 0;
   left: 0;
-  height: 200%;
+  height: 100%;
   width: 100%;
   background: #00f0b5;
   z-index: 9999;
 `
 
+const PreloaderAnimation = posed.div({
+  enter: {
+    opacity: 1,
+    transition: {
+      y: { type: 'spring', stiffness: 1000, damping: 15 },
+      default: { duration: 0 }
+    }
+  },
+  exit: {
+    opacity: 0,
+    delay: 800,
+    transition: { duration: 400 }
+  }
+})
+
 class Layout extends Component {
   constructor(props) {
     super(props)
+    setTimeout(() => {
+
+    }, 800)
     this.state = { isLoaded: false }
     this.tl = new TimelineLite({paused: true})
   }
@@ -166,32 +141,24 @@ class Layout extends Component {
         render={data => (
           <>
             <GlobalStyle />
-            <Preloader isLoaded={ isLoaded } />
-            <TransitionStyle pose={ isLoaded ? 'loaded' : 'not' } />
-            <RevealStyle/>
+            <PoseGroup>
+              {/* {!isLoaded && [
+                // If animating more than one child, each needs a `key`
+                <PreloaderAnimation key="preloader" >
+                  <Preloader />
+                </PreloaderAnimation>,
+                <TransitionStyle key="transition" />
+              ]} */}
+            </PoseGroup>
             <Header delay={ 2.4 } siteTitle={data.site.siteMetadata.title} />
             <SocialContentStyle id="social-content">
-              <Link to='/'>
-                linkedin
-              </Link>
-              <Link to='/'>
-                twitter
-              </Link>
-              <Link to='/'>
-                instagram
-              </Link>
+              <Link to='/'>linkedin</Link>
+              <Link to='/'>twitter</Link>
+              <Link to='/'>github</Link>
             </SocialContentStyle>
-            <ContentStyle>
+            <ContentStyle isLoaded={ isLoaded }>
               { children }
             </ContentStyle>
-            <ProjectNavStyle id="navigation">
-              <Link className="arrow arrow-up" to='/'>
-                <FontAwesomeIcon icon="arrow-up" />
-              </Link>
-              <Link className="arrow arrow-down" to='/'>
-                <FontAwesomeIcon icon="arrow-down" />
-              </Link>
-            </ProjectNavStyle>
             <InformationStyle id="last-update">
               Dernière mise jour: 06/02/2019
             </InformationStyle>

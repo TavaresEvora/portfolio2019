@@ -1,20 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import posed from 'react-pose'
 
-const PreloaderAnimation = posed.div({
-  loaded: {
-    opacity: '0',
-    y: '100%',
-    delay: 800,
-    transition: {
-      duration: 400,
-      ease: 'easeInOut'
-    },
-  }
-})
-
-const PreloaderStyle = styled(PreloaderAnimation)`
+const PreloaderStyle = styled.div`
   position: fixed;
   display: flex;
   overflow: hidden;
@@ -28,8 +15,6 @@ const PreloaderStyle = styled(PreloaderAnimation)`
   z-index: 999;
 `
 
-const CounterStyle = styled(PreloaderAnimation)``
-
 class Preloader extends Component {
   constructor(props) {
     super(props)
@@ -40,16 +25,14 @@ class Preloader extends Component {
 
   render() {
     const { count } = this.state
-    const { isLoaded } = this.props
 
     setInterval(() => {
       if (this.state.count < 100) this.setState({ count: this.state.count + 1 })
     }, 80)
     return (
       <>
-        <PreloaderStyle pose={ isLoaded ? 'loaded' : 'not' }>
-          <CounterStyle>{ count }%</CounterStyle>
-          {/* <p>Attend ça charge...</p> */}
+        <PreloaderStyle>
+          <span>{ count }%</span>
         </PreloaderStyle>
       </>
     )
