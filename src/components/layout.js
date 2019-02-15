@@ -46,6 +46,12 @@ const SocialContentStyle = styled.div`
     letter-spacing: 0.1rem;
     color: #333;
     text-decoration: none;
+    will-change: transform;
+    transition: opacity .3s;
+
+    &:hover {
+      opacity: .8;
+    }
 
     @media (max-width: 812px) {
       display: none;
@@ -106,9 +112,6 @@ const PreloaderAnimation = posed.div({
 class Layout extends Component {
   constructor(props) {
     super(props)
-    setTimeout(() => {
-
-    }, 800)
     this.state = { isLoaded: false }
     this.tl = new TimelineLite({paused: true})
   }
@@ -117,7 +120,7 @@ class Layout extends Component {
     this.setState({ isLoaded: true })
     this.tl
       .add('social', 2.6)
-      .from('#social-content', 0.5, { x: -50, opacity: 0 }, 'social')
+      .from('#social-content', 0.5, { x: -50, opacity: 0, clearProps: 'all' }, 'social')
       .from('#navigation', 0.5, { x: 50, opacity: 0 }, 'social')
       .from('#last-update', 0.3, { y: 50, opacity: 0 }, 'social+=0.1')
     this.tl.play()
@@ -142,13 +145,13 @@ class Layout extends Component {
           <>
             <GlobalStyle />
             <PoseGroup>
-              {/* {!isLoaded && [
+              {!isLoaded && [
                 // If animating more than one child, each needs a `key`
                 <PreloaderAnimation key="preloader" >
                   <Preloader />
                 </PreloaderAnimation>,
                 <TransitionStyle key="transition" />
-              ]} */}
+              ]}
             </PoseGroup>
             <Header delay={ 2.4 } siteTitle={data.site.siteMetadata.title} />
             <SocialContentStyle id="social-content">
@@ -156,7 +159,7 @@ class Layout extends Component {
               <Link to='/'>twitter</Link>
               <Link to='/'>github</Link>
             </SocialContentStyle>
-            <ContentStyle isLoaded={ isLoaded }>
+            <ContentStyle delay={ isLoaded ? 2400 : 800 }>
               { children }
             </ContentStyle>
             <InformationStyle id="last-update">

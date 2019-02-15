@@ -8,28 +8,14 @@ const PresentationStyle = styled.div`
   padding: 25px;
 `
 
-const HelloStyle = styled.p`
-  color: #757575;
-  margin-bottom: -15px;
+const RevealBlockStyle = styled.div`
+  position: relative;
+  overflow: hidden;
 `
 
-const RevealContentAnimation = posed.div({
-  isLoaded: {
-    opactity: 1,
-    transition: ({ index }) => ({
-      delay: index * 150
-    })
-  },
-  not: {
-    opacity: 0,
-  },
-  // initialPose: 'not'
-})
-
 const RevealAnimation = posed.div({
-  isLoaded: {
+  visible: {
     x: '100%',
-    duration: 1200,
     transition: ({ index }) => ({
       type: 'keyframes',
       values: ['-100%', '0%', '0%', '100%'],
@@ -38,11 +24,25 @@ const RevealAnimation = posed.div({
       delay: index * 150
     })
   },
-  not: {
+  hidden: {
     x: '-100%',
   },
-  initialPose: 'not'
+  initialPose: 'hidden'
 })
+
+const appearAnimation = {
+  visible: {
+    opacity: 1,
+    transition: ({ index }) => ({
+      delay: 800 + (index * 150)
+    })
+  },
+  hidden: { opacity: 0 },
+}
+
+const RevealContentAnimation = posed.p(appearAnimation)
+
+const RevealTitleAnimation = posed.h1(appearAnimation)
 
 const RevealStyle = styled(RevealAnimation)`
   position: absolute;
@@ -51,14 +51,15 @@ const RevealStyle = styled(RevealAnimation)`
   width: 100%;
   height: 100%;
   background: #00f0b5;
+  z-index: 9999
 `
 
-const RevealBlockStyle = styled.div`
-  position: relative;
-  overflow: hidden;
+const HelloStyle = styled(RevealContentAnimation)`
+  color: #757575;
+  margin-bottom: -15px;
 `
 
-const NameStyle = styled(RevealContentAnimation)`
+const NameStyle = styled(RevealTitleAnimation)`
   font-size: 5rem;
   font-weight: 600;
   color: #000;
@@ -75,45 +76,47 @@ const DescriptionStyle = styled(RevealContentAnimation)`
 class IndexPage extends Component {
   constructor(props) {
     super(props)
-    this.state = { isLoaded: this.props.isLoaded }
+    this.state = { isLoaded: false}
   }
 
   componentDidMount() {
-    this.setState({ isLoaded: true })
+    setTimeout(() => {
+      this.setState({ isLoaded: true })
+    }, 1600)
   }
 
   render() {
     const { isLoaded } = this.state
+    const { delay } = this.props
 
     return (
       <>
         <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
         <PresentationStyle>
-          <HelloStyle><span>Bonjour, je m'appelle</span></HelloStyle>
-            <RevealBlockStyle index={1} pose={(isLoaded) ? 'isLoaded' : 'not'}>
-              <RevealStyle index={1} pose={(isLoaded) ? 'isLoaded' : 'not'} />
-              <NameStyle index={1} pose={(isLoaded) ? 'isLoaded' : 'not'}>
-                { isLoaded &&
-                  <span>Tavares Evora</span>
-                }
-              </NameStyle>
-            </RevealBlockStyle>
+          <HelloStyle delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
+            Bonjour, je m'appelle
+          </HelloStyle>
+          <RevealBlockStyle>
+            <RevealStyle delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' } />
+            <NameStyle delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
+              Tavares Evora
+            </NameStyle>
+          </RevealBlockStyle>
             
-            <RevealBlockStyle index={2} pose={(isLoaded) ? 'isLoaded' : 'not'}>
-              <RevealStyle index={2} pose={(isLoaded) ? 'isLoaded' : 'not'} />
-              <DescriptionStyle index={2} pose={(isLoaded) ? 'isLoaded' : 'not'}>
-                Je suis developpeur <span className="function">fullstack</span> sur Paris,
-                bienvenue sur mon portfolio !
-                {/* https://greeeg.com/about */}
-                {/* http://eric-huguenin.com/ */}
-                {/* https://www.olivier-guilleux.com/ */}
-              </DescriptionStyle>
-            </RevealBlockStyle>
+          <RevealBlockStyle>
+            <RevealStyle delay={ delay } index={2} pose={ isLoaded ? 'visible' : 'hidden' } />
+            <DescriptionStyle delay={ delay } index={2} pose={ isLoaded ? 'visible' : 'hidden' }>
+              Je suis developpeur <span className="function">fullstack</span> sur Paris,
+              bienvenue sur mon portfolio !
+              {/* https://greeeg.com/about/ */}
+              {/* http://eric-huguenin.com/ */}
+              {/* https://www.olivier-guilleux.com/ */}
+            </DescriptionStyle>
+          </RevealBlockStyle>
         </PresentationStyle>
       </>
     )
   }
-  
 }
 
 export default IndexPage

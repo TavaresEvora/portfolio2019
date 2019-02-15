@@ -2,7 +2,7 @@ import { Link } from 'gatsby'
 import posed from 'react-pose'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes, css } from 'styled-components'
 import { TimelineLite } from 'gsap'
 
 const HeaderStyle = styled.header`
@@ -23,16 +23,21 @@ const LogoStyle = styled.div`
   text-decoration: none;
   cursor: pointer;
 
+  &:hover {
+    a {
+      opacity: .8;
+    }
+  }
+
   a {
     text-decoration: none;
     color: #333;
-  }
-`
+    transition: color .8s, opacity .3s;
 
-const BurgerMenuContentStyle = styled.div`
-  display: flex;
-  cursor: pointer;
-  align-items: center;
+    ${props => props.isOpen && css`
+      color: #FFF;
+    `}
+  }
 `
 
 const BurgerMenuStyle = styled.div`
@@ -53,7 +58,9 @@ const BurgerMenuStyle = styled.div`
     background: #333;
     height: 3px;
     width: 25px;
+    will-change: transform;
     transform: translate(-50%, -50%);
+    transition: background .8s, transform .3s;
 
 		&:first-child {
 			/* width: 80%; */
@@ -65,6 +72,32 @@ const BurgerMenuStyle = styled.div`
 			transform: translate(-50%, 5px);
 		}
   }
+`
+
+const BurgerMenuContentStyle = styled.div`
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  transition: color .8s;
+
+  &:hover {
+    ${BurgerMenuStyle} {
+      span:first-child {
+        transform: translate(-50%, -10px);
+      }
+      span:last-child {
+        transform: translate(-50%, 7px);
+      }
+    }
+  }
+
+  ${props => props.isOpen && css`
+    color: #FFF;
+
+    ${BurgerMenuStyle} span {
+      background: #FFF;
+    }
+  `}
 `
 
 const fadeIn = keyframes`
@@ -118,17 +151,22 @@ const Overlay = styled(OverlayStyle)`
 `
 
 const NavStyle = styled.nav`
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 `
 
 const NavListStyle = styled.ul`
-	position: absolute;
-	top: 50%;
-	left: 50%;
 	color: #FFF;
-	transform: translate(-50%, -50%);
 	margin: 0;
 	padding: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 `
 
 const NavItem = posed.li({
@@ -139,28 +177,36 @@ const NavItem = posed.li({
 const NavItemStyle = styled(NavItem)`
 	display: inline-block;
 	list-style: none;
+`
 
-	&:not(:last-child) {
-		margin-right: 120px;
-	}
+const MenuStyle = styled.ul`
+`
 
-	&:first-child {
-		&:hover {
-			&::before {
-				content: '';
-				display: block;
-				position: absolute;
-				top: -180px;
-				left: -30px;
-				width: 300px;
-				height: 400px;
-				background: red;
-				transition: 1s;
-				animation: ${fadeIn} 2s ease-in-out;
-				z-index: -1;
-			}
-		}
-	}
+const MenuItemStyle = styled.li`
+  display: inline-block;
+  font-size: .9rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color .8s;
+
+  &:not(:last-child) {
+    margin: 0 25px;
+  }
+
+  ${props => props.isOpen && css`
+    color: #FFF;
+  `}
+
+  a {
+    color: inherit;
+    font-size: .9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color .8s;
+    ${props => props.isOpen && css`
+      color: #FFF;
+    `}
+  }
 `
 
 class Header extends Component {
@@ -175,8 +221,8 @@ class Header extends Component {
   componentDidMount(){
     this.tl
       .add('start', this.props.delay)
-      .staggerFrom('#burger-menu span', 0.5, { x: 50, opacity: 0 }, 0.1, 'start')
-      .from('#menu-txt', 0.5, { opacity: 0 }, 'start+=0.5')
+      .staggerFrom('#burger-menu span', 0.5, { x: 50, opacity: 0, clearProps: 'all' } , 0.1, 'start')
+      .from('.menu-txt', 0.5, { opacity: 0 }, 'start+=0.5')
       .from('#logo', 0.5, { y: -50, opacity: 0 }, 'start')
       .play()
   }
@@ -191,20 +237,31 @@ class Header extends Component {
 		return (
 			<>
 				<HeaderStyle id="header">
-          <LogoStyle id="logo" menuIsOpen>
+          <LogoStyle id="logo" isOpen={ menuIsOpen } >
 					  <Link to='/'>
 							TavaresEvora
             </Link>
           </LogoStyle>
 
-          <BurgerMenuContentStyle onClick={ this.burgerHandleClick }>
+          <MenuStyle>
+            <MenuItemStyle className="menu-txt" isOpen={ menuIsOpen } onClick={ this.burgerHandleClick }>
+              { menuIsOpen ? 'close' : 'all projects' }
+            </MenuItemStyle>
+            <MenuItemStyle isOpen={ menuIsOpen }  className="menu-txt">
+              <Link to='/'>
+                about
+              </Link>
+            </MenuItemStyle>
+          </MenuStyle>
+
+          {/* <BurgerMenuContentStyle isOpen={ menuIsOpen } onClick={ this.burgerHandleClick }>
             <span id="menu-txt">{ menuIsOpen ? 'close' : 'menu' }</span>
             <BurgerMenuStyle id="burger-menu">
               <span></span>
               <span></span>
               <span></span>
             </BurgerMenuStyle>
-          </BurgerMenuContentStyle>
+          </BurgerMenuContentStyle> */}
 					
 				</HeaderStyle>
 
