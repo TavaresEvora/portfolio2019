@@ -21,7 +21,7 @@ const RevealAnimation = posed.div({
       values: ['-100%', '0%', '0%', '100%'],
       times: [0, 0.3, 0.7, 1],
       duration: 1600,
-      delay: index * 150
+      delay: index * 250
     })
   },
   hidden: {
@@ -34,7 +34,7 @@ const appearAnimation = {
   visible: {
     opacity: 1,
     transition: ({ index }) => ({
-      delay: 800 + (index * 150)
+      delay: 800 + (index * 250)
     })
   },
   hidden: { opacity: 0 },
@@ -71,6 +71,41 @@ const DescriptionStyle = styled(RevealContentAnimation)`
   margin-top: 15px;
   color: #000;
   margin: 0;
+`
+
+const SocialContentStyle = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 25px;
+  transform-origin: 0 0;
+  transform: rotate(-90deg) translateX(-50%);
+
+  a {
+    display: inline-block;
+    margin: 0 10px;
+    letter-spacing: 0.1rem;
+    color: #333;
+    text-decoration: none;
+    will-change: transform;
+    transition: opacity .3s;
+
+    &:hover {
+      opacity: .8;
+    }
+
+    @media (max-width: 812px) {
+      display: none;
+    }
+  }
+`
+
+const InformationStyle = styled.div`
+  position: absolute;
+  color: #757575;
+  font-size: 0.9rem;
+  font-weight: 300;
+  bottom: 25px;
+  right: 25px;
 `
 
 class IndexPage extends Component {
@@ -113,6 +148,14 @@ class IndexPage extends Component {
               {/* https://www.olivier-guilleux.com/ */}
             </DescriptionStyle>
           </RevealBlockStyle>
+          <SocialContentStyle id="social-content">
+            <Link to='/'>linkedin</Link>
+            <Link to='/'>twitter</Link>
+            <Link to='/'>github</Link>
+          </SocialContentStyle>
+          <InformationStyle id="last-update">
+            Dernière mise jour: 06/02/2019
+          </InformationStyle>
         </PresentationStyle>
       </>
     )

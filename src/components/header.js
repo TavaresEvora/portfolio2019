@@ -214,6 +214,7 @@ class Header extends Component {
 		super(props)
 		this.state = { menuIsOpen: false }
     this.burgerHandleClick = this.burgerHandleClick.bind(this)
+    this.closeBurger = this.closeBurger.bind(this)
     this.buttonMenuElement = React.createRef()
     this.tl = new TimelineLite({paused: true})
   }
@@ -230,7 +231,11 @@ class Header extends Component {
 	burgerHandleClick(e) {
 		e.preventDefault()
 		this.setState({ menuIsOpen: !!!this.state.menuIsOpen })
-	}
+  }
+  
+  closeBurger() {
+    this.setState({ menuIsOpen: false })
+  }
 
 	render() {
         const { menuIsOpen } = this.state
@@ -245,11 +250,11 @@ class Header extends Component {
 
           <MenuStyle>
             <MenuItemStyle className="menu-txt" isOpen={ menuIsOpen } onClick={ this.burgerHandleClick }>
-              { menuIsOpen ? 'close' : 'all projects' }
+              { menuIsOpen ? 'fermer' : 'projets' }
             </MenuItemStyle>
-            <MenuItemStyle isOpen={ menuIsOpen }  className="menu-txt">
-              <Link to='/'>
-                about
+            <MenuItemStyle isOpen={ menuIsOpen } onClick={ this.closeBurger } className="menu-txt">
+              <Link to='/about'>
+                a propos
               </Link>
             </MenuItemStyle>
           </MenuStyle>

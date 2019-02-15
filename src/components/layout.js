@@ -33,41 +33,6 @@ const ContentStyle = styled.div`
   width: 100vw;
 `
 
-const SocialContentStyle = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 25px;
-  transform-origin: 0 0;
-  transform: rotate(-90deg) translateX(-50%);
-
-  a {
-    display: inline-block;
-    margin: 0 10px;
-    letter-spacing: 0.1rem;
-    color: #333;
-    text-decoration: none;
-    will-change: transform;
-    transition: opacity .3s;
-
-    &:hover {
-      opacity: .8;
-    }
-
-    @media (max-width: 812px) {
-      display: none;
-    }
-  }
-`
-
-const InformationStyle = styled.div`
-  position: absolute;
-  color: #757575;
-  font-size: 0.9rem;
-  font-weight: 300;
-  bottom: 25px;
-  right: 25px;
-`
-
 const TransitionAnimation = posed.div({
   enter: {
     y: '-100%',
@@ -154,17 +119,9 @@ class Layout extends Component {
               ]}
             </PoseGroup>
             <Header delay={ 2.4 } siteTitle={data.site.siteMetadata.title} />
-            <SocialContentStyle id="social-content">
-              <Link to='/'>linkedin</Link>
-              <Link to='/'>twitter</Link>
-              <Link to='/'>github</Link>
-            </SocialContentStyle>
             <ContentStyle delay={ isLoaded ? 2400 : 800 }>
               { children }
             </ContentStyle>
-            <InformationStyle id="last-update">
-              Dernière mise jour: 06/02/2019
-            </InformationStyle>
           </>
         )}
       />
