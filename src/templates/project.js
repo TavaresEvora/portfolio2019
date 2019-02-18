@@ -22,13 +22,18 @@ const ProjectNavStyle = styled.div`
     height: 35px;
     transition: transform .3s;
 
+    &.disabled {
+      opacity: .5;
+      pointer-events: none;
+    }
+
     &-up {
       margin-bottom: 30px;
-      &:hover {
+      &:not(.disabled):hover {
       transform: translateY(-5px);
       }
     }
-    &-down:hover {
+    &-down:not(.disabled):hover {
       transform: translateY(5px);
     }
   }
@@ -56,11 +61,22 @@ const Template = ({data, pageContext}) => {
             <FontAwesomeIcon icon="arrow-up" />
           </Link>
         }
+        {!prev &&
+          <div disabled className="arrow arrow-up disabled">
+            <FontAwesomeIcon icon="arrow-up" />
+          </div>
+        }
         
         {next &&
           <Link to={ next.frontmatter.path } className="arrow arrow-down">
             <FontAwesomeIcon icon="arrow-down" />
           </Link>
+        }
+        
+        {!next &&
+          <div className="arrow arrow-down disabled">
+            <FontAwesomeIcon icon="arrow-down" />
+          </div>
         }
       </ProjectNavStyle>
     </>

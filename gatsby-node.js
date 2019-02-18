@@ -31,7 +31,7 @@ exports.createPages = (({ graphql, actions }) => {
                 const projects = response.data.allMarkdownRemark.edges
 
                 projects.forEach(({node}, index) => {
-                    const path = node.frontmatter.path
+                    const { path } = node.frontmatter
 
                     createPage({
                         path,

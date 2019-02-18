@@ -51,7 +51,7 @@ const RevealStyle = styled(RevealAnimation)`
   width: 100%;
   height: 100%;
   background: #00f0b5;
-  z-index: 9999
+  z-index: 9999;
 `
 
 const HelloStyle = styled(RevealContentAnimation)`
