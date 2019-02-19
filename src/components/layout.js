@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link, StaticQuery, graphql } from 'gatsby'
+import { StaticQuery, graphql } from 'gatsby'
 import styled, { createGlobalStyle } from 'styled-components'
 import posed, { PoseGroup } from 'react-pose'
 import { TimelineLite } from 'gsap'
@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-const ContentStyle = styled.div`
+const ContentStyle = styled.main`
   display:flex;
   justify-content: center;
   align-items: center;
@@ -85,7 +85,6 @@ class Layout extends Component {
     this.setState({ isLoaded: true })
     this.tl
       .add('social', 2.6)
-      .from('#social-content', 0.5, { x: -50, opacity: 0, clearProps: 'all' }, 'social')
       .from('#navigation', 0.5, { x: 50, opacity: 0 }, 'social')
       .from('#last-update', 0.3, { y: 50, opacity: 0 }, 'social+=0.1')
     this.tl.play()
@@ -104,6 +103,18 @@ class Layout extends Component {
                 description
               }
             }
+            allMarkdownRemark (
+              sort: { order: ASC, fields: [frontmatter___title]}
+            ) {
+              edges {
+                node {
+                  frontmatter {
+                    path
+                    title
+                  }
+                }
+              }
+            }
           }
         `}
         render={data => (
@@ -118,7 +129,10 @@ class Layout extends Component {
                 <TransitionStyle key="transition" />
               ]}
             </PoseGroup>
-            <Header delay={ 2.4 } siteTitle={data.site.siteMetadata.title} />
+            <Header delay={ 1.9 }
+              projects={data.allMarkdownRemark.edges}
+              siteTitle={data.site.siteMetadata.title}
+            />
             <ContentStyle delay={ isLoaded ? 2400 : 800 }>
               { children }
             </ContentStyle>

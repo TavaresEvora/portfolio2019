@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import posed from 'react-pose'
 import { Link } from 'gatsby'
+import { TimelineLite } from 'gsap'
 import styled from 'styled-components'
 import SEO from '../components/seo'
 
@@ -112,12 +113,16 @@ class IndexPage extends Component {
   constructor(props) {
     super(props)
     this.state = { isLoaded: false}
+    this.tl = new TimelineLite({paused: true})
   }
 
   componentDidMount() {
     setTimeout(() => {
       this.setState({ isLoaded: true })
     }, 1600)
+    this.tl
+      .from('#social-content', 0.5, { x: -50, opacity: 0, clearProps: 'all' }, 2)
+      .play()
   }
 
   render() {

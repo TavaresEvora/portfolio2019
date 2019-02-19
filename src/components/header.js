@@ -1,4 +1,4 @@
-import { Link } from 'gatsby'
+import { Link, graphql } from 'gatsby'
 import posed from 'react-pose'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -147,6 +147,7 @@ const Overlay = styled(OverlayStyle)`
 	height: 100vh;
 	width: 100vw;
   margin: 0;
+  transform: translateY(-100%);
   z-index: 98;
 `
 
@@ -223,8 +224,8 @@ class Header extends Component {
     this.tl
       .add('start', this.props.delay)
       .staggerFrom('#burger-menu span', 0.5, { x: 50, opacity: 0, clearProps: 'all' } , 0.1, 'start')
-      .from('.menu-txt', 0.5, { opacity: 0 }, 'start+=0.5')
       .from('#logo', 0.5, { y: -50, opacity: 0 }, 'start')
+      .from('.menu-txt', 0.5, { opacity: 0 }, 'start')
       .play()
   }
 
@@ -238,7 +239,8 @@ class Header extends Component {
   }
 
 	render() {
-        const { menuIsOpen } = this.state
+    const { menuIsOpen } = this.state
+    const { projects } = this.props
 		return (
 			<>
 				<HeaderStyle id="header">
@@ -273,10 +275,9 @@ class Header extends Component {
 				<Overlay pose={ menuIsOpen ? 'open' : 'closed' }>
 					<NavStyle>
 						<NavListStyle>
-							<NavItemStyle>Home</NavItemStyle>
-							<NavItemStyle>Our Story</NavItemStyle>
-							<NavItemStyle>Portfolio</NavItemStyle>
-							<NavItemStyle>Contact</NavItemStyle>
+              { projects.map(({ node }) => (
+                <NavItemStyle key={ node.frontmatter.path }>{ node.frontmatter.title }</NavItemStyle>
+              ))}
 						</NavListStyle>
 					</NavStyle>
 				</Overlay>
@@ -288,10 +289,12 @@ class Header extends Component {
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
+  projects: PropTypes.array,
 }
 
 Header.defaultProps = {
   siteTitle: '',
+  projects: [],
 }
 
 export default Header
