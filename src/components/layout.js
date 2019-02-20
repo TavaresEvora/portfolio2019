@@ -133,7 +133,7 @@ class Layout extends Component {
               projects={data.allMarkdownRemark.edges}
               siteTitle={data.site.siteMetadata.title}
             />
-            <ContentStyle delay={ isLoaded ? 2400 : 800 }>
+            <ContentStyle projects={ data.allMarkdownRemark.edges } delay={ isLoaded ? 2400 : 800 }>
               { children }
             </ContentStyle>
           </>

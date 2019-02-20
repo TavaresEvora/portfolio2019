@@ -5,6 +5,8 @@ import React, { Component } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { TimelineLite } from 'gsap'
 
+import LinkStyle from '../components/elements/link'
+
 const HeaderStyle = styled.header`
   position: relative;
   display: flex;
@@ -252,12 +254,14 @@ class Header extends Component {
 
           <MenuStyle>
             <MenuItemStyle className="menu-txt" isOpen={ menuIsOpen } onClick={ this.burgerHandleClick }>
-              { menuIsOpen ? 'fermer' : 'projets' }
+              <LinkStyle>
+                { menuIsOpen ? 'fermer' : 'projets' }
+              </LinkStyle>
             </MenuItemStyle>
             <MenuItemStyle isOpen={ menuIsOpen } onClick={ this.closeBurger } className="menu-txt">
-              <Link to='/about'>
+              <LinkStyle as={Link} to='/about'>
                 a propos
-              </Link>
+              </LinkStyle>
             </MenuItemStyle>
           </MenuStyle>
 

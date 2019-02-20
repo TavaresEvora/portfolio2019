@@ -3,7 +3,9 @@ import posed from 'react-pose'
 import { Link } from 'gatsby'
 import { TimelineLite } from 'gsap'
 import styled from 'styled-components'
+
 import SEO from '../components/seo'
+import LinkStyle from '../components/elements/link'
 
 const PresentationStyle = styled.div`
   padding: 25px;
@@ -15,6 +17,7 @@ const RevealBlockStyle = styled.div`
 `
 
 const RevealAnimation = posed.div({
+  hoverable: true,
   visible: {
     x: '100%',
     transition: ({ index }) => ({
@@ -25,7 +28,20 @@ const RevealAnimation = posed.div({
       delay: index * 250
     })
   },
+  hover: {
+    x: '100%',
+    transition: ({ index }) => ({
+      type: 'keyframes',
+      values: ['-100%', '0%', '0%', '100%'],
+      times: [0, 0.3, 0.7, 1],
+      duration: 1600,
+      delay: index * 250
+    })
+  },
   hidden: {
+    x: '-100%',
+  },
+  init: {
     x: '-100%',
   },
   initialPose: 'hidden'
@@ -109,6 +125,14 @@ const InformationStyle = styled.div`
   right: 25px;
 `
 
+const SeeMoreStyle = styled.div`
+  position: fixed;
+  font-size: 1rem;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+`
+
 class IndexPage extends Component {
   constructor(props) {
     super(props)
@@ -127,7 +151,9 @@ class IndexPage extends Component {
 
   render() {
     const { isLoaded } = this.state
-    const { delay } = this.props
+    const { projects, delay } = this.props
+
+    console.debug(projects, delay)
 
     return (
       <>
@@ -151,6 +177,11 @@ class IndexPage extends Component {
               {/* https://greeeg.com/about/ */}
               {/* http://eric-huguenin.com/ */}
               {/* https://www.olivier-guilleux.com/ */}
+              <SeeMoreStyle>
+                <LinkStyle as={Link} to="/iad">
+                  voir les projets
+                </LinkStyle>
+              </SeeMoreStyle>
             </DescriptionStyle>
           </RevealBlockStyle>
           <SocialContentStyle id="social-content">
