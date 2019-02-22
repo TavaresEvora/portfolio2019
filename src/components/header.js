@@ -5,9 +5,9 @@ import React, { Component } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { TimelineLite } from 'gsap'
 
-import LinkStyle from '../components/elements/link'
+import LinkStyled from '../components/elements/link'
 
-const HeaderStyle = styled.header`
+const StyledHeader = styled.header`
   position: relative;
   display: flex;
   align-items: center;
@@ -18,7 +18,7 @@ const HeaderStyle = styled.header`
 	z-index: 99;
 `
 
-const LogoStyle = styled.div`
+const StyledLogo = styled.div`
   color: #333;
   background: transparent;
   padding: 10px;
@@ -42,7 +42,7 @@ const LogoStyle = styled.div`
   }
 `
 
-const BurgerMenuStyle = styled.div`
+const StyledBurgerMenu = styled.div`
 	position: relative;
   background: transparent;
   height: 45px;
@@ -76,14 +76,14 @@ const BurgerMenuStyle = styled.div`
   }
 `
 
-const BurgerMenuContentStyle = styled.div`
+const StyledBurgerMenuContent = styled.div`
   display: flex;
   cursor: pointer;
   align-items: center;
   transition: color .8s;
 
   &:hover {
-    ${BurgerMenuStyle} {
+    ${StyledBurgerMenu} {
       span:first-child {
         transform: translate(-50%, -10px);
       }
@@ -96,7 +96,7 @@ const BurgerMenuContentStyle = styled.div`
   ${props => props.isOpen && css`
     color: #FFF;
 
-    ${BurgerMenuStyle} span {
+    ${StyledBurgerMenu} span {
       background: #FFF;
     }
   `}
@@ -118,7 +118,7 @@ const fadeIn = keyframes`
   }
 `
 
-const OverlayStyle = posed.div({
+const StyledOverlay = posed.div({
     open: {
       y: '0%',
       delayChildren: 500,
@@ -140,7 +140,7 @@ const OverlayStyle = posed.div({
     initialPose: 'closed'
 })
 
-const Overlay = styled(OverlayStyle)`
+const Overlay = styled(StyledOverlay)`
 	background: #333;
 	position: absolute;
 	overflow: hidden;
@@ -153,7 +153,7 @@ const Overlay = styled(OverlayStyle)`
   z-index: 98;
 `
 
-const NavStyle = styled.nav`
+const StyledNav = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -161,7 +161,7 @@ const NavStyle = styled.nav`
   width: 100%;
 `
 
-const NavListStyle = styled.ul`
+const StyledNavList = styled.ul`
 	color: #FFF;
 	margin: 0;
 	padding: 0;
@@ -177,15 +177,15 @@ const NavItem = posed.li({
   closed: { y: 100, opacity: 0 },
 })
 
-const NavItemStyle = styled(NavItem)`
+const StyledNavItem = styled(NavItem)`
 	display: inline-block;
 	list-style: none;
 `
 
-const MenuStyle = styled.ul`
+const StyledMenu = styled.ul`
 `
 
-const MenuItemStyle = styled.li`
+const StyledMenuItem = styled.li`
   display: inline-block;
   font-size: .9rem;
   cursor: pointer;
@@ -245,45 +245,45 @@ class Header extends Component {
     const { projects } = this.props
 		return (
 			<>
-				<HeaderStyle id="header">
-          <LogoStyle id="logo" isOpen={ menuIsOpen } >
+				<StyledHeader id="header">
+          <StyledLogo id="logo" isOpen={ menuIsOpen } >
 					  <Link to='/'>
 							TavaresEvora
             </Link>
-          </LogoStyle>
+          </StyledLogo>
 
-          <MenuStyle>
-            <MenuItemStyle className="menu-txt" isOpen={ menuIsOpen } onClick={ this.burgerHandleClick }>
-              <LinkStyle>
+          <StyledMenu>
+            <StyledMenuItem className="menu-txt" isOpen={ menuIsOpen } onClick={ this.burgerHandleClick }>
+              <LinkStyled>
                 { menuIsOpen ? 'fermer' : 'projets' }
-              </LinkStyle>
-            </MenuItemStyle>
-            <MenuItemStyle isOpen={ menuIsOpen } onClick={ this.closeBurger } className="menu-txt">
-              <LinkStyle as={Link} to='/about'>
+              </LinkStyled>
+            </StyledMenuItem>
+            <StyledMenuItem isOpen={ menuIsOpen } onClick={ this.closeBurger } className="menu-txt">
+              <LinkStyled as={Link} to='/about'>
                 a propos
-              </LinkStyle>
-            </MenuItemStyle>
-          </MenuStyle>
+              </LinkStyled>
+            </StyledMenuItem>
+          </StyledMenu>
 
-          {/* <BurgerMenuContentStyle isOpen={ menuIsOpen } onClick={ this.burgerHandleClick }>
+          {/* <StyledBurgerMenuContent isOpen={ menuIsOpen } onClick={ this.burgerHandleClick }>
             <span id="menu-txt">{ menuIsOpen ? 'close' : 'menu' }</span>
-            <BurgerMenuStyle id="burger-menu">
+            <StyledBurgerMenu id="burger-menu">
               <span></span>
               <span></span>
               <span></span>
-            </BurgerMenuStyle>
-          </BurgerMenuContentStyle> */}
+            </StyledBurgerMenu>
+          </StyledBurgerMenuContent> */}
 					
-				</HeaderStyle>
+				</StyledHeader>
 
 				<Overlay pose={ menuIsOpen ? 'open' : 'closed' }>
-					<NavStyle>
-						<NavListStyle>
+					<StyledNav>
+						<StyledNavList>
               { projects.map(({ node }) => (
-                <NavItemStyle key={ node.frontmatter.path }>{ node.frontmatter.title }</NavItemStyle>
+                <StyledNavItem key={ node.frontmatter.path }>{ node.frontmatter.title }</StyledNavItem>
               ))}
-						</NavListStyle>
-					</NavStyle>
+						</StyledNavList>
+					</StyledNav>
 				</Overlay>
 			</>
 		)

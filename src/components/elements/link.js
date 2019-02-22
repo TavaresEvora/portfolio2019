@@ -22,7 +22,7 @@ const RevealAnimation = posed.div({
   initialPose: 'hidden'
 })
 
-const RevealStyle = styled(RevealAnimation)`
+const StyledReveal = styled(RevealAnimation)`
   position: absolute;
   top: 0;
   left: 0;
@@ -32,7 +32,7 @@ const RevealStyle = styled(RevealAnimation)`
   z-index: 9999;
 `
 
-const LinkStyle = styled.span`
+const StyledLink = styled.span`
   display: inline-block;
   position: relative;
   overflow: hidden;
@@ -61,13 +61,13 @@ class LinkStyled extends Component {
     const { props } = this
 
     return (
-      <LinkStyle {...props}
+      <StyledLink {...props}
         onMouseEnter={ this.mouseEnter }
         onMouseLeave={ this.mouseLeave }
       >
-        <RevealStyle pose={ isHover ? 'visible' : 'hidden' }/>
+        <StyledReveal pose={ isHover ? 'visible' : 'hidden' }/>
         { this.props.children }
-      </LinkStyle>
+      </StyledLink>
     )
   }
 }

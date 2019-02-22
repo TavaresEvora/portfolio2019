@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-const ContentStyle = styled.main`
+const StyledContent = styled.main`
   display:flex;
   justify-content: center;
   align-items: center;
@@ -49,7 +49,7 @@ const TransitionAnimation = posed.div({
   },
 })
 
-const TransitionStyle = styled(TransitionAnimation)`
+const StyledTransition = styled(TransitionAnimation)`
   position: fixed;
   top: 0;
   left: 0;
@@ -126,16 +126,16 @@ class Layout extends Component {
                 <PreloaderAnimation key="preloader" >
                   <Preloader />
                 </PreloaderAnimation>,
-                <TransitionStyle key="transition" />
+                <StyledTransition key="transition" />
               ]}
             </PoseGroup>
             <Header delay={ 1.9 }
               projects={data.allMarkdownRemark.edges}
               siteTitle={data.site.siteMetadata.title}
             />
-            <ContentStyle projects={ data.allMarkdownRemark.edges } delay={ isLoaded ? 2400 : 800 }>
+            <StyledContent projects={ data.allMarkdownRemark.edges } delay={ isLoaded ? 2400 : 800 }>
               { children }
-            </ContentStyle>
+            </StyledContent>
           </>
         )}
       />

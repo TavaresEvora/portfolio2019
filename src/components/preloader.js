@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-const PreloaderStyle = styled.div`
+const StyledPreloader = styled.div`
   position: fixed;
   display: flex;
   overflow: hidden;
@@ -31,9 +31,9 @@ class Preloader extends Component {
     }, 80)
     return (
       <>
-        <PreloaderStyle>
+        <StyledPreloader>
           <span>{ count }%</span>
-        </PreloaderStyle>
+        </StyledPreloader>
       </>
     )
   }

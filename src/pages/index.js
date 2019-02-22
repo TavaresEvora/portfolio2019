@@ -7,11 +7,11 @@ import styled from 'styled-components'
 import SEO from '../components/seo'
 import LinkStyle from '../components/elements/link'
 
-const PresentationStyle = styled.div`
+const StyledPresentation = styled.div`
   padding: 25px;
 `
 
-const RevealBlockStyle = styled.div`
+const StyledRevealBlock = styled.div`
   position: relative;
   overflow: hidden;
 `
@@ -61,7 +61,7 @@ const RevealContentAnimation = posed.p(appearAnimation)
 
 const RevealTitleAnimation = posed.h1(appearAnimation)
 
-const RevealStyle = styled(RevealAnimation)`
+const StyledReveal = styled(RevealAnimation)`
   position: absolute;
   top: 0;
   left: 0;
@@ -71,26 +71,26 @@ const RevealStyle = styled(RevealAnimation)`
   z-index: 9999;
 `
 
-const HelloStyle = styled(RevealContentAnimation)`
+const StyledHello = styled(RevealContentAnimation)`
   color: #757575;
   margin-bottom: -15px;
 `
 
-const NameStyle = styled(RevealTitleAnimation)`
+const StyledName = styled(RevealTitleAnimation)`
   font-size: 5rem;
   font-weight: 600;
   color: #000;
   margin: 0;
 `
 
-const DescriptionStyle = styled(RevealContentAnimation)`
+const StyledDescription = styled(RevealContentAnimation)`
   font-size: 1.2rem;
   margin-top: 15px;
   color: #000;
   margin: 0;
 `
 
-const SocialContentStyle = styled.div`
+const StyledSocialContent = styled.div`
   position: absolute;
   top: 50%;
   left: 25px;
@@ -116,7 +116,7 @@ const SocialContentStyle = styled.div`
   }
 `
 
-const InformationStyle = styled.div`
+const StyledInformation = styled.div`
   position: absolute;
   color: #757575;
   font-size: 0.9rem;
@@ -125,7 +125,7 @@ const InformationStyle = styled.div`
   right: 25px;
 `
 
-const SeeMoreStyle = styled.div`
+const StyledSeeMore = styled.div`
   position: fixed;
   font-size: 1rem;
   bottom: 25px;
@@ -158,41 +158,41 @@ class IndexPage extends Component {
     return (
       <>
         <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
-        <PresentationStyle>
-          <HelloStyle delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
+        <StyledPresentation>
+          <StyledHello delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
             Bonjour, je m'appelle
-          </HelloStyle>
-          <RevealBlockStyle>
-            <RevealStyle delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' } />
-            <NameStyle delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
+          </StyledHello>
+          <StyledRevealBlock>
+            <StyledReveal delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' } />
+            <StyledName delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
               Tavares Evora
-            </NameStyle>
-          </RevealBlockStyle>
+            </StyledName>
+          </StyledRevealBlock>
             
-          <RevealBlockStyle>
-            <RevealStyle delay={ delay } index={2} pose={ isLoaded ? 'visible' : 'hidden' } />
-            <DescriptionStyle delay={ delay } index={2} pose={ isLoaded ? 'visible' : 'hidden' }>
+          <StyledRevealBlock>
+            <StyledReveal delay={ delay } index={2} pose={ isLoaded ? 'visible' : 'hidden' } />
+            <StyledDescription delay={ delay } index={2} pose={ isLoaded ? 'visible' : 'hidden' }>
               Je suis developpeur <span className="function">fullstack</span> sur Paris,
               bienvenue sur mon portfolio !
               {/* https://greeeg.com/about/ */}
               {/* http://eric-huguenin.com/ */}
               {/* https://www.olivier-guilleux.com/ */}
-              <SeeMoreStyle>
+              <StyledSeeMore>
                 <LinkStyle as={Link} to="/iad">
                   voir les projets
                 </LinkStyle>
-              </SeeMoreStyle>
-            </DescriptionStyle>
-          </RevealBlockStyle>
-          <SocialContentStyle id="social-content">
+              </StyledSeeMore>
+            </StyledDescription>
+          </StyledRevealBlock>
+          <StyledSocialContent id="social-content">
             <Link to='/'>linkedin</Link>
             <Link to='/'>twitter</Link>
             <Link to='/'>github</Link>
-          </SocialContentStyle>
-          <InformationStyle id="last-update">
+          </StyledSocialContent>
+          <StyledInformation id="last-update">
             Dernière mise jour: 06/02/2019
-          </InformationStyle>
-        </PresentationStyle>
+          </StyledInformation>
+        </StyledPresentation>
       </>
     )
   }

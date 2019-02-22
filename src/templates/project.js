@@ -9,7 +9,7 @@ import SEO from '../components/seo'
 library.add(faArrowUp)
 library.add(faArrowDown)
 
-const ProjectNavStyle = styled.div`
+const StyledProjectNav = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -55,7 +55,7 @@ const Template = ({data, pageContext}) => {
       <h1>{ title }</h1>
       <div dangerouslySetInnerHTML={{__html: html}} />
 
-      <ProjectNavStyle id="navigation">
+      <StyledProjectNav id="navigation">
         {prev &&
           <Link to={ prev.frontmatter.path } className="arrow arrow-up">
             <FontAwesomeIcon icon="arrow-up" />
@@ -78,7 +78,7 @@ const Template = ({data, pageContext}) => {
             <FontAwesomeIcon icon="arrow-down" />
           </div>
         }
-      </ProjectNavStyle>
+      </StyledProjectNav>
     </>
   )
 }
