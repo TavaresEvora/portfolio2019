@@ -21,7 +21,7 @@ const StyledProjectNav = styled.div`
     color: #333;
     height: 35px;
     transition: transform .3s;
-
+    
     &.disabled {
       opacity: .5;
       pointer-events: none;
