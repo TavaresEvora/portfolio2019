@@ -29,8 +29,8 @@ module.exports = {
         name: 'Tavares Evora',
         short_name: 'tavaresevora',
         start_url: '/',
-        background_color: '#663399',
-        theme_color: '#663399',
+        background_color: '#01b1ec',
+        theme_color: '#01b1ec',
         display: 'standalone',
         icon: 'src/images/gatsby-icon.png', // This path is relative to the root of the site.
       },

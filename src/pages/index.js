@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import SEO from '../components/seo'
 import LinkStyle from '../components/elements/link'
+import variables from '../components/elements/variables'
 
 const StyledPresentation = styled.div`
   padding: 25px;
@@ -17,7 +18,6 @@ const StyledRevealBlock = styled.div`
 `
 
 const RevealAnimation = posed.div({
-  hoverable: true,
   visible: {
     x: '100%',
     transition: ({ index }) => ({
@@ -28,20 +28,7 @@ const RevealAnimation = posed.div({
       delay: index * 250
     })
   },
-  hover: {
-    x: '100%',
-    transition: ({ index }) => ({
-      type: 'keyframes',
-      values: ['-100%', '0%', '0%', '100%'],
-      times: [0, 0.3, 0.7, 1],
-      duration: 1600,
-      delay: index * 250
-    })
-  },
   hidden: {
-    x: '-100%',
-  },
-  init: {
     x: '-100%',
   },
   initialPose: 'hidden'
@@ -67,7 +54,7 @@ const StyledReveal = styled(RevealAnimation)`
   left: 0;
   width: 100%;
   height: 100%;
-  background: #00f0b5;
+  background: ${variables.primary};
   z-index: 9999;
 `
 
@@ -119,7 +106,7 @@ const StyledSocialContent = styled.div`
 const StyledInformation = styled.div`
   position: absolute;
   color: #757575;
-  font-size: 0.9rem;
+  font-size: 0.6rem;
   font-weight: 300;
   bottom: 25px;
   right: 25px;
@@ -153,8 +140,6 @@ class IndexPage extends Component {
     const { isLoaded } = this.state
     const { projects, delay } = this.props
 
-    console.debug(projects, delay)
-
     return (
       <>
         <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
@@ -177,6 +162,8 @@ class IndexPage extends Component {
               {/* https://greeeg.com/about/ */}
               {/* http://eric-huguenin.com/ */}
               {/* https://www.olivier-guilleux.com/ */}
+              {/* http://kolaps.com/en/about/ */}
+              {/* http://www.lucavolino.com/about */}
               <StyledSeeMore>
                 <LinkStyle as={Link} to="/iad">
                   voir les projets

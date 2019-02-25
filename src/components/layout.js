@@ -4,11 +4,11 @@ import { StaticQuery, graphql } from 'gatsby'
 import styled, { createGlobalStyle } from 'styled-components'
 import posed, { PoseGroup } from 'react-pose'
 import { TimelineLite } from 'gsap'
-
 import 'normalize.css'
 
 import Header from './header'
-import Preloader from './preloader';
+import Preloader from './preloader'
+import variables from '../components/elements/variables'
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -55,7 +55,7 @@ const StyledTransition = styled(TransitionAnimation)`
   left: 0;
   height: 100%;
   width: 100%;
-  background: #00f0b5;
+  background: ${variables.primary};
   z-index: 9999;
 `
 

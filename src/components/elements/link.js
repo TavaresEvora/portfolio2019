@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import posed from 'react-pose'
-import { Link } from 'gatsby'
 import styled from 'styled-components'
+import variables from './variables'
 
 const RevealAnimation = posed.div({
   visible: {
@@ -28,7 +28,7 @@ const StyledReveal = styled(RevealAnimation)`
   left: 0;
   width: 100%;
   height: 100%;
-  background: #00f0b5;
+  background: ${variables.primary};
   z-index: 9999;
 `
 
