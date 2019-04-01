@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { TimelineLite } from 'gsap'
 
+import variables from '../components/elements/variables'
 import LinkStyled from '../components/elements/link'
 
 const StyledHeader = styled.header`
@@ -14,12 +15,12 @@ const StyledHeader = styled.header`
   padding: 15px 15px 0;
   justify-content: space-between;
   height: 50px;
-  color: #333;
+  color: ${ variables.black };
 	z-index: 99;
 `
 
 const StyledLogo = styled.div`
-  color: #333;
+  color: ${ variables.black };
   background: transparent;
   padding: 10px;
   text-decoration: none;
@@ -33,7 +34,7 @@ const StyledLogo = styled.div`
 
   a {
     text-decoration: none;
-    color: #333;
+    color: ${ variables.black };
     transition: color .8s, opacity .3s;
 
     ${props => props.isOpen && css`
@@ -57,7 +58,7 @@ const StyledBurgerMenu = styled.div`
     top: 50%;
     left: 50%;
     display: block;
-    background: #333;
+    background: ${ variables.black };
     height: 3px;
     width: 25px;
     will-change: transform;
@@ -141,7 +142,7 @@ const StyledOverlay = posed.div({
 })
 
 const Overlay = styled(StyledOverlay)`
-	background: #333;
+	background: ${ variables.black };
 	position: absolute;
 	overflow: hidden;
 	top: 0;

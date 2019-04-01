@@ -21,7 +21,7 @@ const StyledProjectNav = styled.div`
   transform: translateY(calc(-35px / 2));
 
   .arrow {
-    color: #333;
+    color: ${ variables.black };
     height: 35px;
     transition: transform .3s;
     
@@ -63,6 +63,7 @@ const StyledNavNext = styled(Link)`
 
 const StyledProject = styled.div`
   position: relative;
+  transform: translate3d(-20%, 0, 0);
 `
 
 const RevealAnimation = posed.div({
@@ -92,9 +93,23 @@ const StyledReveal = styled(RevealAnimation)`
   z-index: 9999;
 `
 
+const StyledProjectImage = styled.img`
+`
+
 const StyledRevealBlock = styled.div`
   position: relative;
   overflow: hidden;
+`
+
+const StyledRevealBlockTitle = styled.div`
+  position: absolute;
+  overflow: hidden;
+  z-index: 9;
+  font-size: 2rem;
+  left: 70%;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+  white-space: nowrap;
 `
 
 const appearAnimation = {
@@ -111,6 +126,25 @@ const RevealTitleAnimation = posed.h1(appearAnimation)
 
 const StyledTitle = styled(RevealTitleAnimation)`
   display: inline-block;
+  margin: 0;
+  color: #333;
+`
+
+const StyledViewProject = styled.span`
+  display: block;
+  text-align: right;
+  color: #333;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 2px;
+    background: #333;
+    right: 15%;
+    top: 50%;
+  }
 `
 
 class Template extends Component {
@@ -141,13 +175,16 @@ class Template extends Component {
           description={excerpt}
         />
         <StyledProject>
-          <StyledRevealBlock>
+          <StyledRevealBlockTitle>
             <StyledReveal index={2} pose={ isLoaded ? 'visible' : 'hidden' } />
             <StyledTitle index={2} pose={ isLoaded ? 'visible' : 'hidden' }>{ title }</StyledTitle>
-          </StyledRevealBlock>
+            <StyledViewProject>
+              02
+            </StyledViewProject>
+          </StyledRevealBlockTitle>
           <StyledRevealBlock>
             <StyledReveal pose={ isLoaded ? 'visible' : 'hidden' } />
-            <img src="https://via.placeholder.com/350x300" />
+            <StyledProjectImage pose={ isLoaded ? 'visible' : 'hidden' } src="https://via.placeholder.com/550x300" />
           </StyledRevealBlock>
         </StyledProject>
         {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}

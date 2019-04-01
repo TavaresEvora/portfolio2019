@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     min-width: 100vw;
     overflow: hidden;
+    color: ${ variables.black };
   }
 `
 

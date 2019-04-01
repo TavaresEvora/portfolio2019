@@ -88,7 +88,7 @@ const StyledSocialContent = styled.div`
     display: inline-block;
     margin: 0 10px;
     letter-spacing: 0.1rem;
-    color: #333;
+    color: ${ variables.black };
     text-decoration: none;
     will-change: transform;
     transition: opacity .3s;
