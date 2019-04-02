@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { graphql, Link } from 'gatsby'
+import { graphql, Link, StaticQuery } from 'gatsby'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import SEO from '../components/seo'
 import posed from 'react-pose'
+import Image from '../components/image'
+import Img from 'gatsby-image'
 
 import variables from '../components/elements/variables'
 
@@ -93,7 +95,9 @@ const StyledReveal = styled(RevealAnimation)`
   z-index: 9999;
 `
 
-const StyledProjectImage = styled.img`
+const StyledProjectImage = styled(Img)`
+  width: 550px;
+  height: 300px;
 `
 
 const StyledRevealBlock = styled.div`
@@ -161,11 +165,13 @@ class Template extends Component {
     const { data, pageContext } = this.props
     const { isLoaded } = this.state
     const { markdownRemark: project, allFile } = data
-    const { title, tags, excerpt } = project.frontmatter
+    const { title, tags, excerpt, image } = project.frontmatter
     const { html } = project
     const { next, prev } = pageContext
     const prevIconPath = allFile.edges[0].node.publicURL
     const nextIconPath = allFile.edges[1].node.publicURL
+
+    console.debug(image)
     
     return (
       <>
@@ -184,7 +190,22 @@ class Template extends Component {
           </StyledRevealBlockTitle>
           <StyledRevealBlock>
             <StyledReveal pose={ isLoaded ? 'visible' : 'hidden' } />
-            <StyledProjectImage pose={ isLoaded ? 'visible' : 'hidden' } src="https://via.placeholder.com/550x300" />
+            {/* <Image src="iadfrance.png" /> */}
+            {/* <StyledProjectImage pose={ isLoaded ? 'visible' : 'hidden' } src="https://via.placeholder.com/550x300" /> */}
+            <StaticQuery
+              query={graphql`
+                query {
+                  placeholderImage: file(relativePath: { eq: "iad.JPG" }) {
+                    childImageSharp {
+                      fluid(maxWidth: 2000) {
+                        ...GatsbyImageSharpFluid
+                      }
+                    }
+                  }
+                }
+              `}
+              render={data => <StyledProjectImage fluid={data.placeholderImage.childImageSharp.fluid} />}
+            />
           </StyledRevealBlock>
         </StyledProject>
         {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}
@@ -230,6 +251,7 @@ export const query = graphql`
       html
       frontmatter {
         title
+        image
       }
     },
     allFile(filter: { name: { in: ["chevron-left", "chevron-right"] } }) {
