@@ -13,11 +13,11 @@
 //  * - `StaticQuery`: https://gatsby.app/staticquery
 //  */
 
-// const Image = () => (
+// const Image = ({ src }) => (
 //   <StaticQuery
 //     query={graphql`
-//       query {
-//         placeholderImage: file(relativePath: { eq: "iadfrance.png" }) {
+//       query  ImageQuery($src: String!){
+//         placeholderImage: file(relativePath: { eq: $src }) {
 //           childImageSharp {
 //             fluid(maxWidth: 300) {
 //               ...GatsbyImageSharpFluid

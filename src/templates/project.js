@@ -14,44 +14,13 @@ import variables from '../components/elements/variables'
 library.add(faArrowUp)
 library.add(faArrowDown)
 
-const StyledProjectNav = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  top: 50%;
-  right: 25px;
-  transform: translateY(calc(-35px / 2));
-
-  .arrow {
-    color: ${ variables.black };
-    height: 35px;
-    transition: transform .3s;
-    
-
-    &.disabled {
-      opacity: .5;
-      pointer-events: none;
-    }
-
-    &-up {
-      margin-bottom: 30px;
-      &:not(.disabled):hover {
-      transform: translateY(-5px);
-      }
-    }
-    &-down:not(.disabled):hover {
-      transform: translateY(5px);
-    }
-  }
-`
-
 const StyledNavPrev = styled(Link)`
   position: fixed;
   cursor: url(${(props) => props.url}), pointer;
   left: 0;
   bottom: 0;
   height: calc(100% - ${variables.navHeight});
-  width: 20vw;
+  width: 10vw;
 `
 
 const StyledNavNext = styled(Link)`
@@ -60,95 +29,44 @@ const StyledNavNext = styled(Link)`
   right: 0;
   bottom: 0;
   height: calc(100% - ${variables.navHeight});
-  width: 20vw;
+  width: 10vw;
 `
 
 const StyledProject = styled.div`
   position: relative;
-  transform: translate3d(-20%, 0, 0);
+  display: flex;
+  max-width: 80vw;
 `
 
-const RevealAnimation = posed.div({
-  visible: {
-    x: '100%',
-    transition: ({ index = 1 }) => ({
-      type: 'keyframes',
-      values: ['-101%', '0%', '0%', '101%'],
-      times: [0, 0.3, 0.7, 1],
-      duration: 1600,
-      delay: index * 250
-    })
-  },
-  hidden: {
-    x: '-101%',
-  },
-  initialPose: 'hidden'
-})
-
-const StyledReveal = styled(RevealAnimation)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: ${variables.primary};
-  z-index: 9999;
-`
-
-const StyledProjectImage = styled(Img)`
-  width: 550px;
+const StyledProjectImage = styled.img`
+  /* width: 70%; */
   height: 300px;
 `
 
-const StyledRevealBlock = styled.div`
-  position: relative;
-  overflow: hidden;
-`
-
-const StyledRevealBlockTitle = styled.div`
-  position: absolute;
-  overflow: hidden;
-  z-index: 9;
-  font-size: 2rem;
-  left: 70%;
-  top: 50%;
-  transform: translate3d(0, -50%, 0);
+const StyledProjectTitle = styled.h1`
+  color: ${variables.blackDark};
+  font-size: 3em;
   white-space: nowrap;
-`
-
-const appearAnimation = {
-  visible: {
-    opacity: 1,
-    transition: ({ index = 1 }) => ({
-      delay: 800 + (index * 250)
-    })
-  },
-  hidden: { opacity: 0 },
-}
-
-const RevealTitleAnimation = posed.h1(appearAnimation)
-
-const StyledTitle = styled(RevealTitleAnimation)`
-  display: inline-block;
   margin: 0;
-  color: #333;
 `
 
-const StyledViewProject = styled.span`
-  display: block;
-  text-align: right;
-  color: #333;
-  position: relative;
+const StyledProjectExcerpt = styled.p`
+  max-width: 90%;
+  font-size: 0.9em;
+  margin: 40px 0;
+`
 
-  &:before {
-    content: '';
-    position: absolute;
-    width: 150px;
-    height: 2px;
-    background: #333;
-    right: 15%;
-    top: 50%;
-  }
+const StyledProjectInformations = styled.div`
+  width: 40%;
+  align-self: center;
+  transform: translate(10%, 0);
+`
+
+const StyledProjectCategory = styled.span`
+  display: block;
+  color: ${variables.blackDark};
+  text-align: right;
+  font-size: 0.8em;
 `
 
 class Template extends Component {
@@ -165,7 +83,7 @@ class Template extends Component {
     const { data, pageContext } = this.props
     const { isLoaded } = this.state
     const { markdownRemark: project, allFile } = data
-    const { title, tags, excerpt, image } = project.frontmatter
+    const { title, tags, excerpt, image, category } = project.frontmatter
     const { html } = project
     const { next, prev } = pageContext
     const prevIconPath = allFile.edges[0].node.publicURL
@@ -181,32 +99,12 @@ class Template extends Component {
           description={excerpt}
         />
         <StyledProject>
-          <StyledRevealBlockTitle>
-            <StyledReveal index={2} pose={ isLoaded ? 'visible' : 'hidden' } />
-            <StyledTitle index={2} pose={ isLoaded ? 'visible' : 'hidden' }>{ title }</StyledTitle>
-            <StyledViewProject>
-              02
-            </StyledViewProject>
-          </StyledRevealBlockTitle>
-          <StyledRevealBlock>
-            <StyledReveal pose={ isLoaded ? 'visible' : 'hidden' } />
-            {/* <Image src="iadfrance.png" /> */}
-            {/* <StyledProjectImage pose={ isLoaded ? 'visible' : 'hidden' } src="https://via.placeholder.com/550x300" /> */}
-            <StaticQuery
-              query={graphql`
-                query {
-                  placeholderImage: file(relativePath: { eq: "iad.JPG" }) {
-                    childImageSharp {
-                      fluid(maxWidth: 2000) {
-                        ...GatsbyImageSharpFluid
-                      }
-                    }
-                  }
-                }
-              `}
-              render={data => <StyledProjectImage fluid={data.placeholderImage.childImageSharp.fluid} />}
-            />
-          </StyledRevealBlock>
+          <StyledProjectInformations>
+            <StyledProjectTitle>{ title }</StyledProjectTitle>
+            <StyledProjectCategory>{ category }</StyledProjectCategory>
+            <StyledProjectExcerpt>{ excerpt }</StyledProjectExcerpt>
+          </StyledProjectInformations>
+          <StyledProjectImage src="https://via.placeholder.com/550x300" />
         </StyledProject>
         {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}
         {prev &&
@@ -252,6 +150,8 @@ export const query = graphql`
       frontmatter {
         title
         image
+        excerpt
+        category
       }
     },
     allFile(filter: { name: { in: ["chevron-left", "chevron-right"] } }) {
