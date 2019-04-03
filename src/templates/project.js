@@ -32,10 +32,11 @@ const StyledNavNext = styled(Link)`
   width: 10vw;
 `
 
-const StyledProject = styled.div`
+const StyledProject = styled.a`
   position: relative;
   display: flex;
   max-width: 80vw;
+  text-decoration: none;
 `
 
 const StyledProjectImage = styled.img`
@@ -48,18 +49,22 @@ const StyledProjectTitle = styled.h1`
   font-size: 3em;
   white-space: nowrap;
   margin: 0;
+  text-decoration: none;
 `
 
 const StyledProjectExcerpt = styled.p`
   max-width: 90%;
+  color: ${variables.black};
   font-size: 0.9em;
   margin: 40px 0;
+  text-decoration: none;
 `
 
 const StyledProjectInformations = styled.div`
   width: 40%;
   align-self: center;
   transform: translate(10%, 0);
+  text-decoration: none;
 `
 
 const StyledProjectCategory = styled.span`
@@ -67,6 +72,7 @@ const StyledProjectCategory = styled.span`
   color: ${variables.blackDark};
   text-align: right;
   font-size: 0.8em;
+  text-decoration: none;
 `
 
 class Template extends Component {
@@ -83,13 +89,11 @@ class Template extends Component {
     const { data, pageContext } = this.props
     const { isLoaded } = this.state
     const { markdownRemark: project, allFile } = data
-    const { title, tags, excerpt, image, category } = project.frontmatter
+    const { title, tags, excerpt, image, category, path } = project.frontmatter
     const { html } = project
     const { next, prev } = pageContext
     const prevIconPath = allFile.edges[0].node.publicURL
     const nextIconPath = allFile.edges[1].node.publicURL
-
-    console.debug(image)
     
     return (
       <>
@@ -98,7 +102,7 @@ class Template extends Component {
           keywords={tags}
           description={excerpt}
         />
-        <StyledProject>
+        <StyledProject as={Link} to={`${path}/detail`}>
           <StyledProjectInformations>
             <StyledProjectTitle>{ title }</StyledProjectTitle>
             <StyledProjectCategory>{ category }</StyledProjectCategory>
@@ -152,6 +156,7 @@ export const query = graphql`
         image
         excerpt
         category
+        path
       }
     },
     allFile(filter: { name: { in: ["chevron-left", "chevron-right"] } }) {

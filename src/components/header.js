@@ -77,48 +77,6 @@ const StyledBurgerMenu = styled.div`
   }
 `
 
-const StyledBurgerMenuContent = styled.div`
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  transition: color .8s;
-
-  &:hover {
-    ${StyledBurgerMenu} {
-      span:first-child {
-        transform: translate(-50%, -10px);
-      }
-      span:last-child {
-        transform: translate(-50%, 7px);
-      }
-    }
-  }
-
-  ${props => props.isOpen && css`
-    color: #FFF;
-
-    ${StyledBurgerMenu} span {
-      background: #FFF;
-    }
-  `}
-`
-
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-		top: -160px;
-  }
-
-  50% {
-    opacity: 1;
-		top: -180px;
-  }
-  100% {
-    opacity: 1;
-		top: -180px;
-  }
-`
-
 const StyledOverlay = posed.div({
     open: {
       y: '0%',
@@ -142,7 +100,7 @@ const StyledOverlay = posed.div({
 })
 
 const Overlay = styled(StyledOverlay)`
-	background: ${ variables.black };
+	background: ${ variables.blackDark };
 	position: absolute;
 	overflow: hidden;
 	top: 0;
