@@ -11,27 +11,56 @@ library.add(faArrowUp)
 library.add(faArrowDown)
 
 const StyledNav = styled.div`
-  position: relative;
+  /* position: relative; */
   display: flex;
   width: 100%;
-  height: 25vh;
-  bottom: 0;
-  left: 0;
+  height: 250px;
 `
 
 const StyledNavPrev = styled(Link)`
   position: relative;
   cursor: url(${(props) => props.url}), pointer;
-  height: 100%;
-  width: 50%;
 `
 
 const StyledNavNext = styled(Link)`
   position: relative;
   cursor: url(${(props) => props.url}), pointer;
-  height: calc(100% - ${variables.navHeight});
-  height: 100%;
-  width: 50%;
+`
+
+const StyledHeader = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: calc(100vh - 65px);
+`
+
+const StyledHeaderImage = styled.img`
+  width: 100%;
+  height: 80vh;
+`
+
+const StyledHeaderInformations = styled.ul`
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1080px;
+`
+
+const StyledHeaderInformation = styled.li`
+  list-style: none;
+`
+
+const StyledHeaderInformationTitle = styled.h4`
+  display: block;
+  text-transform: uppercase;
+`
+
+const StyledHeaderInformationContent = styled.p`
+  font-weight: 500;
+  color: ${variables.blackDark};
 `
 
 class Template extends Component {
@@ -44,7 +73,7 @@ class Template extends Component {
     const { next, prev } = pageContext
     const prevIconPath = allFile.edges[0].node.publicURL
     const nextIconPath = allFile.edges[1].node.publicURL
-    
+
     return (
       <>
         <SEO
@@ -52,6 +81,35 @@ class Template extends Component {
           keywords={tags}
           description={excerpt}
         />
+        <StyledHeader>
+            <StyledHeaderImage src="https://via.placeholder.com/550x300" />
+            <StyledHeaderInformations>
+                <StyledHeaderInformation>
+                    <StyledHeaderInformationTitle>
+                        Date
+                    </StyledHeaderInformationTitle>
+                    <StyledHeaderInformationContent>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, repellendus?
+                    </StyledHeaderInformationContent>
+                </StyledHeaderInformation>
+                <StyledHeaderInformation>
+                    <StyledHeaderInformationTitle>
+                        Date
+                    </StyledHeaderInformationTitle>
+                    <StyledHeaderInformationContent>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, repellendus?
+                    </StyledHeaderInformationContent>
+                </StyledHeaderInformation>
+                <StyledHeaderInformation>
+                    <StyledHeaderInformationTitle>
+                        Date
+                    </StyledHeaderInformationTitle>
+                    <StyledHeaderInformationContent>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, repellendus?
+                    </StyledHeaderInformationContent>
+                </StyledHeaderInformation>
+            </StyledHeaderInformations>
+        </StyledHeader>
         {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}
         <StyledNav>
         {prev &&
@@ -61,7 +119,7 @@ class Template extends Component {
             <StyledNavNext url={ nextIconPath } to={ next.frontmatter.path } />
         }
         </StyledNav>
-        
+
       </>
     )
   }

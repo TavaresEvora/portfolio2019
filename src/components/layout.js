@@ -16,21 +16,21 @@ const GlobalStyle = createGlobalStyle`
      src: url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
   }
 
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     font-family: 'Montserrat';
     min-height: 100vh;
     min-width: 100vw;
-    overflow: hidden;
+    /* overflow: hidden; */
     color: ${ variables.black };
   }
 `
 
 const StyledContent = styled.main`
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: calc(100vh - 65px);
+  min-height: calc(100vh - 65px);
   width: 100vw;
 `
 
@@ -130,13 +130,15 @@ class Layout extends Component {
                 <StyledTransition key="transition" />
               ]}
             </PoseGroup>
-            <Header delay={ 1.9 }
-              projects={data.allMarkdownRemark.edges}
-              siteTitle={data.site.siteMetadata.title}
-            />
-            <StyledContent projects={ data.allMarkdownRemark.edges } delay={ isLoaded ? 2400 : 800 }>
-              { children }
-            </StyledContent>
+                <Header delay={ 1.9 }
+                projects={data.allMarkdownRemark.edges}
+                siteTitle={data.site.siteMetadata.title}
+                />
+            {isLoaded && [
+                <StyledContent projects={ data.allMarkdownRemark.edges } delay={ isLoaded ? 2400 : 800 }>
+                { children }
+                </StyledContent>
+            ]}
           </>
         )}
       />

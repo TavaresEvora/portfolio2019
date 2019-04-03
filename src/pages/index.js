@@ -48,6 +48,13 @@ const RevealContentAnimation = posed.p(appearAnimation)
 
 const RevealTitleAnimation = posed.h1(appearAnimation)
 
+const StyledContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 65px);
+`
+
 const StyledReveal = styled(RevealAnimation)`
   position: absolute;
   top: 0;
@@ -134,6 +141,8 @@ class IndexPage extends Component {
     this.tl
       .from('#social-content', 0.5, { x: -50, opacity: 0, clearProps: 'all' }, 2)
       .play()
+
+    console.debug('Component did mounted INDEX')
   }
 
   render() {
@@ -141,7 +150,7 @@ class IndexPage extends Component {
     const { projects, delay } = this.props
 
     return (
-      <>
+      <StyledContent>
         <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
         <StyledPresentation>
           <StyledHello delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
@@ -153,7 +162,7 @@ class IndexPage extends Component {
               Tavares Evora
             </StyledName>
           </StyledRevealBlock>
-            
+
           <StyledRevealBlock>
             <StyledReveal delay={ delay } index={2} pose={ isLoaded ? 'visible' : 'hidden' } />
             <StyledDescription delay={ delay } index={2} pose={ isLoaded ? 'visible' : 'hidden' }>
@@ -180,7 +189,7 @@ class IndexPage extends Component {
             Dernière mise jour: 06/02/2019
           </StyledInformation>
         </StyledPresentation>
-      </>
+      </StyledContent>
     )
   }
 }

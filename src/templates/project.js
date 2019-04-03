@@ -44,6 +44,13 @@ const StyledProjectImage = styled.img`
   height: 300px;
 `
 
+const StyledContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 65px);
+`
+
 const StyledProjectTitle = styled.h1`
   color: ${variables.blackDark};
   font-size: 3em;
@@ -94,9 +101,9 @@ class Template extends Component {
     const { next, prev } = pageContext
     const prevIconPath = allFile.edges[0].node.publicURL
     const nextIconPath = allFile.edges[1].node.publicURL
-    
+
     return (
-      <>
+      <StyledContent>
         <SEO
           title={title}
           keywords={tags}
@@ -117,32 +124,7 @@ class Template extends Component {
         {next &&
           <StyledNavNext url={ nextIconPath } to={ next.frontmatter.path } />
         }
-  
-        {/* <StyledProjectNav id="navigation"> */}
-          {/* {prev &&
-            <Link to={ prev.frontmatter.path } className="arrow arrow-up">
-              <FontAwesomeIcon icon="arrow-up" />
-            </Link>
-          }
-          {!prev &&
-            <div disabled className="arrow arrow-up disabled">
-              <FontAwesomeIcon icon="arrow-up" />
-            </div>
-          }
-          
-          {next &&
-            <Link to={ next.frontmatter.path } className="arrow arrow-down">
-              <FontAwesomeIcon icon="arrow-down" />
-            </Link>
-          }
-          
-          {!next &&
-            <div className="arrow arrow-down disabled">
-              <FontAwesomeIcon icon="arrow-down" />
-            </div>
-          } */}
-        {/* </StyledProjectNav> */}
-      </>
+      </StyledContent>
     )
   }
 }
