@@ -32,7 +32,7 @@ const StyledReveal = styled(RevealAnimation)`
   z-index: 9999;
 `
 
-const StyledLink = styled.span`
+const StyledLink = styled.a`
   display: inline-block;
   position: relative;
   overflow: hidden;

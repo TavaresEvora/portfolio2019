@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import posed from 'react-pose'
-import { Link } from 'gatsby'
+import Link from 'gatsby-plugin-transition-link'
 import { TimelineLite } from 'gsap'
 import styled from 'styled-components'
 
@@ -24,7 +24,7 @@ const RevealAnimation = posed.div({
       type: 'keyframes',
       values: ['-100%', '0%', '0%', '100%'],
       times: [0, 0.3, 0.7, 1],
-      duration: 1600,
+      duration: 2000,
       delay: index * 250
     })
   },
@@ -38,7 +38,7 @@ const appearAnimation = {
   visible: {
     opacity: 1,
     transition: ({ index }) => ({
-      delay: 800 + (index * 250)
+      delay: (index * 250)
     })
   },
   hidden: { opacity: 0 },
@@ -135,9 +135,7 @@ class IndexPage extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ isLoaded: true })
-    }, 1600)
+    this.setState({ isLoaded: true })
     this.tl
       .from('#social-content', 0.5, { x: -50, opacity: 0, clearProps: 'all' }, 2)
       .play()
@@ -147,25 +145,24 @@ class IndexPage extends Component {
 
   render() {
     const { isLoaded } = this.state
-    const { projects, delay } = this.props
 
     return (
       <StyledContent>
         <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
         <StyledPresentation>
-          <StyledHello delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
+          <StyledHello index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
             Bonjour, je m'appelle
           </StyledHello>
           <StyledRevealBlock>
-            <StyledReveal delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' } />
-            <StyledName delay={ delay } index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
+            <StyledReveal index={1} pose={ isLoaded ? 'visible' : 'hidden' } />
+            <StyledName index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
               Tavares Evora
             </StyledName>
           </StyledRevealBlock>
 
           <StyledRevealBlock>
-            <StyledReveal delay={ delay } index={2} pose={ isLoaded ? 'visible' : 'hidden' } />
-            <StyledDescription delay={ delay } index={2} pose={ isLoaded ? 'visible' : 'hidden' }>
+            <StyledReveal index={2} pose={ isLoaded ? 'visible' : 'hidden' } />
+            <StyledDescription index={2} pose={ isLoaded ? 'visible' : 'hidden' }>
               Je suis developpeur <span className="function">fullstack</span> sur Paris,
               bienvenue sur mon portfolio !
               {/* https://greeeg.com/about/ */}

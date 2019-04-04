@@ -50,7 +50,7 @@ const TransitionAnimation = posed.div({
   },
 })
 
-const StyledTransition = styled(TransitionAnimation)`
+const StyledTransition = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -80,15 +80,19 @@ class Layout extends Component {
     super(props)
     this.state = { isLoaded: false }
     this.tl = new TimelineLite({paused: true})
+    this.preloader = React.createRef()
+    this.transition = React.createRef()
   }
 
   componentDidMount = () => {
-    this.setState({ isLoaded: true })
     this.tl
-      .add('social', 2.6)
-      .from('#navigation', 0.5, { x: 50, opacity: 0 }, 'social')
-      .from('#last-update', 0.3, { y: 50, opacity: 0 }, 'social+=0.1')
+      .from(this.preloader.current, 0.5, { opacity: 1 }, 0.8)
+      .from(this.transition.current, 0.5, { y: '-100%' })
+      .to(this.transition.current, 0.5, { y: '100%' }, '+=.5')
     this.tl.play()
+    this.tl.eventCallback("onComplete", () => {
+      this.setState({ isLoaded: true })
+    })
   }
 
   render() {
@@ -121,24 +125,24 @@ class Layout extends Component {
         render={data => (
           <>
             <GlobalStyle />
-            <PoseGroup>
-              {!isLoaded && [
-                // If animating more than one child, each needs a `key`
-                <PreloaderAnimation key="preloader" >
-                  <Preloader />
-                </PreloaderAnimation>,
-                <StyledTransition key="transition" />
-              ]}
-            </PoseGroup>
-                <Header delay={ 1.9 }
-                projects={data.allMarkdownRemark.edges}
-                siteTitle={data.site.siteMetadata.title}
+              {!isLoaded &&
+                <>
+                  <Preloader preloaderRef={this.preloader} />
+                  <StyledTransition ref={this.transition} />
+                </>
+              }
+            {isLoaded &&
+              <>
+                <Header
+                  projects={data.allMarkdownRemark.edges}
+                  siteTitle={data.site.siteMetadata.title}
                 />
-            {isLoaded && [
-                <StyledContent projects={ data.allMarkdownRemark.edges } delay={ isLoaded ? 2400 : 800 }>
+                <StyledContent projects={ data.allMarkdownRemark.edges }>
                 { children }
                 </StyledContent>
-            ]}
+              </>
+                
+            }
           </>
         )}
       />

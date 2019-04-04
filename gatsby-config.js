@@ -15,6 +15,7 @@ module.exports = {
     },
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-transition-link',
     'gatsby-transformer-remark',
     {
       resolve: `gatsby-source-filesystem`,
@@ -23,7 +24,6 @@ module.exports = {
         path: `${__dirname}/src/pages`,
       },
     },
-    'gatsby-plugin-sharp',
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

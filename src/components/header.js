@@ -1,4 +1,5 @@
-import { Link, graphql } from 'gatsby'
+import { graphql } from 'gatsby'
+import Link from 'gatsby-plugin-transition-link'
 import posed from 'react-pose'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
@@ -19,7 +20,7 @@ const StyledHeader = styled.header`
 	z-index: 99;
 `
 
-const StyledLogo = styled.div`
+const StyledLogo = styled.a`
   color: ${ variables.black };
   background: transparent;
   padding: 10px;
@@ -177,7 +178,7 @@ class Header extends Component {
 		this.state = { menuIsOpen: false }
     this.burgerHandleClick = this.burgerHandleClick.bind(this)
     this.closeBurger = this.closeBurger.bind(this)
-    this.buttonMenuElement = React.createRef()
+    // this.buttonMenuElement = React.createRef()
     this.tl = new TimelineLite({paused: true})
   }
   
@@ -205,10 +206,8 @@ class Header extends Component {
 		return (
 			<>
 				<StyledHeader id="header">
-          <StyledLogo id="logo" isOpen={ menuIsOpen } >
-					  <Link to='/'>
-							TavaresEvora
-            </Link>
+          <StyledLogo as={Link} to='/' isOpen={ menuIsOpen } >
+            TavaresEvora
           </StyledLogo>
 
           <StyledMenu>

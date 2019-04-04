@@ -9,6 +9,7 @@ const StyledTitle = styled.h1`
 
 const StyledContent = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: calc(100vh - 65px);
@@ -25,21 +26,19 @@ class AboutPage extends Component {
     return (
       <StyledContent>
         <SEO title="A propos" />
-        <div>
-            <StyledTitle>A Propos de moi</StyledTitle>
-            <StyledDescription>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            uas, eos veniam nobis nihil ut nisi! Harum, architecto?
-            Dignissimos consequuntur vitae repellat officiis ab cum.
-            Error voluptas esse aspernatur voluptatum nostrum?
-            </StyledDescription>
-            <StyledDescription>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            uas, eos veniam nobis nihil ut nisi! Harum, architecto?
-            Dignissimos consequuntur vitae repellat officiis ab cum.
-            Error voluptas esse aspernatur voluptatum nostrum?
-            </StyledDescription>
-        </div>
+          <StyledTitle>A Propos de moi</StyledTitle>
+          <StyledDescription>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+          uas, eos veniam nobis nihil ut nisi! Harum, architecto?
+          Dignissimos consequuntur vitae repellat officiis ab cum.
+          Error voluptas esse aspernatur voluptatum nostrum?
+          </StyledDescription>
+          <StyledDescription>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+          uas, eos veniam nobis nihil ut nisi! Harum, architecto?
+          Dignissimos consequuntur vitae repellat officiis ab cum.
+          Error voluptas esse aspernatur voluptatum nostrum?
+          </StyledDescription>
       </StyledContent>
     )
   }

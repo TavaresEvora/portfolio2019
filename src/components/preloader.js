@@ -5,6 +5,7 @@ const StyledPreloader = styled.div`
   position: fixed;
   display: flex;
   overflow: hidden;
+  opacity: 0;
   pointer-events: none;
   flex-direction: column;
   justify-content: center;
@@ -29,12 +30,11 @@ class Preloader extends Component {
     setInterval(() => {
       if (this.state.count < 100) this.setState({ count: this.state.count + 1 })
     }, 80)
+
     return (
-      <>
-        <StyledPreloader>
-          <span>{ count }%</span>
-        </StyledPreloader>
-      </>
+      <StyledPreloader ref={ this.props.preloaderRef }>
+        <span>{ count }%</span>
+      </StyledPreloader>
     )
   }
 }
