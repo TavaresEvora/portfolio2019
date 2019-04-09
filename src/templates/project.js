@@ -1,21 +1,18 @@
 import React, { Component } from 'react'
-import { graphql, StaticQuery } from 'gatsby'
-import Link from 'gatsby-plugin-transition-link'
+import { graphql } from 'gatsby'
+import TransitionLink from 'gatsby-plugin-transition-link'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import SEO from '../components/seo'
-import posed from 'react-pose'
-import Image from '../components/image'
-import Img from 'gatsby-image'
+import { TimelineLite } from 'gsap'
 
 import variables from '../components/elements/variables'
 
 library.add(faArrowUp)
 library.add(faArrowDown)
 
-const StyledNavPrev = styled(Link)`
+const StyledNavPrev = styled(TransitionLink)`
   position: fixed;
   cursor: url(${(props) => props.url}), pointer;
   left: 0;
@@ -24,7 +21,7 @@ const StyledNavPrev = styled(Link)`
   width: 10vw;
 `
 
-const StyledNavNext = styled(Link)`
+const StyledNavNext = styled(TransitionLink)`
   position: fixed;
   cursor: url(${(props) => props.url}), pointer;
   right: 0;
@@ -43,6 +40,8 @@ const StyledProject = styled.a`
 const StyledProjectImage = styled.img`
   /* width: 70%; */
   height: 300px;
+  top: 0;
+  left: 0;
 `
 
 const StyledContent = styled.div`
@@ -54,6 +53,7 @@ const StyledContent = styled.div`
 
 const StyledProjectTitle = styled.h1`
   color: ${variables.blackDark};
+  overflow: hidden;
   font-size: 3em;
   white-space: nowrap;
   margin: 0;
@@ -62,6 +62,7 @@ const StyledProjectTitle = styled.h1`
 
 const StyledProjectExcerpt = styled.p`
   max-width: 90%;
+  overflow: hidden;
   color: ${variables.black};
   font-size: 0.9em;
   margin: 40px 0;
@@ -77,6 +78,7 @@ const StyledProjectInformations = styled.div`
 
 const StyledProjectCategory = styled.span`
   display: block;
+  overflow: hidden;
   color: ${variables.blackDark};
   text-align: right;
   font-size: 0.8em;
@@ -87,10 +89,25 @@ class Template extends Component {
   constructor(props) {
     super(props)
     this.state = { isLoaded: false }
+    this.onGoToDetail = this.onGoToDetail.bind(this)
+    this.tl = new TimelineLite({paused: true})
+    this.img = React.createRef()
+    // this.transition = React.createRef()
   }
 
   componentDidMount() {
     this.setState({ isLoaded: true })
+  }
+
+  onGoToDetail(node, e) {
+    const rect = this.img.current.getBoundingClientRect()
+    this.tl
+      .to('.txt div', 0.5, { y: '100%' })
+      .to(this.img.current, 0, { position: 'fixed', x: `${rect.left}px`, y: `${rect.top}px` })
+      .to(this.img.current, 0.5, { x: '0%', y: '0%', width: '100vw', height: '100vh' })
+      // .from(this.transition.current, 0.5, { y: '-100%' })
+      // .to(this.transition.current, 0.5, { y: '100%' }, '+=.5')
+      .play()
   }
 
   render() {
@@ -100,8 +117,8 @@ class Template extends Component {
     const { title, tags, excerpt, image, category, path } = project.frontmatter
     const { html } = project
     const { next, prev } = pageContext
-    const prevIconPath = allFile.edges[0].node.publicURL
-    const nextIconPath = allFile.edges[1].node.publicURL
+    const prevIconPath = allFile.edges[1].node.publicURL
+    const nextIconPath = allFile.edges[0].node.publicURL
 
     return (
       <StyledContent>
@@ -110,20 +127,32 @@ class Template extends Component {
           keywords={tags}
           description={excerpt}
         />
-        <StyledProject as={Link} to={`${path}/detail`}>
+        <StyledProject
+          as={TransitionLink}
+          to={`/${path}/detail`}
+          exit={{
+            trigger: ({ node, e }) => this.onGoToDetail(node, e),
+            length: 1,
+            zIndex: 2
+          }}
+          entry={{
+            delay: 0.8,
+            zIndex: 0
+          }}
+        >
           <StyledProjectInformations>
-            <StyledProjectTitle>{ title }</StyledProjectTitle>
-            <StyledProjectCategory>{ category }</StyledProjectCategory>
-            <StyledProjectExcerpt>{ excerpt }</StyledProjectExcerpt>
+            <StyledProjectTitle className="txt"><div>{ title }</div></StyledProjectTitle>
+            <StyledProjectCategory className="txt"><div>{ category }</div></StyledProjectCategory>
+            <StyledProjectExcerpt className="txt"><div>{ excerpt }</div></StyledProjectExcerpt>
           </StyledProjectInformations>
-          <StyledProjectImage src="https://via.placeholder.com/550x300" />
+          <StyledProjectImage ref={this.img} className="img" src="https://via.placeholder.com/550x300" />
         </StyledProject>
         {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}
         {prev &&
-          <StyledNavPrev url={ prevIconPath } to={ prev.frontmatter.path } />
+          <StyledNavPrev url={ prevIconPath } to={ `/${prev.frontmatter.path}` } />
         }
         {next &&
-          <StyledNavNext url={ nextIconPath } to={ next.frontmatter.path } />
+          <StyledNavNext url={ nextIconPath } to={ `/${next.frontmatter.path}` } />
         }
       </StyledContent>
     )

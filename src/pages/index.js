@@ -131,6 +131,7 @@ class IndexPage extends Component {
   constructor(props) {
     super(props)
     this.state = { isLoaded: false}
+    this.onGoToProject = this.onGoToProject.bind(this)
     this.tl = new TimelineLite({paused: true})
   }
 
@@ -143,6 +144,10 @@ class IndexPage extends Component {
     console.debug('Component did mounted INDEX')
   }
 
+  onGoToProject(node, e) {
+    
+  }
+
   render() {
     const { isLoaded } = this.state
 
@@ -150,19 +155,19 @@ class IndexPage extends Component {
       <StyledContent>
         <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
         <StyledPresentation>
-          <StyledHello index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
+          <StyledHello>
             Bonjour, je m'appelle
           </StyledHello>
           <StyledRevealBlock>
-            <StyledReveal index={1} pose={ isLoaded ? 'visible' : 'hidden' } />
-            <StyledName index={1} pose={ isLoaded ? 'visible' : 'hidden' }>
+            <StyledReveal />
+            <StyledName>
               Tavares Evora
             </StyledName>
           </StyledRevealBlock>
 
           <StyledRevealBlock>
-            <StyledReveal index={2} pose={ isLoaded ? 'visible' : 'hidden' } />
-            <StyledDescription index={2} pose={ isLoaded ? 'visible' : 'hidden' }>
+            <StyledReveal />
+            <StyledDescription>
               Je suis developpeur <span className="function">fullstack</span> sur Paris,
               bienvenue sur mon portfolio !
               {/* https://greeeg.com/about/ */}
@@ -171,16 +176,28 @@ class IndexPage extends Component {
               {/* http://kolaps.com/en/about/ */}
               {/* http://www.lucavolino.com/about */}
               <StyledSeeMore>
-                <LinkStyle as={Link} to="/iad">
+                <LinkStyle
+                  as={Link}
+                  to="/iad"
+                  exit={{
+                    trigger: ({ node, e }) => this.onGoToProject(node, e),
+                    length: 1,
+                    zIndex: 2
+                  }}
+                  entry={{
+                    delay: 0.8,
+                    zIndex: 0
+                  }}
+                >
                   voir les projets
                 </LinkStyle>
               </StyledSeeMore>
             </StyledDescription>
           </StyledRevealBlock>
           <StyledSocialContent id="social-content">
-            <Link to='/'>linkedin</Link>
-            <Link to='/'>twitter</Link>
-            <Link to='/'>github</Link>
+            <a href="linkedin">linkedin</a>
+            <a href="linkedin">twitter</a>
+            <a href="linkedin">github</a>
           </StyledSocialContent>
           <StyledInformation id="last-update">
             Dernière mise jour: 06/02/2019

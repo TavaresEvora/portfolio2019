@@ -8,7 +8,7 @@ import 'normalize.css'
 
 import Header from './header'
 import Preloader from './preloader'
-import variables from '../components/elements/variables'
+import variables from './elements/variables'
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -34,22 +34,6 @@ const StyledContent = styled.main`
   width: 100vw;
 `
 
-const TransitionAnimation = posed.div({
-  enter: {
-    y: '-100%',
-  },
-  exit: {
-    y: '100%',
-    delay: 800,
-    transition: {
-      type: 'keyframes',
-      values: ['-100%', '0%', '0%', '100%'],
-      times: [0, 0.3, 0.7, 1],
-      duration: 1200,
-    }
-  },
-})
-
 const StyledTransition = styled.div`
   position: fixed;
   top: 0;
@@ -59,21 +43,6 @@ const StyledTransition = styled.div`
   background: ${variables.primary};
   z-index: 9999;
 `
-
-const PreloaderAnimation = posed.div({
-  enter: {
-    opacity: 1,
-    transition: {
-      y: { type: 'spring', stiffness: 1000, damping: 15 },
-      default: { duration: 0 }
-    }
-  },
-  exit: {
-    opacity: 0,
-    delay: 800,
-    transition: { duration: 400 }
-  }
-})
 
 class Layout extends Component {
   constructor(props) {
@@ -89,6 +58,7 @@ class Layout extends Component {
       .from(this.preloader.current, 0.5, { opacity: 1 }, 0.8)
       .from(this.transition.current, 0.5, { y: '-100%' })
       .to(this.transition.current, 0.5, { y: '100%' }, '+=.5')
+
     this.tl.play()
     this.tl.eventCallback("onComplete", () => {
       this.setState({ isLoaded: true })
@@ -141,7 +111,6 @@ class Layout extends Component {
                 { children }
                 </StyledContent>
               </>
-                
             }
           </>
         )}
