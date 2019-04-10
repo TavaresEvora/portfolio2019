@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import posed from 'react-pose'
 import Link from 'gatsby-plugin-transition-link'
 import { TimelineLite } from 'gsap'
 import styled from 'styled-components'
@@ -17,37 +16,6 @@ const StyledRevealBlock = styled.div`
   overflow: hidden;
 `
 
-const RevealAnimation = posed.div({
-  visible: {
-    x: '100%',
-    transition: ({ index }) => ({
-      type: 'keyframes',
-      values: ['-100%', '0%', '0%', '100%'],
-      times: [0, 0.3, 0.7, 1],
-      duration: 2000,
-      delay: index * 250
-    })
-  },
-  hidden: {
-    x: '-100%',
-  },
-  initialPose: 'hidden'
-})
-
-const appearAnimation = {
-  visible: {
-    opacity: 1,
-    transition: ({ index }) => ({
-      delay: (index * 250)
-    })
-  },
-  hidden: { opacity: 0 },
-}
-
-const RevealContentAnimation = posed.p(appearAnimation)
-
-const RevealTitleAnimation = posed.h1(appearAnimation)
-
 const StyledContent = styled.div`
   display: flex;
   justify-content: center;
@@ -55,29 +23,33 @@ const StyledContent = styled.div`
   height: calc(100vh - 65px);
 `
 
-const StyledReveal = styled(RevealAnimation)`
+const StyledReveal = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: ${variables.primary};
+  transform: translateX(-102%);
   z-index: 9999;
 `
 
-const StyledHello = styled(RevealContentAnimation)`
+const StyledHello = styled.p`
+  overflow: hidden;
   color: #757575;
   margin-bottom: -15px;
 `
 
-const StyledName = styled(RevealTitleAnimation)`
+const StyledName = styled.h1`
+  overflow: hidden;
   font-size: 5rem;
   font-weight: 600;
   color: #000;
   margin: 0;
 `
 
-const StyledDescription = styled(RevealContentAnimation)`
+const StyledDescription = styled.p`
+  overflow: hidden;
   font-size: 1.2rem;
   margin-top: 15px;
   color: #000;
@@ -138,10 +110,11 @@ class IndexPage extends Component {
   componentDidMount() {
     this.setState({ isLoaded: true })
     this.tl
-      .from('#social-content', 0.5, { x: -50, opacity: 0, clearProps: 'all' }, 2)
+      .staggerTo('.reveal', 0.5, { x: '0%' }, 0.5, 0.2)
+      .staggerFrom('.reveal-text > div', 0.2, { opacity: 0 }, 0.2)
+      .staggerTo('.reveal', 0.5, { x: '102%' }, 0.2, 2)
+      .from('#social-content', 0.5, { x: -50, opacity: 0 })
       .play()
-
-    console.debug('Component did mounted INDEX')
   }
 
   onGoToProject(node, e) {
@@ -155,21 +128,21 @@ class IndexPage extends Component {
       <StyledContent>
         <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
         <StyledPresentation>
-          <StyledHello>
-            Bonjour, je m'appelle
+          <StyledHello className="reveal-text">
+            <div>Bonjour, je m'appelle</div>
           </StyledHello>
           <StyledRevealBlock>
-            <StyledReveal />
-            <StyledName>
-              Tavares Evora
+            <StyledReveal className="reveal" />
+            <StyledName className="reveal-text">
+              <div>Tavares Evora</div>
             </StyledName>
           </StyledRevealBlock>
 
           <StyledRevealBlock>
-            <StyledReveal />
-            <StyledDescription>
-              Je suis developpeur <span className="function">fullstack</span> sur Paris,
-              bienvenue sur mon portfolio !
+            <StyledReveal className="reveal" />
+            <StyledDescription className="reveal-text">
+              <div>Je suis developpeur <span className="function">fullstack</span> sur Paris,
+              bienvenue sur mon portfolio !</div>
               {/* https://greeeg.com/about/ */}
               {/* http://eric-huguenin.com/ */}
               {/* https://www.olivier-guilleux.com/ */}
@@ -189,7 +162,7 @@ class IndexPage extends Component {
                     zIndex: 0
                   }}
                 >
-                  voir les projets
+                  <div>voir les projets</div>
                 </LinkStyle>
               </StyledSeeMore>
             </StyledDescription>

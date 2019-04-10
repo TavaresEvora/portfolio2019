@@ -102,7 +102,7 @@ class Template extends Component {
   onGoToDetail(node, e) {
     const rect = this.img.current.getBoundingClientRect()
     this.tl
-      .to('.txt div', 0.5, { y: '100%' })
+      .staggerTo('.txt div', 0.5, { y: '100%' }, 0.1)
       .to(this.img.current, 0, { position: 'fixed', x: `${rect.left}px`, y: `${rect.top}px` })
       .to(this.img.current, 0.5, { x: '0%', y: '0%', width: '100vw', height: '100vh' })
       // .from(this.transition.current, 0.5, { y: '-100%' })
@@ -132,11 +132,11 @@ class Template extends Component {
           to={`/${path}/detail`}
           exit={{
             trigger: ({ node, e }) => this.onGoToDetail(node, e),
-            length: 1,
+            length: 1.3,
             zIndex: 2
           }}
           entry={{
-            delay: 0.8,
+            delay: 1.1,
             zIndex: 0
           }}
         >
