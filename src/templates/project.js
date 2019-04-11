@@ -37,11 +37,27 @@ const StyledProject = styled.a`
   text-decoration: none;
 `
 
+const StyledRevealBlock = styled.div`
+  position: relative;
+  overflow: hidden;
+`
+
 const StyledProjectImage = styled.img`
   /* width: 70%; */
   height: 300px;
   top: 0;
   left: 0;
+`
+
+const StyledReveal = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: ${variables.primary};
+  transform: translateX(-102%);
+  z-index: 9999;
 `
 
 const StyledContent = styled.div`
@@ -74,6 +90,7 @@ const StyledProjectInformations = styled.div`
   align-self: center;
   transform: translate(10%, 0);
   text-decoration: none;
+  z-index: 9;
 `
 
 const StyledProjectCategory = styled.span`
@@ -96,18 +113,21 @@ class Template extends Component {
   }
 
   componentDidMount() {
-    this.setState({ isLoaded: true })
+    this.tl
+      .to('.reveal', 0.5, { x: '0%' }, 1)
+      .from(this.img.current, 0.1, { opacity: 0 })
+      .to('.reveal', 0.5, { x: '102%' }, 2)
+      .staggerFrom('.txt > div', 0.5, { y: '100%' }, 0.2)
+      .play()
   }
 
   onGoToDetail(node, e) {
     const rect = this.img.current.getBoundingClientRect()
     this.tl
-      .staggerTo('.txt div', 0.5, { y: '100%' }, 0.1)
+      .staggerTo('.txt > div', 0.5, { y: '100%' }, 0.1)
       .to(this.img.current, 0, { position: 'fixed', x: `${rect.left}px`, y: `${rect.top}px` })
       .to(this.img.current, 0.5, { top: '50%', left: '50%', x: '-50%', y: '-50%'})
       .to(this.img.current, 0.5, { width: '100vw', height: '100vh' })
-      // .from(this.transition.current, 0.5, { y: '-100%' })
-      // .to(this.transition.current, 0.5, { y: '100%' }, '+=.5')
       .play()
   }
 
@@ -118,8 +138,10 @@ class Template extends Component {
     const { title, tags, excerpt, image, category, path } = project.frontmatter
     const { html } = project
     const { next, prev } = pageContext
-    const prevIconPath = allFile.edges[1].node.publicURL
-    const nextIconPath = allFile.edges[0].node.publicURL
+    const prevIconPath = allFile.nodes[0].publicURL
+    const nextIconPath = allFile.nodes[1].publicURL
+
+    console.debug(allFile)
 
     return (
       <StyledContent>
@@ -146,7 +168,10 @@ class Template extends Component {
             <StyledProjectCategory className="txt"><div>{ category }</div></StyledProjectCategory>
             <StyledProjectExcerpt className="txt"><div>{ excerpt }</div></StyledProjectExcerpt>
           </StyledProjectInformations>
-          <StyledProjectImage ref={this.img} className="img" src="https://via.placeholder.com/550x300" />
+          <StyledRevealBlock>
+            <StyledReveal className="reveal" />
+            <StyledProjectImage ref={this.img} className="img" src="https://via.placeholder.com/550x300" />
+          </StyledRevealBlock>
         </StyledProject>
         {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}
         {prev &&
@@ -172,12 +197,10 @@ export const query = graphql`
         path
       }
     },
-    allFile(filter: { name: { in: ["chevron-left", "chevron-right"] } }) {
-      edges {
-        node {
-          publicURL
-          name
-        }
+    allFile(sort: { fields: name }, filter: { name: { in: ["chevron-left", "chevron-right"] } }) {
+      nodes {
+        publicURL
+        name
       }
     }
   }

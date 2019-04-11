@@ -110,8 +110,8 @@ class IndexPage extends Component {
   componentDidMount() {
     this.setState({ isLoaded: true })
     this.tl
-      .staggerTo('.reveal', 0.5, { x: '0%' }, 0.5, 0.2)
-      .staggerFrom('.reveal-text > div', 0.2, { opacity: 0 }, 0.2)
+      .staggerTo('.reveal', 0.5, { x: '0%' }, 0.5, 0.4)
+      .staggerFrom('.reveal-text > div', 0.1, { opacity: 0 }, 0.2)
       .staggerTo('.reveal', 0.5, { x: '102%' }, 0.2, 2)
       .from('#social-content', 0.5, { x: -50, opacity: 0 })
       .play()
