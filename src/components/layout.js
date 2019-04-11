@@ -13,7 +13,7 @@ import variables from './elements/variables'
 const GlobalStyle = createGlobalStyle`
   @font-face {
      font-family: 'Montserrat';
-     src: url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+     src: url('https://fonts.googleapis.com/css?family=Roboto|Montserrat:400,700');
   }
 
   * {
@@ -22,16 +22,18 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Montserrat';
-    min-height: 100vh;
-    min-width: 100vw;
+    /* min-height: 100vh;
+    min-width: 100vw; */
     /* overflow: hidden; */
     color: ${ variables.black };
   }
 `
 
 const StyledContent = styled.main`
-  min-height: calc(100vh - 65px);
-  width: 100vw;
+  /* min-height: 100vh; */
+  /* width: 100vw; */
+  margin-top: -${variables.navHeight};
+  /* overflow: hidden; */
 `
 
 const StyledTransition = styled.div`

@@ -48,7 +48,7 @@ const StyledContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 65px);
+  height: 100vh;
 `
 
 const StyledProjectTitle = styled.h1`
@@ -104,7 +104,8 @@ class Template extends Component {
     this.tl
       .staggerTo('.txt div', 0.5, { y: '100%' }, 0.1)
       .to(this.img.current, 0, { position: 'fixed', x: `${rect.left}px`, y: `${rect.top}px` })
-      .to(this.img.current, 0.5, { x: '0%', y: '0%', width: '100vw', height: '100vh' })
+      .to(this.img.current, 0.5, { top: '50%', left: '50%', x: '-50%', y: '-50%'})
+      .to(this.img.current, 0.5, { width: '100vw', height: '100vh' })
       // .from(this.transition.current, 0.5, { y: '-100%' })
       // .to(this.transition.current, 0.5, { y: '100%' }, '+=.5')
       .play()
@@ -132,11 +133,11 @@ class Template extends Component {
           to={`/${path}/detail`}
           exit={{
             trigger: ({ node, e }) => this.onGoToDetail(node, e),
-            length: 1.3,
+            length: 2,
             zIndex: 2
           }}
           entry={{
-            delay: 1.1,
+            delay: 2,
             zIndex: 0
           }}
         >

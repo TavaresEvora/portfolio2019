@@ -20,7 +20,7 @@ const StyledContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 65px);
+  height: 100vh;
 `
 
 const StyledReveal = styled.div`

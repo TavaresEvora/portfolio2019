@@ -2127,6 +2127,10 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
+classnames@^2.2.5:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+
 cli-boxes@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/cli-boxes/-/cli-boxes-1.0.0.tgz#4fa917c3e59c94a004cd61f8ee509da651687143"
@@ -2171,6 +2175,10 @@ clone-response@1.0.2:
   resolved "https://registry.yarnpkg.com/clone-response/-/clone-response-1.0.2.tgz#d1dc973920314df67fbeb94223b4ee350239e96b"
   dependencies:
     mimic-response "^1.0.0"
+
+cnbuilder@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/cnbuilder/-/cnbuilder-1.0.9.tgz#6290c767ea1be2dd51dd39add6ea21f201234ad1"
 
 coa@^2.0.2:
   version "2.0.2"
@@ -7952,7 +7960,7 @@ prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.6.2:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-prop-types@^15.6.1:
+prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   dependencies:
@@ -8144,6 +8152,13 @@ react-dom@^16.6.3:
     prop-types "^15.6.2"
     scheduler "^0.11.2"
 
+react-draggable@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-3.2.1.tgz#45d09a9a227988dc85674b23ab3c75b6e820dae5"
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
+
 react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
@@ -8191,6 +8206,13 @@ react-pose@^4.0.4:
     hey-listen "^1.0.5"
     popmotion-pose "^3.4.0"
     tslib "^1.9.1"
+
+react-scrollbars-custom@^4.0.0-alpha.12:
+  version "4.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/react-scrollbars-custom/-/react-scrollbars-custom-4.0.0-alpha.12.tgz#92686eb2ef6058a3f4f1b5cae03ea1079153e8e4"
+  dependencies:
+    cnbuilder "^1.0.9"
+    react-draggable "^3.2.1"
 
 react-side-effect@^1.1.0:
   version "1.1.5"

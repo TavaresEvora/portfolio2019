@@ -14,9 +14,9 @@ const StyledHeader = styled.header`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 15px 15px 0;
+  padding: 0 15px;
   justify-content: space-between;
-  height: 50px;
+  height: ${ variables.navHeight };
   color: ${ variables.black };
 	z-index: 99;
 `

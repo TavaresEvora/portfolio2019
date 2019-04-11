@@ -12,7 +12,7 @@ const StyledContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 65px);
+  height: 100vh;
 `
 
 const StyledDescription = styled.p`
