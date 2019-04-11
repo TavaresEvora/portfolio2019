@@ -121,6 +121,15 @@ class Template extends Component {
       .play()
   }
 
+  onGoToNextProject(node, e) {
+    const rect = this.img.current.getBoundingClientRect()
+    this.tl
+      .staggerTo('.txt > div', 0.5, { y: '100%' }, 0.1)
+      .set('.reveal', { x: '-102%' })
+      .to('.reveal', 0.5, { x: '0%' })
+      .play()
+  }
+
   onGoToDetail(node, e) {
     const rect = this.img.current.getBoundingClientRect()
     this.tl
@@ -140,8 +149,6 @@ class Template extends Component {
     const { next, prev } = pageContext
     const prevIconPath = allFile.nodes[0].publicURL
     const nextIconPath = allFile.nodes[1].publicURL
-
-    console.debug(allFile)
 
     return (
       <StyledContent>
@@ -175,10 +182,34 @@ class Template extends Component {
         </StyledProject>
         {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}
         {prev &&
-          <StyledNavPrev url={ prevIconPath } to={ `/${prev.frontmatter.path}` } />
+          <StyledNavPrev
+            url={ prevIconPath }
+            to={ `/${prev.frontmatter.path}` }
+            exit={{
+              trigger: ({ node, e }) => this.onGoToNextProject(node, e),
+              length: 1,
+              zIndex: 0
+              }}
+              entry={{
+                delay: 0.1,
+                zIndex: 2
+              }}
+          />
         }
         {next &&
-          <StyledNavNext url={ nextIconPath } to={ `/${next.frontmatter.path}` } />
+          <StyledNavNext
+           url={ nextIconPath }
+           to={ `/${next.frontmatter.path}` }
+           exit={{
+            trigger: ({ node, e }) => this.onGoToNextProject(node, e),
+            length: 1,
+            zIndex: 2
+            }}
+            entry={{
+              delay: 0.1,
+              zIndex: 0
+            }}
+          />
         }
       </StyledContent>
     )
