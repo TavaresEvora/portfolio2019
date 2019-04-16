@@ -108,6 +108,16 @@ const StyledInformation = styled.div`
   }
 `
 
+const StyledFunction = styled.div`
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+
+  & > * {
+    display: block;
+  } 
+`
+
 const StyledSeeMore = styled.div`
   position: fixed;
   font-size: 1rem;
@@ -124,13 +134,20 @@ const StyledSeeMore = styled.div`
 class IndexPage extends Component {
   constructor(props) {
     super(props)
-    this.state = { isLoaded: false}
+    this.state = { 
+      role: 'fullstack'
+    }
     this.onGoToProject = this.onGoToProject.bind(this)
     this.tl = new TimelineLite({paused: true})
   }
 
+  getRole() {
+    const role = ['fullstack', 'backend', 'frontend']
+    const index = Math.floor(Math.random() * 3)
+    return role[index]
+  }
+
   componentDidMount() {
-    this.setState({ isLoaded: true })
     this.tl
       // .set('.reveal-text > div', { opacity: 0 })
       .staggerFrom('.txt', 0.5, { y: '100%' }, 0.15)
@@ -139,6 +156,17 @@ class IndexPage extends Component {
       // .staggerTo('.reveal', 0.5, { x: '102%' }, 0.2, 2)
       .from('#social-content', 0.5, { x: -50, opacity: 0 })
       .play()
+
+    setInterval(() => {
+      // this.tl
+      //   .set()
+      //   .to('.function > span', 1, { y: '100%' })
+      //   .to('.function > span', 1, { y: '0%' })
+      //   .play()
+
+      this.setState({ role: this.getRole() })
+        
+    }, 2000)
   }
 
   onGoToProject() {
@@ -166,8 +194,8 @@ class IndexPage extends Component {
           <StyledRevealBlock>
             <StyledReveal className="reveal" />
             <StyledDescription className="reveal-text">
-              <div className="txt">Je suis developpeur <span className="function">fullstack</span> sur Paris,
-              bienvenue sur mon portfolio !</div>
+              <div className="txt">
+              Je suis développeur <StyledFunction className="function"> <span> {this.state.role} </span> </StyledFunction> sur Paris, bienvenue sur mon portfolio !</div>
               {/* https://greeeg.com/about/ */}
               {/* http://eric-huguenin.com/ */}
               {/* https://www.olivier-guilleux.com/ */}
