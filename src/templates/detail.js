@@ -108,9 +108,9 @@ class Template extends Component {
     this.setState({ isLoaded: true })
     this.tl
       .from('.informations', 0.5, { y: '100%' }, 0.8)
-      .from('.reveal-title > div', 0.3, { y: '-100%', opacity: 0 }, '-=0.2')
-      .from('.reveal > div', 0.3, { y: '-100%', opacity: 0 })
-      .staggerFrom('.reveal-description > p', 0.5, { y: '-100%', opacity: 0 }, '-0.2')
+      .from('.reveal-title > div', 0.3, { y: '100%', opacity: 0 }, '-=0.2')
+      .from('.reveal > div', 0.3, { y: '100%', opacity: 0 })
+      .staggerFrom('.reveal-description > p', 0.5, { y: '100%', opacity: 0 }, '0.2')
       .play()
   }
 

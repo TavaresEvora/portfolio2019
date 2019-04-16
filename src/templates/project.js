@@ -40,11 +40,16 @@ const StyledProject = styled.a`
 const StyledRevealBlock = styled.div`
   position: relative;
   overflow: hidden;
+  height: 250px;
+  width: 445px;
+  top: 0;
+  left: 0;
 `
 
 const StyledProjectImage = styled.img`
   /* width: 70%; */
-  height: 300px;
+  height: 100%;
+  width: 100%;
   top: 0;
   left: 0;
 `
@@ -76,7 +81,7 @@ const StyledProjectTitle = styled.h1`
   text-decoration: none;
 `
 
-const StyledProjectExcerpt = styled.p`
+const StyledProjectExcerpt = styled.div`
   max-width: 90%;
   overflow: hidden;
   color: ${variables.black};
@@ -105,10 +110,10 @@ const StyledProjectCategory = styled.span`
 class Template extends Component {
   constructor(props) {
     super(props)
-    this.state = { isLoaded: false }
     this.onGoToDetail = this.onGoToDetail.bind(this)
     this.tl = new TimelineLite({paused: true})
     this.img = React.createRef()
+    this.imgBlock = React.createRef()
     // this.transition = React.createRef()
   }
 
@@ -121,31 +126,28 @@ class Template extends Component {
       .play()
   }
 
-  onGoToNextProject(node, e) {
-    const rect = this.img.current.getBoundingClientRect()
+  onGoToNextProject() {
     this.tl
-      .staggerTo('.txt > div', 0.5, { y: '100%' }, 0.1)
       .set('.reveal', { x: '-102%' })
+      .staggerTo('.txt > div', 0.5, { y: '100%' })
       .to('.reveal', 0.5, { x: '0%' })
       .play()
   }
 
-  onGoToDetail(node, e) {
-    const rect = this.img.current.getBoundingClientRect()
+  onGoToDetail() {
+    const rect = this.imgBlock.current.getBoundingClientRect()
     this.tl
       .staggerTo('.txt > div', 0.5, { y: '100%' }, 0.1)
-      .to(this.img.current, 0, { position: 'fixed', x: `${rect.left}px`, y: `${rect.top}px` })
-      .to(this.img.current, 0.5, { top: '50%', left: '50%', x: '-50%', y: '-50%'})
-      .to(this.img.current, 0.5, { width: '100vw', height: '100vh' })
+      .to(this.imgBlock.current, 0, { position: 'fixed', x: `${rect.left}px`, y: `${rect.top}px` })
+      .to(this.imgBlock.current, 0.5, { top: '50%', left: '50%', x: '-50%', y: '-50%'})
+      .to(this.imgBlock.current, 0.5, { width: '100vw', height: '100vh' })
       .play()
   }
 
   render() {
     const { data, pageContext } = this.props
-    const { isLoaded } = this.state
     const { markdownRemark: project, allFile } = data
     const { title, tags, excerpt, image, category, path } = project.frontmatter
-    const { html } = project
     const { next, prev } = pageContext
     const prevIconPath = allFile.nodes[0].publicURL
     const nextIconPath = allFile.nodes[1].publicURL
@@ -175,7 +177,7 @@ class Template extends Component {
             <StyledProjectCategory className="txt"><div>{ category }</div></StyledProjectCategory>
             <StyledProjectExcerpt className="txt"><div>{ excerpt }</div></StyledProjectExcerpt>
           </StyledProjectInformations>
-          <StyledRevealBlock>
+          <StyledRevealBlock ref={this.imgBlock}>
             <StyledReveal className="reveal" />
             <StyledProjectImage ref={this.img} className="img" src="https://via.placeholder.com/550x300" />
           </StyledRevealBlock>
@@ -186,13 +188,13 @@ class Template extends Component {
             url={ prevIconPath }
             to={ `/${prev.frontmatter.path}` }
             exit={{
-              trigger: ({ node, e }) => this.onGoToNextProject(node, e),
-              length: 1,
-              zIndex: 0
+              trigger: () => this.onGoToNextProject(),
+              length: 1.7,
+              zIndex: 2
               }}
               entry={{
-                delay: 0.1,
-                zIndex: 2
+                delay: 0.15,
+                zIndex: 0
               }}
           />
         }
@@ -201,12 +203,12 @@ class Template extends Component {
            url={ nextIconPath }
            to={ `/${next.frontmatter.path}` }
            exit={{
-            trigger: ({ node, e }) => this.onGoToNextProject(node, e),
-            length: 1,
+            trigger: () => this.onGoToNextProject(),
+            length: 1.7,
             zIndex: 2
             }}
             entry={{
-              delay: 0.1,
+              delay: 0.15,
               zIndex: 0
             }}
           />

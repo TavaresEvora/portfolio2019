@@ -196,7 +196,7 @@ class Header extends Component {
 						<StyledNavList>
               { projects.map(({ node }) => (
                 <StyledNavItem key={ node.frontmatter.path }>
-                  <LinkStyled onClick={ this.closeBurger } as={Link} to={node.frontmatter.path + '/detail'}>
+                  <LinkStyled onClick={ this.closeBurger } as={Link} to={`/${node.frontmatter.path}/detail`}>
                     { node.frontmatter.title }
                   </LinkStyled>
                 </StyledNavItem>

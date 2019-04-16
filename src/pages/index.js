@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Link from 'gatsby-plugin-transition-link'
+import TransitionLink from 'gatsby-plugin-transition-link'
 import { TimelineLite } from 'gsap'
 import styled from 'styled-components'
 
@@ -34,10 +34,14 @@ const StyledReveal = styled.div`
   z-index: 9999;
 `
 
-const StyledHello = styled.p`
+const StyledHello = styled.div`
   overflow: hidden;
   color: #757575;
   margin-bottom: -15px;
+
+  & > * {
+    display: block;
+  }
 `
 
 const StyledName = styled.h1`
@@ -46,14 +50,22 @@ const StyledName = styled.h1`
   font-weight: 600;
   color: #000;
   margin: 0;
+
+  & > * {
+    display: block;
+  }
 `
 
-const StyledDescription = styled.p`
+const StyledDescription = styled.div`
   overflow: hidden;
   font-size: 1.2rem;
   margin-top: 15px;
   color: #000;
   margin: 0;
+
+  & > * {
+    display: block;
+  }
 `
 
 const StyledSocialContent = styled.div`
@@ -84,11 +96,16 @@ const StyledSocialContent = styled.div`
 
 const StyledInformation = styled.div`
   position: absolute;
+  overflow: hidden;
   color: #757575;
   font-size: 0.6rem;
   font-weight: 300;
   bottom: 25px;
   right: 25px;
+
+  & > * {
+    display: block;
+  }
 `
 
 const StyledSeeMore = styled.div`
@@ -97,6 +114,11 @@ const StyledSeeMore = styled.div`
   bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
+
+  
+  & > * {
+    display: block;
+  }
 `
 
 class IndexPage extends Component {
@@ -110,38 +132,41 @@ class IndexPage extends Component {
   componentDidMount() {
     this.setState({ isLoaded: true })
     this.tl
-      .staggerTo('.reveal', 0.5, { x: '0%' }, 0.5, 0.4)
-      .staggerFrom('.reveal-text > div', 0.1, { opacity: 0 }, 0.2)
-      .staggerTo('.reveal', 0.5, { x: '102%' }, 0.2, 2)
+      // .set('.reveal-text > div', { opacity: 0 })
+      .staggerFrom('.txt', 0.5, { y: '100%' }, 0.15)
+      // .staggerTo('.reveal', 0.5, { x: '0%' }, 0.5)
+      // .staggerFrom('.reveal-text > div', 0.1, { opacity: 0 }, 0.2)
+      // .staggerTo('.reveal', 0.5, { x: '102%' }, 0.2, 2)
       .from('#social-content', 0.5, { x: -50, opacity: 0 })
       .play()
   }
 
-  onGoToProject(node, e) {
-    
+  onGoToProject() {
+    this.tl
+      .staggerTo('.txt', 0.5, { y: '100%' }, 0.15)
+      .to('#social-content', 0.5, { x: -50, opacity: 0 })
+      .play()
   }
 
   render() {
-    const { isLoaded } = this.state
-
     return (
       <StyledContent>
         <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
         <StyledPresentation>
           <StyledHello className="reveal-text">
-            <div>Bonjour, je m'appelle</div>
+            <span className="txt">Bonjour, je m'appelle</span>
           </StyledHello>
           <StyledRevealBlock>
             <StyledReveal className="reveal" />
             <StyledName className="reveal-text">
-              <div>Tavares Evora</div>
+              <span className="txt">Tavares Evora</span>
             </StyledName>
           </StyledRevealBlock>
 
           <StyledRevealBlock>
             <StyledReveal className="reveal" />
             <StyledDescription className="reveal-text">
-              <div>Je suis developpeur <span className="function">fullstack</span> sur Paris,
+              <div className="txt">Je suis developpeur <span className="function">fullstack</span> sur Paris,
               bienvenue sur mon portfolio !</div>
               {/* https://greeeg.com/about/ */}
               {/* http://eric-huguenin.com/ */}
@@ -150,19 +175,19 @@ class IndexPage extends Component {
               {/* http://www.lucavolino.com/about */}
               <StyledSeeMore>
                 <LinkStyle
-                  as={Link}
+                  as={TransitionLink}
                   to="/iad"
                   exit={{
                     trigger: ({ node, e }) => this.onGoToProject(node, e),
-                    length: 1,
+                    length: 1.3,
                     zIndex: 2
                   }}
                   entry={{
-                    delay: 0.8,
+                    delay: 1.25,
                     zIndex: 0
                   }}
                 >
-                  <div>voir les projets</div>
+                  <div className="txt">voir les projets</div>
                 </LinkStyle>
               </StyledSeeMore>
             </StyledDescription>
@@ -173,7 +198,7 @@ class IndexPage extends Component {
             <a href="linkedin">github</a>
           </StyledSocialContent>
           <StyledInformation id="last-update">
-            Dernière mise jour: 06/02/2019
+            <span className="txt">Dernière mise jour: 06/02/2019</span>
           </StyledInformation>
         </StyledPresentation>
       </StyledContent>
