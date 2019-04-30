@@ -39,8 +39,8 @@ exports.createPages = (({ graphql, actions }) => {
                         component: projectTemplate,
                         context: {
                             pathSlug: path,
-                            prev: index === 0 ? null : projects[index - 1].node,
-                            next: index === (projects.length - 1) ? null : projects[index + 1].node
+                            prev: index === 0 ? projects[projects.length - 1].node : projects[index - 1].node,
+                            next: index === (projects.length - 1) ? projects[0].node : projects[index + 1].node
                         }
                     })
 
