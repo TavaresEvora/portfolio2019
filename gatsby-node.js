@@ -18,6 +18,8 @@ exports.createPages = (({ graphql, actions }) => {
                             node {
                                 frontmatter {
                                     path
+                                    title
+                                    image
                                 }
                             }
                         }
