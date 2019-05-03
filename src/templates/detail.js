@@ -5,7 +5,8 @@ import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import SEO from '../components/seo'
-import { TimelineLite } from 'gsap'
+import { TimelineLite, Power2 } from 'gsap'
+import 'gsap/ScrollToPlugin'
 
 import variables from '../components/elements/variables'
 
@@ -13,7 +14,7 @@ library.add(faArrowUp)
 library.add(faArrowDown)
 
 const StyledNav = styled.div`
-  /* position: relative; */
+  position: relative;
   display: flex;
   width: 100%;
   height: 200px;
@@ -24,11 +25,15 @@ const StyledNavPrev = styled.a`
   cursor: url(${(props) => props.icon}), pointer;
   /* width: 100%; */
   background: #E0E0E0;
-  flex: 1;
+  /* flex: 1; */
+  width: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  bottom: 0;
+  right: 50%;
 
   &:hover h3 {
     opacity: 1;
@@ -40,11 +45,15 @@ const StyledNavNext = styled.a`
   cursor: url(${(props) => props.icon}), pointer;
   /* width: 100%; */
   background: #E0E0E0;
-  flex: 1;
+  /* flex: 1; */
+  width: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  bottom: 0;
+  right: 0;
 
   &:hover h3 {
     opacity: 1;
@@ -128,6 +137,7 @@ const StyledHeaderDescription = styled.div`
   font-weight: 300;
   color: ${variables.black};
   width: 60%;
+  margin: 30px 0;
 
   & p {
     margin: 0;
@@ -152,15 +162,16 @@ class Template extends Component {
       .play()
   }
 
-  onGoToNextProject() {
-    console.debug('SCROLLLLLLL')
-    window.scrollTo(0, document.body.scrollHeight)
-    // const rect = this.imgBlock.current.getBoundingClientRect()
-    // this.tl
-    //   .set('.reveal', { x: '-102%' })
-    //   .staggerTo('.txt > div', 0.5, { y: '100%' })
-    //   .to('.reveal', 0.5, { x: '0%' })
-    //   .play()
+  onGoToNextProject(node, e) {
+    const next = e.target.closest('.nav-button')
+    const rect = next.getBoundingClientRect()
+    this.tl.to(window, 0.5, { scrollTo: document.body.scrollHeight, ease: Power2.easeOut })
+      //TODO: Masquer les écritures vers le bas
+      .to('.nav-button', 0, { position: 'absolute' })
+      .to(next, 0, { position: 'fixed', width: rect.width, height: rect.height })
+      .to(next, 0.5, { bottom: '50%', right: '50%', x: '50%', y: '50%', zIndex: 999 })
+      .to(next, 0.5, { width: '100vw', height: '100vh' })
+      .play()
   }
 
   render() {
@@ -216,19 +227,19 @@ class Template extends Component {
             </StyledHeaderInformationsContent>
         </StyledHeader>
         {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}
-        <StyledNav>
+        <StyledNav className="nav-project">
           {prev &&
-            <StyledNavPrev
+            <StyledNavPrev className="nav-button"
               icon={ prevIconPath }
-              to={ `${ prev.frontmatter.path }/detail` }
+              to={ `/${ prev.frontmatter.path }/detail` }
               as={TransitionLink}
               exit={{
                 trigger: ({ node, e }) => this.onGoToNextProject(node, e),
-                length: 1.3,
+                length: 2,
                 zIndex: 2
               }}
               entry={{
-                delay: 1.25,
+                delay: 2,
                 zIndex: 0
               }}
             >
@@ -238,17 +249,17 @@ class Template extends Component {
             </StyledNavPrev>
           }
           {next &&
-            <StyledNavNext
+            <StyledNavNext className="nav-button"
               icon={ nextIconPath }
-              to={ `${ next.frontmatter.path }/detail` }
+              to={ `/${ next.frontmatter.path }/detail` }
               as={TransitionLink}
               exit={{
                 trigger: ({ node, e }) => this.onGoToNextProject(node, e),
-                length: 1.3,
+                length: 2,
                 zIndex: 2
               }}
               entry={{
-                delay: 1.25,
+                delay: 2,
                 zIndex: 0
               }}
             >
