@@ -9,6 +9,7 @@ import { TimelineLite, Power2 } from 'gsap'
 import 'gsap/ScrollToPlugin'
 
 import variables from '../components/elements/variables'
+import Image from '../components/image';
 
 library.add(faArrowUp)
 library.add(faArrowDown)
@@ -17,7 +18,10 @@ const StyledNav = styled.div`
   position: relative;
   display: flex;
   width: 100%;
-  height: 200px;
+  height: 15vh;
+  @media (min-width: 768px) {
+    height: 200px;
+  }
 `
 
 const StyledNavPrev = styled.a`
@@ -26,6 +30,7 @@ const StyledNavPrev = styled.a`
   /* width: 100%; */
   background: #E0E0E0;
   /* flex: 1; */
+  color: ${ variables.black };
   width: 50%;
   height: 100%;
   display: flex;
@@ -34,6 +39,8 @@ const StyledNavPrev = styled.a`
   align-items: center;
   bottom: 0;
   right: 50%;
+  font-size: 0.75em;
+  text-decoration: none;
 
   &:hover h3 {
     opacity: 1;
@@ -46,6 +53,7 @@ const StyledNavNext = styled.a`
   /* width: 100%; */
   background: #E0E0E0;
   /* flex: 1; */
+  color: ${ variables.black };
   width: 50%;
   height: 100%;
   display: flex;
@@ -54,6 +62,8 @@ const StyledNavNext = styled.a`
   align-items: center;
   bottom: 0;
   right: 0;
+  font-size: 0.75em;
+  text-decoration: none;
 
   &:hover h3 {
     opacity: 1;
@@ -62,11 +72,16 @@ const StyledNavNext = styled.a`
 
 const StyledNavTitle = styled.h3`
   display: block;
+  color: ${ variables.primary };
   /* opacity: 0; */
-  font-size: 2em;
-  margin: 0;
+  font-size: 1rem;
+  margin: 5px;
   text-decoration: none;
   transition: all 0.5s;
+  @media (min-width: 768px) {
+    font-size: 2rem;
+    margin: 0;
+  }
 `
 
 // const StyledNavImage = styled.img`
@@ -82,9 +97,13 @@ const StyledHeader = styled.div`
   flex-direction: column;
   width: 100vw;
   height: 100vh;
+
+  .gatsby-image-wrapper{
+    height: 100%;
+  }
 `
 
-const StyledHeaderImage = styled.img`
+const StyledHeaderImage = styled(Image)`
   width: 100%;
   height: 100%;
 `
@@ -107,9 +126,13 @@ const StyledHeaderInformationsContent = styled.div`
 const StyledHeaderInformations = styled.ul`
   display: flex;
   margin: 0 auto;
-  padding: 0;
+  padding: 15px 0 0;
+  width: 90%;
   justify-content: space-between;
-  width: 60%;
+  @media (min-width: 768px) {
+    width: 60%;
+    padding: 0;
+  }
 `
 
 const StyledHeaderInformation = styled.li`
@@ -119,25 +142,35 @@ const StyledHeaderInformation = styled.li`
 const StyledHeaderInformationTitle = styled.h4`
   display: block;
   overflow: hidden;
-  margin: 0 0 15px;
+  margin: 0 0 5px;
   text-transform: uppercase;
   font-family: Roboto, sans-serif;
   font-weight: 600;
   font-size: 0.8rem;
+  @media (min-width: 768px) {
+    margin: 0 0 15px;
+  }
 `
 
 const StyledHeaderInformationContent = styled.div`
   overflow: hidden;
+  font-size: 0.8rem;
   font-weight: 300;
   color: ${variables.black};
+  @media (min-width: 768px) {
+    font-size: 1rem;
+  }
 `
 
 const StyledHeaderDescription = styled.div`
   overflow: hidden;
   font-weight: 300;
   color: ${variables.black};
-  width: 60%;
+  width: 90%;
   margin: 30px 0;
+  @media (min-width: 768px) {
+    width: 60%;
+  }
 
   & p {
     margin: 0;
@@ -176,12 +209,10 @@ class Template extends Component {
 
   render() {
     const { data, pageContext } = this.props
-    const { markdownRemark: project, allFile } = data
+    const { markdownRemark: project, prevIcon, nextIcon } = data
     const { title, tags, excerpt } = project.frontmatter
     const { html } = project
     const { next, prev } = pageContext
-    const prevIconPath = allFile.edges[0].node.publicURL
-    const nextIconPath = allFile.edges[1].node.publicURL
 
     return (
       <>
@@ -191,7 +222,7 @@ class Template extends Component {
           description={excerpt}
         />
         <StyledHeader>
-            <StyledHeaderImage className="image" src="https://via.placeholder.com/550x300" />
+            <StyledHeaderImage className="image" />
             <StyledHeaderInformationsContent className="informations">
               <StyledHeaderInformations>
                   <StyledHeaderInformation>
@@ -230,7 +261,8 @@ class Template extends Component {
         <StyledNav className="nav-project">
           {prev &&
             <StyledNavPrev className="nav-button"
-              icon={ prevIconPath }
+              url={ prevIcon.publicURL }
+              alt={ prevIcon.name }
               to={ `/${ prev.frontmatter.path }/detail` }
               as={TransitionLink}
               exit={{
@@ -250,7 +282,8 @@ class Template extends Component {
           }
           {next &&
             <StyledNavNext className="nav-button"
-              icon={ nextIconPath }
+              url={ nextIcon.publicURL }
+              alt={ nextIcon.name }
               to={ `/${ next.frontmatter.path }/detail` }
               as={TransitionLink}
               exit={{
@@ -286,13 +319,13 @@ export const query = graphql`
         path
       }
     },
-    allFile(filter: { name: { in: ["chevron-left", "chevron-right"] } }) {
-      edges {
-        node {
-          publicURL
-          name
-        }
-      }
+    prevIcon:file(name: { eq: "chevron-left" }) {
+      publicURL
+    	name
+    },
+    nextIcon:file(name: { eq: "chevron-right" }) {
+      publicURL
+    	name
     }
   }
 `

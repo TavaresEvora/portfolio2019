@@ -14,17 +14,24 @@ const StyledHeader = styled.header`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 0 15px;
   justify-content: space-between;
+  padding: 0 15px;
   height: ${ variables.navHeight };
   color: ${ variables.black };
 	z-index: 99;
+  margin: 0 auto;
+  @media (min-width: 768px) {
+    padding: 0 55px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 85%;
+  }
 `
 
 const StyledLogo = styled.a`
   color: ${ variables.black };
   background: transparent;
-  padding: 10px;
+  padding: 0;
   text-decoration: none;
   cursor: pointer;
 
@@ -84,8 +91,12 @@ const StyledNav = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
+  /* flex-direction: column; */
   height: 100%;
   width: 100%;
+  @media (min-width: 768px) {
+    /* flex-direction: row; */
+  }
 `
 
 const StyledNavList = styled.ul`
@@ -93,10 +104,15 @@ const StyledNavList = styled.ul`
 	margin: 0;
 	padding: 0;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 `
 
 const NavItem = posed.li({
@@ -107,9 +123,15 @@ const NavItem = posed.li({
 const StyledNavItem = styled(NavItem)`
 	display: inline-block;
 	list-style: none;
+  margin: 25px 0;
+  @media (min-width: 768px) {
+    margin: 0;
+  }
 `
 
 const StyledMenu = styled.ul`
+  margin: 0;
+  padding: 0;
 `
 
 const StyledMenuItem = styled.li`

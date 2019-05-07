@@ -8,6 +8,7 @@ import SEO from '../components/seo'
 import { TimelineLite } from 'gsap'
 
 import variables from '../components/elements/variables'
+import Image from '../components/image';
 
 library.add(faArrowUp)
 library.add(faArrowDown)
@@ -17,8 +18,12 @@ const StyledNavPrev = styled(TransitionLink)`
   cursor: url(${(props) => props.url}), pointer;
   left: 0;
   bottom: 0;
-  height: calc(100% - ${variables.navHeight});
-  width: 10vw;
+  height: 30vw;
+  width: 50%;
+  @media (min-width: 768px) {
+    height: calc(100% - ${variables.navHeight});
+    width: 10vw;
+  }
 `
 
 const StyledNavNext = styled(TransitionLink)`
@@ -26,27 +31,44 @@ const StyledNavNext = styled(TransitionLink)`
   cursor: url(${(props) => props.url}), pointer;
   right: 0;
   bottom: 0;
-  height: calc(100% - ${variables.navHeight});
-  width: 10vw;
+  height: 30vw;
+  width: 50%;
+  @media (min-width: 768px) {
+    height: calc(100% - ${variables.navHeight});
+    width: 10vw;
+  }
 `
 
 const StyledProject = styled.a`
   position: relative;
   display: flex;
-  max-width: 80vw;
+  flex-direction: column;
+  width: 90vw;
   text-decoration: none;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    max-width: 80vw;
+  }
 `
 
 const StyledRevealBlock = styled.div`
   position: relative;
   overflow: hidden;
   height: 250px;
-  width: 445px;
+  width: 100%;
   top: 0;
   left: 0;
+
+  @media (min-width: 768px) {
+    width: 445px;
+  }
+
+  .gatsby-image-wrapper {
+    height: 100%;
+  }
 `
 
-const StyledProjectImage = styled.img`
+const StyledProjectImage = styled(Image)`
   /* width: 70%; */
   height: 100%;
   width: 100%;
@@ -75,10 +97,13 @@ const StyledContent = styled.div`
 const StyledProjectTitle = styled.h1`
   color: ${variables.blackDark};
   overflow: hidden;
-  font-size: 3em;
+  font-size: 2.5em;
   white-space: nowrap;
   margin: 0;
   text-decoration: none;
+  @media (min-width: 768px) {
+    font-size: 3em;
+  }
 `
 
 const StyledProjectExcerpt = styled.div`
@@ -91,20 +116,25 @@ const StyledProjectExcerpt = styled.div`
 `
 
 const StyledProjectInformations = styled.div`
-  width: 40%;
+  width: 100%;
   align-self: center;
-  transform: translate(10%, 0);
   text-decoration: none;
   z-index: 9;
+  @media (min-width: 768px) {
+    width: 40%;
+    transform: translate(10%, 0);
+  }
 `
 
 const StyledProjectCategory = styled.span`
   display: block;
   overflow: hidden;
   color: ${variables.blackDark};
-  text-align: right;
   font-size: 0.8em;
   text-decoration: none;
+  @media (min-width: 768px) {
+    text-align: right;
+  }
 `
 
 class Template extends Component {
@@ -112,7 +142,7 @@ class Template extends Component {
     super(props)
     this.onGoToDetail = this.onGoToDetail.bind(this)
     this.tl = new TimelineLite({paused: true})
-    this.img = React.createRef()
+    // this.img = React.createRef()
     this.imgBlock = React.createRef()
     // this.transition = React.createRef()
   }
@@ -120,7 +150,7 @@ class Template extends Component {
   componentDidMount() {
     this.tl
       .to('.reveal', 0.5, { x: '0%' }, 1)
-      .from(this.img.current, 0.1, { opacity: 0 })
+      .from('.img', 0.1, { opacity: 0 })
       .to('.reveal', 0.5, { x: '102%' }, 2)
       .staggerFrom('.txt > div', 0.5, { y: '100%' }, 0.2)
       .play()
@@ -146,11 +176,9 @@ class Template extends Component {
 
   render() {
     const { data, pageContext } = this.props
-    const { markdownRemark: project, allFile } = data
+    const { markdownRemark: project, prevIcon, nextIcon } = data
     const { title, tags, excerpt, image, category, path } = project.frontmatter
     const { next, prev } = pageContext
-    const prevIconPath = allFile.nodes[0].publicURL
-    const nextIconPath = allFile.nodes[1].publicURL
 
     return (
       <StyledContent>
@@ -179,13 +207,14 @@ class Template extends Component {
           </StyledProjectInformations>
           <StyledRevealBlock ref={this.imgBlock}>
             <StyledReveal className="reveal" />
-            <StyledProjectImage ref={this.img} className="img" src="https://via.placeholder.com/550x300" />
+            <StyledProjectImage className="img" />
           </StyledRevealBlock>
         </StyledProject>
         {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}
         {prev &&
           <StyledNavPrev
-            url={ prevIconPath }
+            url={ prevIcon.publicURL }
+            alt={ prevIcon.name }
             to={ `/${prev.frontmatter.path}` }
             exit={{
               trigger: () => this.onGoToNextProject(),
@@ -200,7 +229,8 @@ class Template extends Component {
         }
         {next &&
           <StyledNavNext
-           url={ nextIconPath }
+           url={ nextIcon.publicURL }
+           alt={ nextIcon.name }
            to={ `/${next.frontmatter.path}` }
            exit={{
             trigger: () => this.onGoToNextProject(),
@@ -230,11 +260,13 @@ export const query = graphql`
         path
       }
     },
-    allFile(sort: { fields: name }, filter: { name: { in: ["chevron-left", "chevron-right"] } }) {
-      nodes {
-        publicURL
-        name
-      }
+    prevIcon:file(name: { eq: "chevron-left" }) {
+      publicURL
+    	name
+    },
+    nextIcon:file(name: { eq: "chevron-right" }) {
+      publicURL
+    	name
     }
   }
 `

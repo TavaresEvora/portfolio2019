@@ -9,6 +9,8 @@ import variables from '../components/elements/variables'
 
 const StyledPresentation = styled.div`
   padding: 25px;
+  @media (min-width: 768px) {
+  }
 `
 
 const StyledRevealBlock = styled.div`
@@ -46,10 +48,14 @@ const StyledHello = styled.div`
 
 const StyledName = styled.h1`
   overflow: hidden;
-  font-size: 5rem;
+  font-size: 2.5rem;
   font-weight: 600;
   color: #000;
-  margin: 0;
+  margin: 15px 0;
+  @media (min-width: 768px) {
+    font-size: 5rem;
+    margin: 0;
+  }
 
   & > * {
     display: block;
@@ -100,8 +106,13 @@ const StyledInformation = styled.div`
   color: #757575;
   font-size: 0.6rem;
   font-weight: 300;
-  bottom: 25px;
-  right: 25px;
+  bottom: 5px;
+  right: 5px;
+
+  @media (min-width: 768px) {
+    bottom: 25px;
+    right: 25px;
+  }
 
   & > * {
     display: block;
@@ -121,10 +132,13 @@ const StyledFunction = styled.div`
 const StyledSeeMore = styled.div`
   position: fixed;
   font-size: 1rem;
-  bottom: 25px;
+  bottom: 50px;
   left: 50%;
   transform: translateX(-50%);
 
+  @media (min-width: 768px) {
+    /* bottom: 25px; */
+  }
   
   & > * {
     display: block;

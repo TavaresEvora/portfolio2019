@@ -5,11 +5,15 @@ import SEO from '../components/seo'
 import variables from '../components/elements/variables';
 
 const StyledTitle = styled.h1`
-  width: 50%;
+  width: 100%;
   font-size: 1.1em;
   font-weight: 500;
   text-transform: uppercase;
-  margin: 0;
+  margin: 50px 0;
+  @media (min-width: 768px) {
+    width: 50%;
+    margin: 0;
+  }
 `
 
 const StyledSubTitle = styled.h3`
@@ -34,7 +38,7 @@ const StyledSection = styled.div`
   flex-wrap: wrap;
   max-width: 80%;
   width: 100%;
-  padding: 70px 0;
+  padding: 0;
   &:first-child {
     margin-top: 100vh;
     padding-top: 0;
@@ -42,10 +46,16 @@ const StyledSection = styled.div`
   &:last-child {
     padding-bottom: 0;
   }
+  @media (min-width: 768px) {
+    padding: 70px 0;
+  }
 `
 
 const StyledSectionContent = styled.div`
-  width: 50%;
+  width: 100%;
+  @media (min-width: 768px) {
+    width: 50%;
+  }
   /* margin: 0 70px; */
 `
 
@@ -56,6 +66,8 @@ const StyledSectionSkill = styled.div`
   }
   &:last-child {
     margin-bottom: 0;
+  }
+  @media (min-width: 768px) {
   }
 
   p {
@@ -68,7 +80,11 @@ const StyledDescription = styled.p`
     margin-top: 0;
   }
   &:last-child {
-    margin-bottom: 50px;
+    margin-bottom: 0;
+    @media (min-width: 768px) {
+      margin-bottom: 50px;
+      width: 50%;
+    }
   }
   line-height: 1.8;
   margin-bottom: 25px;

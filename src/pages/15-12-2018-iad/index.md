@@ -1,7 +1,7 @@
 ---
 title: "IAD - France"
 path: "iad"
-image: "iad.jpg"
+image: "iadfrance.png"
 tags: ['backend', frontend]
 category: 'Landing page'
 excerpt: "Petit text court pour IAD"
