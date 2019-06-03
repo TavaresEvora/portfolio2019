@@ -216,6 +216,7 @@ class IndexPage extends Component {
               {/* http://kolaps.com/en/about/ */}
               {/* http://www.lucavolino.com/about */}
               {/* http://tombekkers.com/ */}
+              {/* https://github.com/KyleAMathews/blog/blob/master/src/pages/2019-03-31---new-design-cooper-hewitt/index.md */}
               <StyledSeeMore>
                 <LinkStyle
                   as={TransitionLink}
