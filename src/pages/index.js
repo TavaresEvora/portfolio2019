@@ -215,6 +215,7 @@ class IndexPage extends Component {
               {/* https://www.olivier-guilleux.com/ */}
               {/* http://kolaps.com/en/about/ */}
               {/* http://www.lucavolino.com/about */}
+              {/* http://tombekkers.com/ */}
               <StyledSeeMore>
                 <LinkStyle
                   as={TransitionLink}
