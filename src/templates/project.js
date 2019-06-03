@@ -149,28 +149,28 @@ class Template extends Component {
 
   componentDidMount() {
     this.tl
-      .to('.reveal', 0.5, { x: '0%' }, 1)
-      .from('.img', 0.1, { opacity: 0 })
-      .to('.reveal', 0.5, { x: '102%' }, 2)
-      .staggerFrom('.txt > div', 0.5, { y: '100%' }, 0.2)
+      .to('.reveal', 0.3, { x: '0%' }, 1)
+      .from('.gatsby-image-wrapper', 0.1, { opacity: 0 })
+      .to('.reveal', 0.3, { x: '102%' }, 2)
+      .staggerFrom('.txt > div', 0.3, { y: '100%' }, 0.2)
       .play()
   }
 
   onGoToNextProject() {
     this.tl
       .set('.reveal', { x: '-102%' })
-      .staggerTo('.txt > div', 0.5, { y: '100%' })
-      .to('.reveal', 0.5, { x: '0%' })
+      .staggerTo('.txt > div', 0.3, { y: '100%' })
+      .to('.reveal', 0.3, { x: '0%' })
       .play()
   }
 
   onGoToDetail() {
     const rect = this.imgBlock.current.getBoundingClientRect()
     this.tl
-      .staggerTo('.txt > div', 0.5, { y: '100%' }, 0.1)
+      .staggerTo('.txt > div', 0.3, { y: '100%' }, 0.1)
       .to(this.imgBlock.current, 0, { position: 'fixed', x: `${rect.left}px`, y: `${rect.top}px` })
-      .to(this.imgBlock.current, 0.5, { top: '50%', left: '50%', x: '-50%', y: '-50%'})
-      .to(this.imgBlock.current, 0.5, { width: '100vw', height: '100vh' })
+      .to(this.imgBlock.current, 0.3, { top: '50%', left: '50%', x: '-50%', y: '-50%'})
+      .to(this.imgBlock.current, 0.3, { width: '100vw', height: '100vh' })
       .play()
   }
 
@@ -218,11 +218,11 @@ class Template extends Component {
             to={ `/${prev.frontmatter.path}` }
             exit={{
               trigger: () => this.onGoToNextProject(),
-              length: 1.7,
+              length: 2,
               zIndex: 2
               }}
               entry={{
-                delay: 0.15,
+                delay: 0.7,
                 zIndex: 0
               }}
           />
@@ -234,11 +234,11 @@ class Template extends Component {
            to={ `/${next.frontmatter.path}` }
            exit={{
             trigger: () => this.onGoToNextProject(),
-            length: 1.7,
+            length: 2,
             zIndex: 2
             }}
             entry={{
-              delay: 0.15,
+              delay: 0.7,
               zIndex: 0
             }}
           />

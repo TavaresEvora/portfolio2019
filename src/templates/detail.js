@@ -70,9 +70,15 @@ const StyledNavNext = styled.a`
   }
 `
 
+const StyledNavProject = styled.div`
+  display: block;
+  overflow: hidden;
+`
+
 const StyledNavTitle = styled.h3`
   display: block;
   color: ${ variables.primary };
+  overflow: hidden;
   /* opacity: 0; */
   font-size: 1rem;
   margin: 5px;
@@ -188,22 +194,24 @@ class Template extends Component {
   componentDidMount() {
     this.setState({ isLoaded: true })
     this.tl
-      .from('.informations', 0.5, { y: '100%' }, 0.8)
+      .from('.informations', 0.3, { y: '100%' }, 0.8)
       .from('.reveal-title > div', 0.3, { y: '100%', opacity: 0 }, '-=0.2')
       .from('.reveal > div', 0.3, { y: '100%', opacity: 0 })
-      .staggerFrom('.reveal-description > p', 0.5, { y: '100%', opacity: 0 }, '0.2')
+      .staggerFrom('.reveal-description > p', 0.3, { y: '100%', opacity: 0 }, '0.2')
       .play()
   }
 
   onGoToNextProject(node, e) {
     const next = e.target.closest('.nav-button')
     const rect = next.getBoundingClientRect()
-    this.tl.to(window, 0.5, { scrollTo: document.body.scrollHeight, ease: Power2.easeOut })
+    const titles = next.querySelectorAll('.projectNav > div')
+    this.tl.to(window, 0.3, { scrollTo: document.body.scrollHeight, ease: Power2.easeOut })
       //TODO: Masquer les écritures vers le bas
       .to('.nav-button', 0, { position: 'absolute' })
+      .staggerTo(titles, 0.3, { y: '100%' }, 0.1)
       .to(next, 0, { position: 'fixed', width: rect.width, height: rect.height })
-      .to(next, 0.5, { bottom: '50%', right: '50%', x: '50%', y: '50%', zIndex: 999 })
-      .to(next, 0.5, { width: '100vw', height: '100vh' })
+      .to(next, 0.3, { bottom: '50%', right: '50%', x: '50%', y: '50%', zIndex: 999 })
+      .to(next, 0.3, { width: '100vw', height: '100vh' })
       .play()
   }
 
@@ -267,17 +275,17 @@ class Template extends Component {
               as={TransitionLink}
               exit={{
                 trigger: ({ node, e }) => this.onGoToNextProject(node, e),
-                length: 2,
+                length: 1.8,
                 zIndex: 2
               }}
               entry={{
-                delay: 2,
+                delay: 1.8,
                 zIndex: 0
               }}
             >
               {/* <StyledNavImage src={ prev.frontmatter.image } /> */}
-              <span>Projet précedent</span>
-              <StyledNavTitle>{ prev.frontmatter.title }</StyledNavTitle>
+              <StyledNavProject className="projectNav"><div>Projet précedent</div></StyledNavProject>
+              <StyledNavTitle className="projectNav"><div>{ prev.frontmatter.title }</div></StyledNavTitle>
             </StyledNavPrev>
           }
           {next &&
@@ -288,17 +296,17 @@ class Template extends Component {
               as={TransitionLink}
               exit={{
                 trigger: ({ node, e }) => this.onGoToNextProject(node, e),
-                length: 2,
+                length: 1.8,
                 zIndex: 2
               }}
               entry={{
-                delay: 2,
+                delay: 1.8,
                 zIndex: 0
               }}
             >
               {/* <StyledNavImage src={ next.frontmatter.image } /> */}
-              <span>Projet suivant</span>
-              <StyledNavTitle>{ next.frontmatter.title }</StyledNavTitle>
+              <StyledNavProject className="projectNav"><div>Projet suivant</div></StyledNavProject>
+              <StyledNavTitle className="projectNav"><div>{ next.frontmatter.title }</div></StyledNavTitle>
             </StyledNavNext>
           }
         </StyledNav>

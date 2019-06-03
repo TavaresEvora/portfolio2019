@@ -39,16 +39,14 @@ const StyledSection = styled.div`
   max-width: 80%;
   width: 100%;
   padding: 0;
-  &:first-child {
-    margin-top: 100vh;
-    padding-top: 0;
-  }
-  &:last-child {
-    padding-bottom: 0;
-  }
   @media (min-width: 768px) {
     padding: 70px 0;
   }
+`
+
+const StyledFirstSection = styled(StyledSection)`
+  margin-top: 100vh;
+  padding-top: 0;
 `
 
 const StyledSectionContent = styled.div`
@@ -98,13 +96,13 @@ class AboutPage extends Component {
     return (
       <StyledContent>
         <SEO title="A propos" />
-          <StyledSection>
+          <StyledFirstSection>
             <StyledTitle>A Propos de moi</StyledTitle>
             <StyledSectionContent>
               <StyledDescription>Je m'appelle Tavares Evora Valdimir. Je suis Web Développeur.
               Pendant mes formations j'ai appris le développement <span className="hl">back-end</span>,
               puis étant passionné par le développement plus largement j'ai appris le développement
-              <span className="hl">front-end </span> ainsi que l'intégration.
+              <span className="hl"> front-end </span> ainsi que l'intégration.
               </StyledDescription>
               <StyledDescription>
               Aujourd'hui je suis capable de m'occuper de la conception d'un site internet en passant par 
@@ -118,7 +116,7 @@ class AboutPage extends Component {
               A l'avenir, je souhaite en apprendre plus sur l'aspect DevOps
               </StyledDescription>
             </StyledSectionContent>
-          </StyledSection>
+          </StyledFirstSection>
 
           <StyledSection>
             <StyledTitle>Mes compétences</StyledTitle>
