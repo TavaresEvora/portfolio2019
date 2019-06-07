@@ -134,6 +134,14 @@ const StyledMenu = styled.ul`
   padding: 0;
 `
 
+const StyledNavImage = styled.img`
+  position: absolute;
+  top: auto;
+  left: auto;
+  margin: 0;
+  padding: 0;
+`
+
 const StyledMenuItem = styled.li`
   display: inline-block;
   font-size: .9rem;
@@ -167,7 +175,8 @@ class Header extends Component {
 		this.state = { menuIsOpen: false }
     this.burgerHandleClick = this.burgerHandleClick.bind(this)
     this.closeBurger = this.closeBurger.bind(this)
-    // this.buttonMenuElement = React.createRef()
+    this.showImage = this.showImage.bind(this)
+    this.imageBlock = React.createRef()
     // this.tl = new TimelineLite({paused: true})
   }
   
@@ -187,6 +196,10 @@ class Header extends Component {
   
   closeBurger() {
     this.setState({ menuIsOpen: false })
+  }
+  
+  showImage() {
+    console.debug('Show Image in background')
   }
 
 	render() {
@@ -215,9 +228,10 @@ class Header extends Component {
 
 				<Overlay pose={ menuIsOpen ? 'open' : 'closed' }>
 					<StyledNav>
+            {/* <StyledNavImage ref={ this.imageBlock } src="#" /> */}
 						<StyledNavList>
               { projects.map(({ node }) => (
-                <StyledNavItem key={ node.frontmatter.path }>
+                <StyledNavItem onMouseEnter={ this.showImage } key={ node.frontmatter.path }>
                   <LinkStyled onClick={ this.closeBurger } as={Link} to={`/${node.frontmatter.path}/detail`}>
                     { node.frontmatter.title }
                   </LinkStyled>
