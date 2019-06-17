@@ -68,7 +68,7 @@ const StyledRevealBlock = styled.div`
   }
 `
 
-const StyledProjectImage = styled(Image)`
+const StyledProjectImage = styled.img`
   /* width: 70%; */
   height: 100%;
   width: 100%;
@@ -107,7 +107,6 @@ const StyledProjectTitle = styled.h1`
 `
 
 const StyledProjectExcerpt = styled.div`
-  max-width: 90%;
   overflow: hidden;
   color: ${variables.black};
   font-size: 0.9em;
@@ -117,6 +116,7 @@ const StyledProjectExcerpt = styled.div`
 
 const StyledProjectInformations = styled.div`
   width: 100%;
+  text-align: right;
   align-self: center;
   text-decoration: none;
   z-index: 9;
@@ -196,7 +196,7 @@ class Template extends Component {
             zIndex: 2
           }}
           entry={{
-            delay: 2,
+            delay: 1.8,
             zIndex: 0
           }}
         >
@@ -207,7 +207,7 @@ class Template extends Component {
           </StyledProjectInformations>
           <StyledRevealBlock ref={this.imgBlock}>
             <StyledReveal className="reveal" />
-            <StyledProjectImage className="img" />
+            <StyledProjectImage src={ image.publicURL } className="img" />
           </StyledRevealBlock>
         </StyledProject>
         {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}
@@ -254,10 +254,12 @@ export const query = graphql`
       html
       frontmatter {
         title
-        image
         excerpt
         category
         path
+        image {
+          publicURL
+        }
       }
     },
     prevIcon:file(name: { eq: "chevron-left" }) {

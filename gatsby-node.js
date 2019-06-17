@@ -19,7 +19,9 @@ exports.createPages = (({ graphql, actions }) => {
                                 frontmatter {
                                     path
                                     title
-                                    image
+                                    image {
+                                        publicURL
+                                    }
                                 }
                             }
                         }
@@ -35,6 +37,7 @@ exports.createPages = (({ graphql, actions }) => {
 
                 projects.forEach(({node}, index) => {
                     const { path } = node.frontmatter
+                    console.log(path)
 
                     createPage({
                         path,

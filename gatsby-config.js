@@ -9,6 +9,13 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
         name: `images`,
         path: `${__dirname}/src/images`,
       },
@@ -28,12 +35,17 @@ module.exports = {
     //       layout: require.resolve(`./src/components/layout.js`)
     //     }
     // },
-    'gatsby-transformer-remark',
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-transformer-remark',
       options: {
-        name: `pages`,
-        path: `${__dirname}/src/pages`,
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 786,
+            },
+          },
+        ],
       },
     },
     {

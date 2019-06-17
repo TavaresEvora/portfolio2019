@@ -25,7 +25,7 @@ const StyledNav = styled.div`
 `
 
 const StyledNavPrev = styled.a`
-  /* position: relative; */
+  position: relative;
   cursor: url(${(props) => props.icon}), pointer;
   /* width: 100%; */
   background: #E0E0E0;
@@ -38,7 +38,7 @@ const StyledNavPrev = styled.a`
   justify-content: center;
   align-items: center;
   bottom: 0;
-  right: 50%;
+  /* right: 50%; */
   font-size: 0.75em;
   text-decoration: none;
 
@@ -48,7 +48,7 @@ const StyledNavPrev = styled.a`
 `
 
 const StyledNavNext = styled.a`
-  /* position: relative; */
+  position: relative;
   cursor: url(${(props) => props.icon}), pointer;
   /* width: 100%; */
   background: #E0E0E0;
@@ -73,6 +73,7 @@ const StyledNavNext = styled.a`
 const StyledNavProject = styled.div`
   display: block;
   overflow: hidden;
+  z-index: 3;
 `
 
 const StyledNavTitle = styled.h3`
@@ -84,17 +85,21 @@ const StyledNavTitle = styled.h3`
   margin: 5px;
   text-decoration: none;
   transition: all 0.5s;
+  z-index: 3;
   @media (min-width: 768px) {
     font-size: 2rem;
     margin: 0;
   }
 `
 
-// const StyledNavImage = styled.img`
-//   display: block;
-//   width: 100%;
-//   height: 100%;
-// `
+const StyledNavImage = styled.img`
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`
 
 const StyledHeader = styled.div`
   position: relative;
@@ -109,9 +114,18 @@ const StyledHeader = styled.div`
   }
 `
 
-const StyledHeaderImage = styled(Image)`
+const StyledHeaderImage = styled.img`
   width: 100%;
   height: 100%;
+`
+
+const StyledContent = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  @media (min-width: 768px) {
+    width: 60%;
+    padding: 0;
+  }
 `
 
 const StyledHeaderInformationsContent = styled.div`
@@ -218,7 +232,7 @@ class Template extends Component {
   render() {
     const { data, pageContext } = this.props
     const { markdownRemark: project, prevIcon, nextIcon } = data
-    const { title, tags, excerpt } = project.frontmatter
+    const { title, tags, excerpt, image, client, role, date } = project.frontmatter
     const { html } = project
     const { next, prev } = pageContext
 
@@ -230,7 +244,7 @@ class Template extends Component {
           description={excerpt}
         />
         <StyledHeader>
-            <StyledHeaderImage className="image" />
+            <StyledHeaderImage src={ image.publicURL } className="image" />
             <StyledHeaderInformationsContent className="informations">
               <StyledHeaderInformations>
                   <StyledHeaderInformation>
@@ -238,7 +252,7 @@ class Template extends Component {
                           <div>Client</div>
                       </StyledHeaderInformationTitle>
                       <StyledHeaderInformationContent className="reveal">
-                        <div>Iad France.</div>
+                        <div>{ client }</div>
                       </StyledHeaderInformationContent>
                   </StyledHeaderInformation>
                   <StyledHeaderInformation>
@@ -246,7 +260,7 @@ class Template extends Component {
                         <div>Role</div>
                       </StyledHeaderInformationTitle>
                       <StyledHeaderInformationContent className="reveal">
-                        <div>Développeur Fullstack</div>
+                        <div>{ role }</div>
                       </StyledHeaderInformationContent>
                   </StyledHeaderInformation>
                   <StyledHeaderInformation>
@@ -254,7 +268,7 @@ class Template extends Component {
                         <div>Année</div>
                       </StyledHeaderInformationTitle>
                       <StyledHeaderInformationContent className="reveal">
-                        <div>2019</div>
+                        <div>{ date }</div>
                       </StyledHeaderInformationContent>
                   </StyledHeaderInformation>
               </StyledHeaderInformations>
@@ -265,7 +279,7 @@ class Template extends Component {
               </StyledHeaderDescription>
             </StyledHeaderInformationsContent>
         </StyledHeader>
-        {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}
+        <StyledContent dangerouslySetInnerHTML={{__html: html}} />
         <StyledNav className="nav-project">
           {prev &&
             <StyledNavPrev className="nav-button"
@@ -283,7 +297,7 @@ class Template extends Component {
                 zIndex: 0
               }}
             >
-              {/* <StyledNavImage src={ prev.frontmatter.image } /> */}
+              <StyledNavImage src={ prev.frontmatter.image.publicURL } />
               <StyledNavProject className="projectNav"><div>Projet précedent</div></StyledNavProject>
               <StyledNavTitle className="projectNav"><div>{ prev.frontmatter.title }</div></StyledNavTitle>
             </StyledNavPrev>
@@ -304,7 +318,7 @@ class Template extends Component {
                 zIndex: 0
               }}
             >
-              {/* <StyledNavImage src={ next.frontmatter.image } /> */}
+              <StyledNavImage src={ next.frontmatter.image.publicURL } />
               <StyledNavProject className="projectNav"><div>Projet suivant</div></StyledNavProject>
               <StyledNavTitle className="projectNav"><div>{ next.frontmatter.title }</div></StyledNavTitle>
             </StyledNavNext>
@@ -321,10 +335,15 @@ export const query = graphql`
       html
       frontmatter {
         title
-        image
         excerpt
         category
         path
+        client
+        role
+        date
+        image {
+          publicURL
+        }
       }
     },
     prevIcon:file(name: { eq: "chevron-left" }) {
