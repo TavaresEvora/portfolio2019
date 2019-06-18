@@ -165,7 +165,7 @@ class IndexPage extends Component {
     this.tl
       // .set('.reveal-text > div', { opacity: 0 })
       .staggerFrom('.txt', 0.5, { y: '100%' }, 0.15)
-      .from('#social-content', 0.5, { x: -50, opacity: 0 }, '-=0.5')
+      .from('#social-content', 0.5, { x: -50, opacity: 0 }, '-=0.65')
       .play()
 
     setInterval(() => {
@@ -183,7 +183,7 @@ class IndexPage extends Component {
   onGoToProject() {
     this.tl
       .staggerTo('.txt', 0.5, { y: '100%' }, 0.15)
-      .to('#social-content', 0.5, { x: -50, opacity: 0 })
+      .to('#social-content', 0.5, { x: -50, opacity: 0 }, '-=0.65')
       .play()
   }
 

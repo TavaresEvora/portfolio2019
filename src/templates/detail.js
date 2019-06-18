@@ -16,6 +16,7 @@ library.add(faArrowDown)
 
 const StyledNav = styled.div`
   position: relative;
+  color: #FFF;
   display: flex;
   width: 100%;
   height: 15vh;
@@ -28,7 +29,7 @@ const StyledNavPrev = styled.a`
   position: relative;
   cursor: url(${(props) => props.icon}), pointer;
   /* width: 100%; */
-  background: #E0E0E0;
+  background: url(${(props) => props.background}) no-repeat center center;
   /* flex: 1; */
   color: ${ variables.black };
   width: 50%;
@@ -42,8 +43,8 @@ const StyledNavPrev = styled.a`
   font-size: 0.75em;
   text-decoration: none;
 
-  &:hover h3 {
-    opacity: 1;
+  &:hover .overlay {
+    opacity: 0;
   }
 `
 
@@ -51,7 +52,7 @@ const StyledNavNext = styled.a`
   position: relative;
   cursor: url(${(props) => props.icon}), pointer;
   /* width: 100%; */
-  background: #E0E0E0;
+  background: url(${(props) => props.background}) no-repeat center center;
   /* flex: 1; */
   color: ${ variables.black };
   width: 50%;
@@ -65,20 +66,21 @@ const StyledNavNext = styled.a`
   font-size: 0.75em;
   text-decoration: none;
 
-  &:hover h3 {
-    opacity: 1;
+  &:hover .overlay {
+    opacity: 0;
   }
 `
 
 const StyledNavProject = styled.div`
   display: block;
+  color: #FFF;
   overflow: hidden;
   z-index: 3;
 `
 
 const StyledNavTitle = styled.h3`
   display: block;
-  color: ${ variables.primary };
+  color: #FFF;
   overflow: hidden;
   /* opacity: 0; */
   font-size: 1rem;
@@ -92,13 +94,16 @@ const StyledNavTitle = styled.h3`
   }
 `
 
-const StyledNavImage = styled.img`
+const StyledNavOverlay = styled.div`
   display: block;
   position: absolute;
+  background: rgba(0, 0, 0, 0.3);
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  transition: all .3s;
+  z-index: 0;
 `
 
 const StyledHeader = styled.div`
@@ -219,10 +224,12 @@ class Template extends Component {
     const next = e.target.closest('.nav-button')
     const rect = next.getBoundingClientRect()
     const titles = next.querySelectorAll('.projectNav > div')
+    const overlay = next.querySelectorAll('.projectNav > .overlay')
     this.tl.to(window, 0.3, { scrollTo: document.body.scrollHeight, ease: Power2.easeOut })
       //TODO: Masquer les écritures vers le bas
       .to('.nav-button', 0, { position: 'absolute' })
       .staggerTo(titles, 0.3, { y: '100%' }, 0.1)
+      .to(overlay, 0.1, { opacity: 0 })
       .to(next, 0, { position: 'fixed', width: rect.width, height: rect.height })
       .to(next, 0.3, { bottom: '50%', right: '50%', x: '50%', y: '50%', zIndex: 999 })
       .to(next, 0.3, { width: '100vw', height: '100vh' })
@@ -265,6 +272,14 @@ class Template extends Component {
                   </StyledHeaderInformation>
                   <StyledHeaderInformation>
                       <StyledHeaderInformationTitle className="reveal-title">
+                        <div>Technologies</div>
+                      </StyledHeaderInformationTitle>
+                      <StyledHeaderInformationContent className="reveal">
+                        <div>{ role }</div>
+                      </StyledHeaderInformationContent>
+                  </StyledHeaderInformation>
+                  <StyledHeaderInformation>
+                      <StyledHeaderInformationTitle className="reveal-title">
                         <div>Année</div>
                       </StyledHeaderInformationTitle>
                       <StyledHeaderInformationContent className="reveal">
@@ -282,7 +297,7 @@ class Template extends Component {
         <StyledContent dangerouslySetInnerHTML={{__html: html}} />
         <StyledNav className="nav-project">
           {prev &&
-            <StyledNavPrev className="nav-button"
+            <StyledNavPrev background={ prev.frontmatter.image.publicURL } className="nav-button"
               url={ prevIcon.publicURL }
               alt={ prevIcon.name }
               to={ `/${ prev.frontmatter.path }/detail` }
@@ -297,13 +312,13 @@ class Template extends Component {
                 zIndex: 0
               }}
             >
-              <StyledNavImage src={ prev.frontmatter.image.publicURL } />
+              <StyledNavOverlay className="overlay" />
               <StyledNavProject className="projectNav"><div>Projet précedent</div></StyledNavProject>
               <StyledNavTitle className="projectNav"><div>{ prev.frontmatter.title }</div></StyledNavTitle>
             </StyledNavPrev>
           }
           {next &&
-            <StyledNavNext className="nav-button"
+            <StyledNavNext background={ next.frontmatter.image.publicURL } className="nav-button"
               url={ nextIcon.publicURL }
               alt={ nextIcon.name }
               to={ `/${ next.frontmatter.path }/detail` }
@@ -318,7 +333,7 @@ class Template extends Component {
                 zIndex: 0
               }}
             >
-              <StyledNavImage src={ next.frontmatter.image.publicURL } />
+              <StyledNavOverlay className="overlay" />
               <StyledNavProject className="projectNav"><div>Projet suivant</div></StyledNavProject>
               <StyledNavTitle className="projectNav"><div>{ next.frontmatter.title }</div></StyledNavTitle>
             </StyledNavNext>
