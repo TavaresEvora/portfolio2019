@@ -150,7 +150,7 @@ class Template extends Component {
   componentDidMount() {
     this.tl
       .to('.reveal', 0.3, { x: '0%' }, 1)
-      .from('.gatsby-image-wrapper', 0.1, { opacity: 0 })
+      .from('.img', 0.1, { opacity: 0 })
       .to('.reveal', 0.3, { x: '102%' }, 2)
       .staggerFrom('.txt > div', 0.3, { y: '100%' }, 0.2)
       .play()
