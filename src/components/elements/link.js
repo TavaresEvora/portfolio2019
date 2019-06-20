@@ -5,16 +5,16 @@ import variables from './variables'
 
 const RevealAnimation = posed.div({
   visible: {
-    x: '100%',
+    x: '102%',
     transition: () => ({
       type: 'keyframes',
-      values: ['-100%', '0%', '0%', '100%'],
+      values: ['-102%', '0%', '0%', '102%'],
       times: [0, 0.3, 0.7, 1],
       duration: 800,
     })
   },
   hidden: {
-    x: '-100%',
+    x: '-102%',
     transition: {
       duration: 0,
     }

@@ -7,9 +7,11 @@ import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import SEO from '../components/seo'
 import { TimelineLite, Power2 } from 'gsap'
 import 'gsap/ScrollToPlugin'
+import ScrollMagic from 'scrollmagic'
+import 'imports-loader?define=>false!scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap'
+import 'imports-loader?define=>false!scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators'
 
 import variables from '../components/elements/variables'
-import Image from '../components/image';
 
 library.add(faArrowUp)
 library.add(faArrowDown)
@@ -127,6 +129,12 @@ const StyledHeaderImage = styled.img`
 const StyledContent = styled.div`
   width: 100%;
   margin: 0 auto;
+  .gatsby-resp-image-wrapper {
+      margin: 120px;
+      box-shadow: 0 12px 2vw 1vw rgba(0, 0, 0, .1);
+      cursor: default;
+      pointer-events: none;
+  }
   @media (min-width: 768px) {
     width: 60%;
     padding: 0;
@@ -206,6 +214,7 @@ class Template extends Component {
 
   constructor(props) {
     super(props)
+    this.controller = new ScrollMagic.Controller()
     this.tl = new TimelineLite({paused: true})
     this.onGoToNextProject = this.onGoToNextProject.bind(this)
   }
@@ -218,6 +227,19 @@ class Template extends Component {
       .from('.reveal > div', 0.3, { y: '100%', opacity: 0 })
       .staggerFrom('.reveal-description > p', 0.3, { y: '100%', opacity: 0 }, '0.2')
       .play()
+
+    document.querySelectorAll('.gatsby-resp-image-wrapper').forEach((el) => {
+      const tlm = new TimelineLite()
+      tlm.from(el, 1, { opacity: 0 })
+      new ScrollMagic.Scene({
+        triggerElement: el,
+        triggerHook: 0.65,
+        reverse: false
+      })
+        .setTween(tlm)
+        .addIndicators({name: "1 (duration: 0)"})
+        .addTo(this.controller)
+    })
   }
 
   onGoToNextProject(node, e) {

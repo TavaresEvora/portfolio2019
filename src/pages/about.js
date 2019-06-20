@@ -113,7 +113,7 @@ const StyledDescription = styled.div`
     margin-bottom: 0;
     @media (min-width: 768px) {
       margin-bottom: 50px;
-      width: 50%;
+      /* width: 50%; */
     }
   }
   line-height: 1.8;
