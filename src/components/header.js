@@ -1,10 +1,9 @@
-import { graphql, Link } from 'gatsby'
-import { TimelineLite } from 'gsap'
+import { Link } from 'gatsby'
 // import TransitionLink from 'gatsby-plugin-transition-link'
 import posed from 'react-pose'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import styled, { keyframes, css } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import variables from '../components/elements/variables'
 import LinkStyled from '../components/elements/link'
@@ -130,14 +129,6 @@ const StyledNavItem = styled(NavItem)`
 `
 
 const StyledMenu = styled.ul`
-  margin: 0;
-  padding: 0;
-`
-
-const StyledNavImage = styled.img`
-  position: absolute;
-  top: auto;
-  left: auto;
   margin: 0;
   padding: 0;
 `

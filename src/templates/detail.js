@@ -237,7 +237,6 @@ class Template extends Component {
         reverse: false
       })
         .setTween(tlm)
-        .addIndicators({name: "1 (duration: 0)"})
         .addTo(this.controller)
     })
   }
@@ -261,7 +260,7 @@ class Template extends Component {
   render() {
     const { data, pageContext } = this.props
     const { markdownRemark: project, prevIcon, nextIcon } = data
-    const { title, tags, excerpt, image, client, role, date } = project.frontmatter
+    const { title, tags, excerpt, image, client, role, date, intro, technologies } = project.frontmatter
     const { html } = project
     const { next, prev } = pageContext
 
@@ -297,7 +296,7 @@ class Template extends Component {
                         <div>Technologies</div>
                       </StyledHeaderInformationTitle>
                       <StyledHeaderInformationContent className="reveal">
-                        <div>{ role }</div>
+                        <div>{ technologies }</div>
                       </StyledHeaderInformationContent>
                   </StyledHeaderInformation>
                   <StyledHeaderInformation>
@@ -310,9 +309,7 @@ class Template extends Component {
                   </StyledHeaderInformation>
               </StyledHeaderInformations>
               <StyledHeaderDescription className="reveal-description">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p>Consequuntur nemo praesentium maxime velit. Ut modi cum a fugit, excepturi id quaerat,</p>
-                <p>quia necessitatibus nam, odit adipisci laudantium consequuntur repellat quod.</p>
+                { intro }
               </StyledHeaderDescription>
             </StyledHeaderInformationsContent>
         </StyledHeader>
@@ -378,6 +375,8 @@ export const query = graphql`
         client
         role
         date
+        technologies
+        intro
         image {
           publicURL
         }

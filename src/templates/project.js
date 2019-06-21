@@ -8,7 +8,6 @@ import SEO from '../components/seo'
 import { TimelineLite } from 'gsap'
 
 import variables from '../components/elements/variables'
-import Image from '../components/image';
 
 library.add(faArrowUp)
 library.add(faArrowDown)

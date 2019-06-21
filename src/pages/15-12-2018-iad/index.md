@@ -2,7 +2,7 @@
 title: "IAD - France"
 path: "iad"
 image: "./iad.JPG"
-technologies: ['Symfony 3', 'Gulp']
+technologies: "Symfony"
 category: 'Landing page'
 excerpt: "Petit text court pour IAD"
 intro: "Petit text court pour IAD"

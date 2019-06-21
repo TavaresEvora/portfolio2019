@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
 import styled, { createGlobalStyle } from 'styled-components'
-import posed, { PoseGroup } from 'react-pose'
 import { TimelineLite } from 'gsap'
 import 'normalize.css'
 
