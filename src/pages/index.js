@@ -148,17 +148,8 @@ const StyledSeeMore = styled.div`
 class IndexPage extends Component {
   constructor(props) {
     super(props)
-    this.state = { 
-      role: 'fullstack'
-    }
     this.onGoToProject = this.onGoToProject.bind(this)
     this.tl = new TimelineLite({paused: true})
-  }
-
-  getRole() {
-    const role = ['fullstack', 'backend', 'frontend']
-    const index = Math.floor(Math.random() * 3)
-    return role[index]
   }
 
   componentDidMount() {
@@ -167,17 +158,6 @@ class IndexPage extends Component {
       .staggerFrom('.txt', 0.5, { y: '100%' }, 0.15)
       .from('#social-content', 0.5, { x: -50, opacity: 0 }, '-=0.65')
       .play()
-
-    setInterval(() => {
-      // this.tl
-      //   .set()
-      //   .to('.function > span', 1, { y: '100%' })
-      //   .to('.function > span', 1, { y: '0%' })
-      //   .play()
-
-      this.setState({ role: this.getRole() })
-        
-    }, 2000)
   }
 
   onGoToProject() {
@@ -206,7 +186,7 @@ class IndexPage extends Component {
             <StyledReveal className="reveal" />
             <StyledDescription className="reveal-text">
               <div className="txt">
-              Je suis développeur <StyledFunction className="function"> <span> {this.state.role} </span> </StyledFunction> sur Paris, bienvenue sur mon portfolio !</div>
+              Je suis développeur <StyledFunction className="function"> <span> fullstack </span> </StyledFunction> sur Paris, bienvenue sur mon portfolio !</div>
               {/* https://greeeg.com/about/ */}
               {/* http://eric-huguenin.com/ */}
               {/* https://www.olivier-guilleux.com/ */}
