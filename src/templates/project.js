@@ -152,6 +152,10 @@ class Template extends Component {
       .from('.img', 0.1, { opacity: 0 })
       .to('.reveal', 0.3, { x: '102%' }, 2)
       .staggerFrom('.txt > div', 0.3, { y: '100%' }, 0.2)
+      .to('.nav', 0.5, { background: 'rgba(0, 159, 227, 0.38)' })
+      .to('.nav', 0.5, { background: 'rgba(0, 159, 227, 0)' })
+      .to('.nav', 0.5, { background: 'rgba(0, 159, 227, 0.38)' })
+      .to('.nav', 0.5, { background: 'rgba(0, 159, 227, 0)' })
       .play()
   }
 
@@ -212,6 +216,7 @@ class Template extends Component {
         {/* <div dangerouslySetInnerHTML={{__html: html}} /> */}
         {prev &&
           <StyledNavPrev
+          className="nav"
             url={ prevIcon.publicURL }
             alt={ prevIcon.name }
             to={ `/${prev.frontmatter.path}` }
@@ -228,6 +233,7 @@ class Template extends Component {
         }
         {next &&
           <StyledNavNext
+          className="nav"
            url={ nextIcon.publicURL }
            alt={ nextIcon.name }
            to={ `/${next.frontmatter.path}` }
