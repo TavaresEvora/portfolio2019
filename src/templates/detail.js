@@ -210,6 +210,21 @@ const StyledHeaderDescription = styled.div`
   }
 `
 
+const StyledSeeMore = styled.div`
+  overflow: hidden;
+  font-weight: 600;
+  color: ${variables.black};
+  width: 90%;
+  margin: 30px 0 0;
+  @media (min-width: 768px) {
+    width: 60%;
+  }
+  
+  & > * {
+    display: block;
+  }
+`
+
 class Template extends Component {
 
   constructor(props) {
@@ -223,9 +238,10 @@ class Template extends Component {
     this.setState({ isLoaded: true })
     this.tl
       .from('.informations', 0.3, { y: '100%' }, 0.8)
+      .to('.image', 0.3, { y: '-100px' }, 0.8)
       .from('.reveal-title > div', 0.3, { y: '100%', opacity: 0 }, '-=0.2')
       .from('.reveal > div', 0.3, { y: '100%', opacity: 0 })
-      .staggerFrom('.reveal-description > p', 0.3, { y: '100%', opacity: 0 }, '0.2')
+      .from('.reveal-description', 0.3, { y: '100%', opacity: 0 })
       .play()
 
     document.querySelectorAll('.gatsby-resp-image-wrapper').forEach((el) => {
@@ -260,7 +276,7 @@ class Template extends Component {
   render() {
     const { data, pageContext } = this.props
     const { markdownRemark: project, prevIcon, nextIcon } = data
-    const { title, tags, excerpt, image, client, role, date, intro, technologies } = project.frontmatter
+    const { title, tags, excerpt, image, client, role, date, intro, technologies, link } = project.frontmatter
     const { html } = project
     const { next, prev } = pageContext
 
@@ -308,6 +324,11 @@ class Template extends Component {
                       </StyledHeaderInformationContent>
                   </StyledHeaderInformation>
               </StyledHeaderInformations>
+              <StyledSeeMore>
+                <a href={ link } target="_blank" rel="noopener noreferrer">
+                  <div className="txt">voir le projet</div>
+                </a>
+              </StyledSeeMore>
               <StyledHeaderDescription className="reveal-description">
                 { intro }
               </StyledHeaderDescription>
