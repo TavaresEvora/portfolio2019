@@ -12,4 +12,7 @@ role: 'Développeur Fullstack'
 date: '2019'
 link: '2019'
 ---
-![homepage](./Capture.JPG)
+![vigifinance homepage](./vigifinance-home.png)
+![page vigifinance notre approche](./vigifinance-notre-approche.png)
+![page vigifinance nos expertises](./vigifinance-nos-expertises.png)
+![page vigifinance notre equipe](./vigifinance-notre-equipe.png)
