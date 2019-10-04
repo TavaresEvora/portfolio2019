@@ -141,20 +141,17 @@ class Template extends Component {
     super(props)
     this.onGoToDetail = this.onGoToDetail.bind(this)
     this.tl = new TimelineLite({paused: true})
-    // this.img = React.createRef()
     this.imgBlock = React.createRef()
-    // this.transition = React.createRef()
+    this.onMouseMove = this.onMouseMove.bind(this)
   }
 
   componentDidMount() {
     this.tl
-      .to('.reveal', 0.3, { x: '0%' }, 1)
+      .to('.reveal', 0.3, { x: '0%' }, 0)
       .from('.img', 0.1, { opacity: 0 })
-      .to('.reveal', 0.3, { x: '102%' }, 2)
+      .to('.reveal', 0.3, { x: '102%' }, .5)
       .staggerFrom('.txt > div', 0.3, { y: '100%' }, 0.2)
-      .to('.nav', 0.5, { background: 'rgba(0, 159, 227, 0.38)' })
-      .to('.nav', 0.5, { background: 'rgba(0, 159, 227, 0)' })
-      .to('.nav', 0.5, { background: 'rgba(0, 159, 227, 0.38)' })
+      .to('.nav', 0.5, { background: 'rgba(0, 159, 227, 0.2)' })
       .to('.nav', 0.5, { background: 'rgba(0, 159, 227, 0)' })
       .play()
   }
@@ -175,6 +172,18 @@ class Template extends Component {
       .to(this.imgBlock.current, 0.3, { top: '50%', left: '50%', x: '-50%', y: '-50%'})
       .to(this.imgBlock.current, 0.3, { width: '100vw', height: '100vh' })
       .play()
+  }
+
+  onMouseMove(e) {
+    // const img = this.imgBlock.current.querySelector('.img')
+    // const { screenX: x, screenY: y } = e
+    // const { offsetWidth: width, offsetHeight: height} = this.imgBlock.current
+    // const move = 25
+    // const xMove = x / width * (move * 2) + move
+    // const yMove = y / height * (move * 2) + move
+    // img.style.transform = `translate(${xMove}px, ${yMove}px)`
+
+    console.debug(e.type)
   }
 
   render() {
@@ -208,7 +217,7 @@ class Template extends Component {
             <StyledProjectCategory className="txt"><div>{ category }</div></StyledProjectCategory>
             <StyledProjectExcerpt className="txt"><div>{ excerpt }</div></StyledProjectExcerpt>
           </StyledProjectInformations>
-          <StyledRevealBlock ref={this.imgBlock}>
+          <StyledRevealBlock onMouseMove={(e) => this.onMouseMove(e)} ref={this.imgBlock}>
             <StyledReveal className="reveal" />
             <StyledProjectImage src={ image.publicURL } className="img" />
           </StyledRevealBlock>
@@ -222,7 +231,7 @@ class Template extends Component {
             to={ `/${prev.frontmatter.path}` }
             exit={{
               trigger: () => this.onGoToNextProject(),
-              length: 2,
+              length: 1,
               zIndex: 2
               }}
               entry={{
@@ -239,7 +248,7 @@ class Template extends Component {
            to={ `/${next.frontmatter.path}` }
            exit={{
             trigger: () => this.onGoToNextProject(),
-            length: 2,
+            length: 1,
             zIndex: 2
             }}
             entry={{

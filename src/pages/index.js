@@ -197,7 +197,7 @@ class IndexPage extends Component {
               <StyledSeeMore>
                 <LinkStyle
                   as={TransitionLink}
-                  to="/iad"
+                  to="/portfolio-2016"
                   exit={{
                     trigger: ({ node, e }) => this.onGoToProject(node, e),
                     length: 1.3,

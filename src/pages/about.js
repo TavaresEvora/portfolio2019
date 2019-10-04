@@ -206,10 +206,16 @@ class AboutPage extends Component {
                   </p>
                 </StyledDescription>
                 <StyledDescription className="text">
-                  <p>J'accorde beaucoup d'importance à la qualité et l'optimisation du code produit.</p>
+                  <p>J'accorde beaucoup d'importance à la qualité et l'optimisation du code produit. Cette exigence me permet de vous fournir un site maintenable et performant</p>
                 </StyledDescription>
                 <StyledDescription className="text">
-                  <p>A l'avenir, je souhaite en apprendre plus sur l'aspect DevOps</p>
+                  <p>Mes expériences professionnelles me permettront de répondre à vos attentes, pour réaliser votre site internet, votre landing page, ou une intégration en HTML5</p>
+                </StyledDescription>
+                <StyledDescription className="text">
+                  <p>Etant force de proposition et à votre écoute, je vous apporte les conseils nécessaires pour chaque étape de votre projet</p>
+                </StyledDescription>
+                <StyledDescription className="text">
+                  <p>N'hésitez pas à me contacter, je serai ravi de pouvoir vous aider.</p>
                 </StyledDescription>
               </StyledSectionContent>
             </StyledFirstSection>
@@ -223,7 +229,7 @@ class AboutPage extends Component {
                 </StyledSectionSkill>
                 <StyledSectionSkill>
                   <StyledSubTitle className="text"><p>Javascript</p></StyledSubTitle>
-                  <StyledDescription className="text"><p>Natif / ES6 / React / VueJs / JQuery / Gsap / NodeJs / Websocket</p></StyledDescription>
+                  <StyledDescription className="text"><p>ES6 / React / VueJs / JQuery / Gsap / NodeJs / Websocket</p></StyledDescription>
                 </StyledSectionSkill>
                 <StyledSectionSkill>
                   <StyledSubTitle className="text"><p>CSS</p></StyledSubTitle>
@@ -231,7 +237,7 @@ class AboutPage extends Component {
                 </StyledSectionSkill>
                 <StyledSectionSkill>
                   <StyledSubTitle className="text"><p>PHP</p></StyledSubTitle>
-                  <StyledDescription className="text"><p>Natif / Laravel / Symfony / Wordpress</p></StyledDescription>
+                  <StyledDescription className="text"><p>Symfony / Laravel / Wordpress</p></StyledDescription>
                 </StyledSectionSkill>
                 <StyledSectionSkill>
                   <StyledSubTitle className="text"><p>Environnement</p></StyledSubTitle>
