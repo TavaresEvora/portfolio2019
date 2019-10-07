@@ -129,6 +129,7 @@ const StyledHeaderImage = styled.img`
 const StyledContent = styled.div`
   width: 100%;
   margin: 0 auto;
+  padding: 0 15px;
   .gatsby-resp-image-wrapper {
       margin: 120px;
       box-shadow: 0 12px 2vw 1vw rgba(0, 0, 0, .1);
