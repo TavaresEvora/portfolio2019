@@ -1,16 +1,15 @@
 ---
 title: "Vigifinance"
 path: "vigifinance"
-image: "./hero.jpg"
-technologies: 'Wordpress, sass,  jquery'
-category: 'Landing page'
+image: "./vigifinance.png"
+technologies: 'Wordpress, Sass, Es6, Webpack'
+category: 'Site wordpress'
 excerpt: "Vigifinance site wordpress"
-intro: "Mon portfolio de 2016. Site statique one page réalisé en HTML/CSS.
-"
+intro: "Integration puis developpement sous wordpress"
 client: 'Vigifinance'
 role: 'Développeur Fullstack'
 date: '2019'
-link: 'https://vigifinance.fr/'
+link: 'https://vigifinance.com/'
 ---
 ![vigifinance homepage](./vigifinance-home.png)
 ![page vigifinance notre approche](./vigifinance-notre-approche.png)

@@ -15,7 +15,7 @@ date: '2016'
 link: 'https://2016.tavaresevora.com/'
 ---
 ![tavaresevora preloader](./2016-tavaresevora-preloader.png)
-![tavaresevora homepage](./2016-tavaresevora.png)
+![tavaresevora homepage](./2016-tavaresevora-home.png)
 ![Projet rsln mag réalisé en stage](./2016-tavaresevora-rsln.png)
 ![Projet watchdogs mag réalisé en stage](./2016-tavaresevora-watchdogs.png)
 ![Projet content-loop mag réalisé en stage](./2016-tavaresevora-content-loop.png)

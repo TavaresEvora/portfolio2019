@@ -397,6 +397,7 @@ export const query = graphql`
         client
         role
         date
+        link
         technologies
         intro
         image {
