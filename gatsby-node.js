@@ -1,5 +1,66 @@
 const path = require(`path`)
 
+exports.onCreateWebpackConfig = ({
+    stage,
+    rules,
+    loaders,
+    plugins,
+    actions,
+}) => {
+    actions.setWebpackConfig({
+        module: {
+            rules: stage === 'build-html'
+                ? [
+                    {
+                        test: /ScrollMagic/,
+                        use: loaders.null(),
+                    },
+                    {
+                        test: /animation.gsap/,
+                        use: loaders.null(),
+                    },
+                    {
+                        test: /debug.addIndicators/,
+                        use: loaders.null(),
+                    }
+                ]
+                : []
+        },
+        resolve: {
+            alias: {
+                TweenLite: path.resolve(
+                    'node_modules',
+                    'gsap/src/uncompressed/TweenLite.js'
+                ),
+                TweenMax: path.resolve(
+                    'node_modules',
+                    'gsap/src/uncompressed/TweenMax.js'
+                ),
+                TimelineLite: path.resolve(
+                    'node_modules',
+                    'gsap/src/uncompressed/TimelineLite.js'
+                ),
+                TimelineMax: path.resolve(
+                    'node_modules',
+                    'gsap/src/uncompressed/TimelineMax.js'
+                ),
+                ScrollMagic: path.resolve(
+                    'node_modules',
+                    'scrollmagic/scrollmagic/uncompressed/ScrollMagic.js'
+                ),
+                'animation.gsap': path.resolve(
+                    'node_modules',
+                    'scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js'
+                ),
+                'debug.addIndicators': path.resolve(
+                    'node_modules',
+                    'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators.js'
+                ),
+            },
+        },
+    })
+}
+
 exports.createPages = (({ graphql, actions }) => {
     const { createPage } = actions
 
@@ -35,7 +96,7 @@ exports.createPages = (({ graphql, actions }) => {
 
                 const projects = response.data.allMarkdownRemark.edges
 
-                projects.forEach(({node}, index) => {
+                projects.forEach(({ node }, index) => {
                     const { path } = node.frontmatter
                     console.log(path)
 
