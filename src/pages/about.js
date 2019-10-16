@@ -133,23 +133,30 @@ class AboutPage extends Component {
     super(props)
     this.updatePercentage = this.updatePercentage.bind(this)
     this.tl = new TimelineMax({onUpdate: this.updatePercentage})
-    this.controller = new ScrollMagic.Controller()
-    this.scene = new ScrollMagic.Scene({
-      triggerElement: '.sections',
-      triggerHook: 'onLeave',
-      duration: '100%'
-    })
+    // this.controller = new ScrollMagic.Controller()
+    // this.scene = new ScrollMagic.Scene({
+    //   triggerElement: '.sections',
+    //   triggerHook: 'onLeave',
+    //   duration: '100%'
+    // })
   }
 
   componentDidMount() {
     // this.controller
+    const controller = new ScrollMagic.Controller()
+    const scene = new ScrollMagic.Scene({
+      triggerElement: '.sections',
+      triggerHook: 'onLeave',
+      duration: '100%'
+    })
+
     this.tl
       .to('.name', 1.5, { x: '-100%' })
 
-    this.scene
+    scene
       .setPin('.sections')
       .setTween(this.tl)
-      .addTo(this.controller)
+      .addTo(controller)
 
     document.querySelectorAll('.section').forEach((el) => {
       const title = el.querySelector('.title span')
@@ -161,7 +168,7 @@ class AboutPage extends Component {
         reverse: false
       })
         .setTween(tlm)
-        .addTo(this.controller)
+        .addTo(controller)
 
       el.querySelectorAll('.text').forEach((text) => {
         const textT = text.querySelector('p')
@@ -173,7 +180,7 @@ class AboutPage extends Component {
           reverse: false
         })
           .setTween(tlmt)
-          .addTo(this.controller)
+          .addTo(controller)
       })
     })
   }

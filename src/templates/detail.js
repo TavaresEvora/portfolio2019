@@ -230,7 +230,7 @@ class Template extends Component {
 
   constructor(props) {
     super(props)
-    this.controller = new ScrollMagic.Controller()
+    // this.controller = new ScrollMagic.Controller()
     this.tl = new TimelineLite({paused: true})
     this.onGoToNextProject = this.onGoToNextProject.bind(this)
   }
@@ -254,7 +254,7 @@ class Template extends Component {
         reverse: false
       })
         .setTween(tlm)
-        .addTo(this.controller)
+        .addTo(new ScrollMagic.Controller())
     })
   }
 

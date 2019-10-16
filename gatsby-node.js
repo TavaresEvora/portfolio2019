@@ -16,6 +16,10 @@ exports.onCreateWebpackConfig = ({
                         use: loaders.null(),
                     },
                     {
+                        test: /ScrollMagic.Controller/,
+                        use: loaders.null(),
+                    },
+                    {
                         test: /animation.gsap/,
                         use: loaders.null(),
                     },
