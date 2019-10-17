@@ -56,7 +56,7 @@ class Layout extends Component {
 
   componentDidMount = () => {
     this.tl
-      .from(this.preloader.current, 0.5, { opacity: 1 }, 0.8)
+      .from(this.preloader.current, 0.5, { opacity: 1 }, 1)
       .from(this.transition.current, 0.5, { y: '-100%' })
       .to(this.transition.current, 0.5, { y: '100%' }, '+=.5')
 

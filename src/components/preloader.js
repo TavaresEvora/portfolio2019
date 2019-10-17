@@ -26,12 +26,14 @@ class Preloader extends Component {
     }
   }
 
-  render() {
-    const { count } = this.state
-
+  componentDidMount() {
     setInterval(() => {
       if (this.state.count < 100) this.setState({ count: this.state.count + 1 })
-    }, 80)
+    }, 10)
+  }
+
+  render() {
+    const { count } = this.state
 
     return (
       <StyledPreloader ref={ this.props.preloaderRef }>
