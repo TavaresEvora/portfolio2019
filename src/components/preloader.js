@@ -10,6 +10,8 @@ const StyledPreloader = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   background: #FFF;

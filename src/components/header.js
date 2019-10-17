@@ -182,11 +182,14 @@ class Header extends Component {
 
 	burgerHandleClick(e) {
 		e.preventDefault()
-		this.setState({ menuIsOpen: !!!this.state.menuIsOpen })
+    this.setState({ menuIsOpen: !!!this.state.menuIsOpen })
+    const body = document.querySelector('body')
+    body.style.overflow = (!this.state.menuIsOpen) ? 'hidden' : 'auto'
   }
   
   closeBurger() {
     this.setState({ menuIsOpen: false })
+    document.querySelector('body').style.overflow = 'auto'
   }
   
   showImage() {

@@ -187,14 +187,7 @@ class IndexPage extends Component {
             <StyledDescription className="reveal-text">
               <div className="txt">
               Je suis développeur <StyledFunction className="function"> <span> fullstack </span> </StyledFunction> sur Paris, bienvenue sur mon portfolio !</div>
-              {/* https://greeeg.com/about/ */}
-              {/* http://eric-huguenin.com/ */}
-              {/* https://www.olivier-guilleux.com/ */}
-              {/* http://kolaps.com/en/about/ */}
-              {/* http://www.lucavolino.com/about */}
-              {/* http://tombekkers.com/ */}
-              {/* https://github.com/KyleAMathews/blog/blob/master/src/pages/2019-03-31---new-design-cooper-hewitt/index.md */}
-              <StyledSeeMore>
+            <StyledSeeMore>
                 <LinkStyle
                   as={TransitionLink}
                   to="/portfolio-2016"
