@@ -6,7 +6,15 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-react-helmet',
-    'gatsby-plugin-styled-components',
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        // Change plugin default options here, e.g.:
+        ssr: true
+        // displayName: false, 
+        // minify: false
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
