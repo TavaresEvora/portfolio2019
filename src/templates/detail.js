@@ -236,6 +236,7 @@ class Template extends Component {
   }
 
   componentDidMount() {
+    const imageWrapper = document.querySelectorAll('.gatsby-resp-image-wrapper')
     this.setState({ isLoaded: true })
     this.tl
       .from('.informations', 0.3, { y: '100%' }, 0.8)
@@ -245,13 +246,13 @@ class Template extends Component {
       .from('.reveal-description', 0.3, { y: '100%', opacity: 0 })
       .play()
 
-    document.querySelectorAll('.gatsby-resp-image-wrapper').forEach((el) => {
+    imageWrapper.forEach((el) => {
       const tlm = new TimelineLite()
-      tlm.from(el, 1, { opacity: 0 })
+      tlm.from(el, 0.7, { opacity: 0 })
       new ScrollMagic.Scene({
         triggerElement: el,
         triggerHook: 0.65,
-        reverse: false
+        reverse: true
       })
         .setTween(tlm)
         .addTo(new ScrollMagic.Controller())
@@ -325,11 +326,11 @@ class Template extends Component {
                       </StyledHeaderInformationContent>
                   </StyledHeaderInformation>
               </StyledHeaderInformations>
-              <StyledSeeMore>
+              {/* <StyledSeeMore>
                 <a href={ link } target="_blank" rel="noopener noreferrer">
                   <div className="txt">voir le projet</div>
                 </a>
-              </StyledSeeMore>
+              </StyledSeeMore> */}
               <StyledHeaderDescription className="reveal-description">
                 { intro }
               </StyledHeaderDescription>

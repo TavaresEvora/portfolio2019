@@ -129,6 +129,12 @@ const StyledFunction = styled.div`
   } 
 `
 
+const StyledAvaible = styled.small`
+  display: block;
+  margin-top: 5px;
+  color: ${variables.primary};
+`
+
 const StyledSeeMore = styled.div`
   position: fixed;
   font-size: 1rem;
@@ -186,7 +192,9 @@ class IndexPage extends Component {
             <StyledReveal className="reveal" />
             <StyledDescription className="reveal-text">
               <div className="txt">
-              Je suis développeur <StyledFunction className="function"> <span> fullstack </span> </StyledFunction> sur Paris, bienvenue sur mon portfolio !</div>
+                Je suis développeur <StyledFunction className="function"> <span> fullstack </span> </StyledFunction> sur Paris et bienvenue sur mon portfolio !
+                <StyledAvaible>Disponible à partir du mois de <b>Février</b></StyledAvaible>
+              </div>
             <StyledSeeMore>
                 <LinkStyle
                   as={TransitionLink}
@@ -207,12 +215,12 @@ class IndexPage extends Component {
             </StyledDescription>
           </StyledRevealBlock>
           <StyledSocialContent id="social-content">
-            <a href="linkedin">linkedin</a>
-            <a href="linkedin">twitter</a>
-            <a href="linkedin">github</a>
+            <a href="https://www.linkedin.com/in/valdimir-tavares-evora-9550a4108/">linkedin</a>
+            <a href="https://twitter.com/tavaresevora">twitter</a>
+            <a href="https://github.com/TavaresEvora">github</a>
           </StyledSocialContent>
           <StyledInformation id="last-update">
-            <span className="txt">Dernière mise jour: 06/02/2019</span>
+            <span className="txt">Dernière mise jour: 03/12/2019</span>
           </StyledInformation>
         </StyledPresentation>
       </StyledContent>
