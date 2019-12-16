@@ -11,8 +11,8 @@ import variables from './elements/variables'
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
-     font-family: 'Montserrat';
-     src: url('https://fonts.googleapis.com/css?family=Roboto|Montserrat:400,700');
+     font-family: 'Montserrat', sans-serif;
+     src: url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
   }
 
   * {
@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', sans-serif;
     /* min-height: 100vh;
     min-width: 100vw; */
     /* overflow: hidden; */
@@ -108,6 +108,7 @@ class Layout extends Component {
                   projects={data.allMarkdownRemark.edges}
                   siteTitle={data.site.siteMetadata.title}
                 />
+                <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto&display=swap" rel="stylesheet"></link>
                 <StyledContent projects={ data.allMarkdownRemark.edges }>
                 { children }
                 </StyledContent>

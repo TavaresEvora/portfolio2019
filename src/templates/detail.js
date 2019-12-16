@@ -211,20 +211,6 @@ const StyledHeaderDescription = styled.div`
   }
 `
 
-const StyledSeeMore = styled.div`
-  overflow: hidden;
-  font-weight: 600;
-  color: ${variables.black};
-  width: 90%;
-  margin: 30px 0 0;
-  @media (min-width: 768px) {
-    width: 60%;
-  }
-  
-  & > * {
-    display: block;
-  }
-`
 
 class Template extends Component {
 
@@ -278,7 +264,7 @@ class Template extends Component {
   render() {
     const { data, pageContext } = this.props
     const { markdownRemark: project, prevIcon, nextIcon } = data
-    const { title, tags, excerpt, image, client, role, date, intro, technologies, link } = project.frontmatter
+    const { title, tags, excerpt, image, client, role, date, intro, technologies } = project.frontmatter
     const { html } = project
     const { next, prev } = pageContext
 

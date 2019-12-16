@@ -193,7 +193,7 @@ class IndexPage extends Component {
             <StyledDescription className="reveal-text">
               <div className="txt">
                 Je suis développeur <StyledFunction className="function"> <span> fullstack </span> </StyledFunction> sur Paris et bienvenue sur mon portfolio !
-                <StyledAvaible>Disponible à partir du mois de <b>Février</b></StyledAvaible>
+                {/* <StyledAvaible>Disponible à partir du mois de <b>Février</b></StyledAvaible> */}
               </div>
             <StyledSeeMore>
                 <LinkStyle
