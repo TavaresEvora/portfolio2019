@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TransitionLink from 'gatsby-plugin-transition-link'
 import { TimelineLite } from 'gsap'
 import styled from 'styled-components'
+import { graphql } from 'gatsby'
 
 import SEO from '../components/seo'
 import LinkStyle from '../components/elements/link'
@@ -174,6 +175,9 @@ class IndexPage extends Component {
   }
 
   render() {
+    const { cv } = this.props.data
+    console.log(cv, this.props.data)
+
     return (
       <StyledContent>
         <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
@@ -193,7 +197,8 @@ class IndexPage extends Component {
             <StyledDescription className="reveal-text">
               <div className="txt">
                 Je suis développeur <StyledFunction className="function"> <span> fullstack </span> </StyledFunction> sur Paris et bienvenue sur mon portfolio !
-                {/* <StyledAvaible>Disponible à partir du mois de <b>Février</b></StyledAvaible> */}
+                <StyledAvaible>Disponible à partir du mois de <b>Mars</b></StyledAvaible>
+                <StyledAvaible><LinkStyle target="__blank" href={ cv.publicURL }>Retrouver mon CV ici</LinkStyle></StyledAvaible>
               </div>
             <StyledSeeMore>
                 <LinkStyle
@@ -227,5 +232,14 @@ class IndexPage extends Component {
     )
   }
 }
+
+export const query = graphql`
+  query {
+    cv:file(name: { eq: "Tavares_Evora_CV" }) {
+      publicURL
+    	name
+    },
+  }
+`
 
 export default IndexPage
